@@ -107,7 +107,7 @@ public:
         
         // Prevent spurious wakes from ruining everything
         // then release lock and wait
-       while(queue_.empty())
+        while(queue_.empty())
             condVar_.wait(mlock);
         
         // Same queue operations as normal
