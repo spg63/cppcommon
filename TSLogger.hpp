@@ -23,7 +23,7 @@
 #include <iomanip>
 #include <cstdlib>
 #include <thread>
-#include "tsqueue.hpp"
+#include "TSQueue.hpp"
 
 /**
     \brief Log message type used by the logger
