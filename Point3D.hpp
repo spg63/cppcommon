@@ -220,7 +220,7 @@ private:
    
     // Generalized for floats && doubles
     template<class T>
-    inline void init_pts(T x, T y, T z){
+    void init_pts(T x, T y, T z){
         x_ = x;
         y_ = y;
         z_ = z;

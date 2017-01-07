@@ -1,7 +1,7 @@
 CC := clang++ 
 DEBUG :=
 OPT := -O2
-CFLAGS := -std=c++14 
+CFLAGS := -std=c++14 -pthread
 INCLUDES :=
 LFLAGS := -lsqlite3
 LIBS := 
