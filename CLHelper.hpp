@@ -24,6 +24,16 @@
 */
 class CLHelper{
 public:
+
+    /**
+        \brief See details
+        \details Sets index of OpenCL device number to use. Default is 3.
+        @return True...well at the moment it's always true
+    */
+    void setDeviceToUse(int deviceNum){
+        deviceToUse = deviceNum;
+    }   
+    
     
     /**
         \brief See details
@@ -31,10 +41,9 @@ public:
         @return True...well at the moment it's always true
     */
     bool setup_opencl(void){
-        int device_to_use = 0;
         num_devices = 0;
         if(num_devices == 0){
-            err = clGetDeviceIDs(nullptr, CL_DEVICE_TYPE_ALL, 1, device_ids, &num_devices);
+            err = clGetDeviceIDs(nullptr, CL_DEVICE_TYPE_ALL, maxDevices, device_ids, &num_devices);
             check_and_print_cl_err(err);
 #ifdef PRINT_LIB_ERRORS
             fprintf(stderr, "num_devices: %d\n", num_devices);
@@ -44,8 +53,8 @@ public:
         fprintf(stderr, "num_devices: %d\n", num_devices);
 #endif
         
-        device_id = device_ids[device_to_use];
-        print_selected_device_info(device_id, device_to_use);
+        device_id = device_ids[deviceToUse];
+        print_selected_device_info(device_id, deviceToUse);
         
         context = clCreateContext(0, 1, &device_id, nullptr, nullptr, &err);
         check_and_print_cl_err(err);
@@ -295,7 +304,9 @@ public:
 public:
     int err;
     unsigned int correct;
-    cl_device_id *device_ids = new cl_device_id[2];
+    int maxDevices = 3; // on MBP, 0 is CPU, 1 is integrated GPU, 2 is Discrete.
+    int deviceToUse = 2; // discrete GPU on MBP
+    cl_device_id *device_ids = new cl_device_id[maxDevices];
     cl_device_id device_id;
     cl_context context;
     cl_command_queue commands;
