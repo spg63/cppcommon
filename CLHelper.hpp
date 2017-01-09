@@ -19,21 +19,44 @@
 /**
     \brief Removing some OpenCL setup boiler plate
     \author Andrew McDonald
+    \author Sean Grimes
     \date 11-21-15
     \note Currently under development, no guarantees made. 
 */
 class CLHelper{
 public:
+    
+    /**
+        \brief default c'tor, setup for use with MBP on macOS
+        \details Will default to 3 possible devices, selecting the discrete GPU by default
+    */
+    CLHelper() : CLHelper(3, 2) {}
+    
+    /**
+        \brief c'tor to select which compute device to attempt to use
+        \details Will try to use 'deviceToUse', on a MBP the devices are:\n
+        0 == CPU \n
+        1 == Integrated GPU \n
+        2 == Discrete GPU
+        @param maxDevices The number of OpenCL compute devices on the machine
+        @param deviceToUse The OpenCL device to use
+    */
+    CLHelper(int maxDevices, int deviceToUse)
+        : err{}
+        , correct{}
+        , maxDevices{maxDevices}
+        , deviceToUse{deviceToUse}
+    {
+        device_ids = new cl_device_id[maxDevices];
+    }
 
     /**
         \brief See details
         \details Sets index of OpenCL device number to use. Default is 3.
-        @return True...well at the moment it's always true
     */
     void setDeviceToUse(int deviceNum){
         deviceToUse = deviceNum;
     }   
-    
     
     /**
         \brief See details
@@ -304,8 +327,8 @@ public:
 public:
     int err;
     unsigned int correct;
-    int maxDevices = 3; // on MBP, 0 is CPU, 1 is integrated GPU, 2 is Discrete.
-    int deviceToUse = 2; // discrete GPU on MBP
+    int maxDevices; // on MBP, 0 is CPU, 1 is integrated GPU, 2 is Discrete.
+    int deviceToUse; // discrete GPU on MBP
     cl_device_id *device_ids = new cl_device_id[maxDevices];
     cl_device_id device_id;
     cl_context context;
