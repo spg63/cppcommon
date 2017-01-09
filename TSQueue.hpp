@@ -75,6 +75,11 @@ public:
     }
     
     /**
+        \brief Default d'tor
+    */
+    ~TSQueue(){}
+    
+    /**
         \brief Swap
     */
     void swap(TSQueue &left, TSQueue &right){

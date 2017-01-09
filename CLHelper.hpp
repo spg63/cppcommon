@@ -51,6 +51,66 @@ public:
     }
 
     /**
+        \brief Move c'tor
+    */
+    CLHelper(CLHelper &&clh) : CLHelper() 
+    {
+        swap(*this, clh);
+    }
+
+    /**
+        \brief Move assignment
+    */
+    CLHelper &operator=(CLHelper &&clh){
+        swap(*this, clh);
+        return *this;
+    }
+
+    /**
+        \brief Copy c'tor
+    */
+    CLHelper(const CLHelper &clh) 
+        : err{clh.err}
+        , correct{clh.correct}
+        , maxDevices{clh.maxDevices}
+        , device_ids(maxDevices ? new cl_device_id[maxDevices] : nullptr)
+        , deviceToUse{clh.deviceToUse}
+        , device_id{clh.device_id}
+        , context{clh.context}
+        , commands{clh.commands}
+        , num_devices{clh.num_devices}
+    {
+        std::copy(clh.device_ids, clh.device_ids + maxDevices, device_ids);
+    }
+
+    /**
+        \brief Copy assignment
+    */
+    CLHelper &operator=(CLHelper clh){
+        swap(*this, clh);
+        return *this;
+    }
+
+    /**
+        \brief d'tor
+    */
+    ~CLHelper(){delete[] device_ids;}
+
+    void swap(CLHelper &l, CLHelper &r){
+        using std::swap;
+        swap(l.err, r.err);
+        swap(l.correct, r.correct);
+        swap(l.maxDevices, r.maxDevices);
+        swap(l.deviceToUse, r.deviceToUse);
+        swap(l.device_ids, r.device_ids);
+        swap(l.device_id, r.device_id);
+        swap(l.context, r.context);
+        swap(l.commands, r.commands);
+        swap(l.num_devices, r.num_devices);
+    }
+
+
+    /**
         \brief See details
         \details Sets index of OpenCL device number to use. Default is 3.
     */
@@ -327,8 +387,8 @@ public:
 public:
     int err;
     unsigned int correct;
-    int maxDevices; // on MBP, 0 is CPU, 1 is integrated GPU, 2 is Discrete.
-    int deviceToUse; // discrete GPU on MBP
+    int maxDevices; 
+    int deviceToUse;
     cl_device_id *device_ids = new cl_device_id[maxDevices];
     cl_device_id device_id;
     cl_context context;
