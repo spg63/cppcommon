@@ -113,10 +113,10 @@ public:
 
     /**
         \brief See details
-        \details Sets index of OpenCL device number to use. Default is 3.
+        \details Sets index of OpenCL device number to use. Default is 2.
     */
-    void setDeviceToUse(int deviceNum){
-        deviceToUse = deviceNum;
+    void setDeviceToUse(int deviceIndex){
+        deviceToUse = deviceIndex;
     }   
     
     /**
