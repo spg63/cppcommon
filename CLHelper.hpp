@@ -54,10 +54,10 @@ public:
         \brief Move c'tor
     */
     CLHelper(CLHelper &&clh) 
-    : CLHelper() 
-        {
-            swap(*this, clh);
-        }
+        : CLHelper() 
+    {
+        swap(*this, clh);
+    }
 
     /**
         \brief Move assignment
