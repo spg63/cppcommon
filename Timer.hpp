@@ -73,7 +73,6 @@ public:
     */
     double nanoseconds() {
         auto duration = stop_ - start_;
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
         exe_time_ns_ = std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count();
         return exe_time_ns_;
     }
