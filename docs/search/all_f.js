@@ -2,7 +2,7 @@ var searchData=
 [
   ['seconds',['seconds',['../class_timer.html#a045bb982f9132c9043fb10be01370485',1,'Timer']]],
   ['select',['select',['../class_d_b_helper.html#a86c6d57dedc25db34c68e7e80cabc9b2',1,'DBHelper']]],
-  ['setdevicetouse',['setDeviceToUse',['../class_c_l_helper.html#a7d95f14b66879d74cea32046cc569793',1,'CLHelper']]],
+  ['setdevicetouse',['setDeviceToUse',['../class_c_l_helper.html#a638ca5374a56c321cc77f22c4563587d',1,'CLHelper']]],
   ['setup_5fopencl',['setup_opencl',['../class_c_l_helper.html#a2b6576e59adbdfaf924800b4733b7aba',1,'CLHelper']]],
   ['shouldcolor',['shouldColor',['../class_output_1_1_modifier.html#a3506af45887038bdcebe45529a0865d5',1,'Output::Modifier']]],
   ['size',['size',['../class_t_s_queue.html#afff4add7659d04494bdbd36f20c116e9',1,'TSQueue']]],
