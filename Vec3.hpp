@@ -1,5 +1,5 @@
 //
-//  Point3D.hpp
+//  Vec3.hpp
 //  cppcommon
 //
 //  Created by Sean Grimes on 10/1/16.
@@ -16,23 +16,23 @@
     \author Sean Grimes, spg63@cs.drexel.edu
     \date 10-1-16
 */
-class Point3D{
+class Vec3{
 public:
     
     /**
         \brief Default c'tor
         \details Created object is useless until coordinates are set
     */
-    Point3D() {}
+    Vec3() {}
     
     /**
         \brief c'tor takes a vector of strings
         \details vector.size() must == 3
         @param coords The vector holding 3 string coordinates
     */
-    Point3D(const std::vector<std::string> &coords) {
+    Vec3(const std::vector<std::string> &coords) {
         if(coords.size() != 3)
-            throw std::invalid_argument("Point3D takes a vector of size 3 only");
+            throw std::invalid_argument("Vec3 takes a vector of size 3 only");
         try{
             init_pts(NumUtils::strToDouble(coords[0]),
                      NumUtils::strToDouble(coords[1]),
@@ -53,8 +53,8 @@ public:
         @param z The z coordinate
     */
     template<class T>
-    Point3D(T x, T y, T z){
-        static_assert(std::is_arithmetic<T>::value, "Point3D can only be constructed from numerics");
+    Vec3(T x, T y, T z){
+        static_assert(std::is_arithmetic<T>::value, "Vec3 can only be constructed from numerics");
         init_pts(x, y, z);
     }
     
@@ -64,13 +64,13 @@ public:
         @param coords The vector holding 3 std::is_arithmetic coordinates
     */
     template<class T>
-    Point3D(const std::vector<T> &coords){
+    Vec3(const std::vector<T> &coords){
         // Check that we're getting a numeric (or char)
-        static_assert(std::is_arithmetic<T>::value, "Point3D can only be constructed from std::vector<arithmetic_type>");
+        static_assert(std::is_arithmetic<T>::value, "Vec3 can only be constructed from std::vector<arithmetic_type>");
         
         // Insist on a vector size of 3
         if(coords.size() != 3)
-            throw std::invalid_argument("Point3D takes a vector of size 3 only");
+            throw std::invalid_argument("Vec3 takes a vector of size 3 only");
         
         init_pts(coords[0], coords[1], coords[2]);
     }
@@ -81,7 +81,7 @@ public:
     */
     template<class T>
     void x(T x){
-        static_assert(std::is_arithmetic<T>::value, "Point3D only accepts numerics for coordinates");
+        static_assert(std::is_arithmetic<T>::value, "Vec3 only accepts numerics for coordinates");
         x_ = x;
     }
     
@@ -91,7 +91,7 @@ public:
     */
     template<class T>
     void y(T y){
-        static_assert(std::is_arithmetic<T>::value, "Point3D only accepts numerics for coordinates");
+        static_assert(std::is_arithmetic<T>::value, "Vec3 only accepts numerics for coordinates");
         y_ = y;
     }
     
@@ -101,7 +101,7 @@ public:
     */
     template<class T>
     void z(T z){
-        static_assert(std::is_arithmetic<T>::value, "Point3D only accepts numerics for coordinates");
+        static_assert(std::is_arithmetic<T>::value, "Vec3 only accepts numerics for coordinates");
         z_ = z;
     }
     
@@ -133,7 +133,7 @@ public:
         \brief += operator
         @param rhs The other point
     */
-    Point3D& operator+=(const Point3D &rhs) {
+    Vec3& operator+=(const Vec3 &rhs) {
         x_ += rhs.x_;
         y_ += rhs.y_;
         z_ += rhs.z_;
@@ -144,7 +144,7 @@ public:
         \brief -= operator
         @param rhs The other point
     */
-    Point3D& operator-=(const Point3D &rhs) {
+    Vec3& operator-=(const Vec3 &rhs) {
         x_ -= rhs.x_;
         y_ -= rhs.y_;
         z_ -= rhs.z_;
@@ -155,7 +155,7 @@ public:
         \brief *= operator
         @param rhs The other point
     */
-    Point3D& operator*=(const Point3D &rhs) {
+    Vec3& operator*=(const Vec3 &rhs) {
         x_ *= rhs.x_;
         y_ *= rhs.y_;
         z_ *= rhs.z_;
@@ -166,7 +166,7 @@ public:
         \brief /= operator
         @param rhs The other point
     */
-    Point3D& operator/=(const Point3D &rhs) {
+    Vec3& operator/=(const Vec3 &rhs) {
         x_ /= rhs.x_;
         y_ /= rhs.y_;
         z_ /= rhs.z_;
@@ -176,15 +176,15 @@ public:
     /**
         \brief negation operator
     */
-    Point3D operator-() const {return Point3D(-x_, -y_, -z_);}
+    Vec3 operator-() const {return Vec3(-x_, -y_, -z_);}
     
     /**
         \brief *= scalar operator
         @param s The scalar
     */
     template<class T>
-    Point3D& operator*=(const T &s){
-        static_assert(std::is_arithmetic<T>::value, "Point3D can only carry out arithmetic on numerics");
+    Vec3& operator*=(const T &s){
+        static_assert(std::is_arithmetic<T>::value, "Vec3 can only carry out arithmetic on numerics");
         
         x_ *= s;
         y_ *= s;
@@ -197,8 +197,8 @@ public:
         @param s The scalar
     */
     template<class T>
-    Point3D& operator/=(const T &s){
-        static_assert(std::is_arithmetic<T>::value, "Point3D can only carry out arithmetic on numerics");
+    Vec3& operator/=(const T &s){
+        static_assert(std::is_arithmetic<T>::value, "Vec3 can only carry out arithmetic on numerics");
 
         if(s == 0)
             throw std::invalid_argument("Divide by zero");
@@ -211,7 +211,7 @@ public:
     /**
         \brief Write it
     */
-    inline friend std::ostream &operator<<(std::ostream &out, const Point3D &p3d);
+    inline friend std::ostream &operator<<(std::ostream &out, const Vec3 &p3d);
     
 private:
     double x_;
@@ -233,28 +233,28 @@ private:
     @param lhs A point
     @param rhs Another point
 */
-inline Point3D operator+(const Point3D &lhs, const Point3D &rhs) {return Point3D(lhs) += rhs;}
+inline Vec3 operator+(const Vec3 &lhs, const Vec3 &rhs) {return Vec3(lhs) += rhs;}
 
 /**
     \brief Subtraction
     @param lhs A point
     @param rhs Another point
 */
-inline Point3D operator-(const Point3D &lhs, const Point3D &rhs) {return Point3D(lhs) -= rhs;}
+inline Vec3 operator-(const Vec3 &lhs, const Vec3 &rhs) {return Vec3(lhs) -= rhs;}
 
 /**
     \brief Multiplication
     @param lhs A point
     @param rhs Another point
 */
-inline Point3D operator*(const Point3D &lhs, const Point3D &rhs) {return Point3D(lhs) *= rhs;}
+inline Vec3 operator*(const Vec3 &lhs, const Vec3 &rhs) {return Vec3(lhs) *= rhs;}
 
 /**
     \brief Division
     @param lhs A point
     @param rhs Another point
 */
-inline Point3D operator/(const Point3D &lhs, const Point3D &rhs) {return Point3D(lhs) /= rhs;}
+inline Vec3 operator/(const Vec3 &lhs, const Vec3 &rhs) {return Vec3(lhs) /= rhs;}
 
 /**
     \brief Scalar multiplication
@@ -262,10 +262,10 @@ inline Point3D operator/(const Point3D &lhs, const Point3D &rhs) {return Point3D
     @param rhs The point
 */
 template<class T>
-Point3D operator*(const T &s, const Point3D &rhs){
-    static_assert(std::is_arithmetic<T>::value, "Point3D can only carry out arithmetic on numerics");
+Vec3 operator*(const T &s, const Vec3 &rhs){
+    static_assert(std::is_arithmetic<T>::value, "Vec3 can only carry out arithmetic on numerics");
 
-    return Point3D(rhs) *= s;
+    return Vec3(rhs) *= s;
 }
 
 /**
@@ -274,10 +274,10 @@ Point3D operator*(const T &s, const Point3D &rhs){
     @param s The scalar
 */
 template<class T>
-Point3D operator*(const Point3D &lhs, const T &s){
-    static_assert(std::is_arithmetic<T>::value, "Point3D can only carry out arithmetic on numerics");
+Vec3 operator*(const Vec3 &lhs, const T &s){
+    static_assert(std::is_arithmetic<T>::value, "Vec3 can only carry out arithmetic on numerics");
 
-    return Point3D(lhs) *= s;
+    return Vec3(lhs) *= s;
 }
 
 /**
@@ -286,13 +286,13 @@ Point3D operator*(const Point3D &lhs, const T &s){
     @param s The scalar
 */
 template<class T>
-Point3D operator/(const Point3D &lhs, const T &s){
-    static_assert(std::is_arithmetic<T>::value, "Point3D can only carry out arithmetic on numerics");
+Vec3 operator/(const Vec3 &lhs, const T &s){
+    static_assert(std::is_arithmetic<T>::value, "Vec3 can only carry out arithmetic on numerics");
 
-    return Point3D(lhs) /= s;
+    return Vec3(lhs) /= s;
 }
 
-inline std::ostream &operator<<(std::ostream &out, const Point3D &p3d) {
+inline std::ostream &operator<<(std::ostream &out, const Vec3 &p3d) {
     std::string x = std::to_string(p3d.x());
     std::string y = std::to_string(p3d.y());
     std::string z = std::to_string(p3d.z());

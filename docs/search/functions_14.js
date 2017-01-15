@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['z',['z',['../class_point3_d.html#a8d2e270e65081837b67276e1e171c4d1',1,'Point3D::z(T z)'],['../class_point3_d.html#ad663c810a730a64d1e000e366fc366ea',1,'Point3D::z() const']]]
+  ['y',['y',['../class_vec3.html#a0e0db2578c56482acb5efccde14f7bb5',1,'Vec3::y(T y)'],['../class_vec3.html#a83d4776aef2cb68f2382e2f7f60fb03d',1,'Vec3::y() const']]]
 ];
