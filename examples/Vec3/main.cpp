@@ -36,5 +36,28 @@ int main(){
     std::cout << "v1 / 5: " << v1 / 5 << "\n";
     std::cout << "-v1: " << -v1 << "\n";
 
+    Vec3 a(5, 10, 15);
+    Vec3 b(5, 10, 15);
+
+    if(a == b)
+        std::cout << "a == b\n";
+    else
+        std::cout << "a != b\n";
+    
+    if(a != b)
+        std::cout << "a != b\n";
+    else
+        std::cout << "a == b\n";
+
+    if(a == v1)
+        std::cout << "a == v1\n";
+    else
+        std::cout << "a != v1\n";
+
+    if(b == v2)
+        std::cout << "b == v2\n";
+    else
+        std::cout << "b != v2\n";
+
     return 0;
 }

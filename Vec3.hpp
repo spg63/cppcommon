@@ -130,6 +130,21 @@ public:
     std::vector<double> getAllPts() const {return std::vector<double>{x_, y_, z_};}
     
     /**
+        \brief Operator equals
+    */
+    bool operator==(const Vec3 &other) const {
+        return x_ == other.x_ && y_ == other.y_ && z_ == other.z_;
+    }
+
+    /**
+        \brief Operator not equals
+    */
+    bool operator!=(const Vec3 &other) const {
+        return !(*this == other);
+    }
+
+
+    /**
         \brief += operator
         @param rhs The other point
     */
