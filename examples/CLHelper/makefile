@@ -1,9 +1,9 @@
 # Sean Grimes
 CC := clang++
-CFLAGS := -std=c++14 -pthread
+CFLAGS := -std=c++14
+LIBS :=
 INCLUDES := 
 LFLAGS := 
-LIBS :=
 SRC := $(wildcard *.cpp)
 OBJ := $(addprefix obj/,$(notdir $(SRC:.cpp=.o)))
 EXC := out
@@ -15,6 +15,14 @@ OBJ_DIR := obj/
 LIB_CMD := ar rvs
 OPT := -O2
 
+# Apple specifics vs linux, why can't we all just conform...
+OS := $(shell uname)
+ifeq ($(OS), Darwin)
+override LIBS := -framework OpenCL 
+else
+override LIBS := -lOpenCL
+override CFLAGS := -pthread $(CFLAGS)
+endif
 
 .PHONY: all lib run
 all: resources $(EXC)
