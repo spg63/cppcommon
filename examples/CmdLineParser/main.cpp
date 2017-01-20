@@ -33,10 +33,10 @@ int main(int argc, const char **argv) {
     std::string e_value;
     
     // Check if the flags exist before trying to read the values
-    if(cmd.optExists("-h"))
+    if(cmd.optExists("h"))
         h_value = cmd.getOptValue("-h");
     if(cmd.optExists("-w"))
-        w_value = cmd.getOptValue("-w");
+        w_value = cmd.getOptValue("w");
     if(cmd.optExists("-e"))
         e_value = cmd.getOptValue("-e");
     if(cmd.optExists("-d")){
