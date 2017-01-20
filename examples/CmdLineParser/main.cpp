@@ -44,7 +44,6 @@ int main(int argc, const char **argv) {
         if(cmd.getOptValue("-d") != "")
             std::cout << "-d does not equal a blank space\n";
     }
-    
     std::cout << h_value << " " << w_value << e_value << std::endl;
 
     return 0;
