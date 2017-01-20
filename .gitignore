@@ -1,0 +1,16 @@
+
+*.pbxproj
+
+*.pbxproj
+
+*.xcworkspacedata
+
+*.xcuserstate
+
+*.xcscheme
+
+*.plist
+
+cppcommon_proj_updater/cppcommon_proj_updater/main.cpp
+
+cppcommon_proj_updater/*
