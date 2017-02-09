@@ -32,6 +32,8 @@ namespace StrUtils{
     inline std::vector<std::string> trimStrVec(const std::vector<std::string> &vec);
     inline std::vector<std::string> parseOnCharDelim(const std::string &line, const char delim);
     inline std::string timeStamp();
+    inline bool endsWithString(const std::string &str, const std::string &end);
+    inline bool startsWithString(const std::string &str, const std::string &start);
 }
 
 /**
@@ -160,3 +162,27 @@ std::string StrUtils::timeStamp() {
     oss << "." << ms.count();
     return oss.str();
 }
+
+/**
+ \brief Determine if string ends with another string
+ @param str The string to be searched
+ @param end The string to search for
+ @return True if str ends with end, false otherwise
+ */
+bool StrUtils::endsWithString(const std::string &str, const std::string &end){
+    return end.size() <= str.size() && str.find(end, str.size() - end.size()) != str.npos;
+}
+
+/**
+ \brief Determine if string starts with another string
+ @param str The string to be searched
+ @param start The string to search for
+ @return True if str starts with start, false otherwise
+ */
+bool StrUtils::startsWithString(const std::string &str, const std::string &start){
+    return start.length() <= str.length() && std::equal(std::begin(start), std::end(start), std::begin(str));
+}
+
+
+
+

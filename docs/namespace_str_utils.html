@@ -91,12 +91,64 @@ Functions</h2></td></tr>
 <tr class="memitem:afef7b4fe00a9a412098a334eb4289491"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_str_utils.html#afef7b4fe00a9a412098a334eb4289491">timeStamp</a> ()</td></tr>
 <tr class="memdesc:afef7b4fe00a9a412098a334eb4289491"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current time stamp using chrono.  <a href="#afef7b4fe00a9a412098a334eb4289491">More...</a><br /></td></tr>
 <tr class="separator:afef7b4fe00a9a412098a334eb4289491"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1749db0f497298d9ca13f26216bb5a37"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_str_utils.html#a1749db0f497298d9ca13f26216bb5a37">endsWithString</a> (const std::string &amp;str, const std::string &amp;end)</td></tr>
+<tr class="memdesc:a1749db0f497298d9ca13f26216bb5a37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine if string ends with another string.  <a href="#a1749db0f497298d9ca13f26216bb5a37">More...</a><br /></td></tr>
+<tr class="separator:a1749db0f497298d9ca13f26216bb5a37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d81ba30148fa0f0211f75745dda29bb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_str_utils.html#a9d81ba30148fa0f0211f75745dda29bb">startsWithString</a> (const std::string &amp;str, const std::string &amp;start)</td></tr>
+<tr class="memdesc:a9d81ba30148fa0f0211f75745dda29bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine if string starts with another string.  <a href="#a9d81ba30148fa0f0211f75745dda29bb">More...</a><br /></td></tr>
+<tr class="separator:a9d81ba30148fa0f0211f75745dda29bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Utility functions focusing on string. </p>
 <dl class="section author"><dt>Author</dt><dd>Sean Grimes, <a href="#" onclick="location.href='mai'+'lto:'+'spg'+'63'+'@cs'+'.d'+'rex'+'el'+'.ed'+'u'; return false;">spg63<span style="display: none;">.nosp@m.</span>@cs.<span style="display: none;">.nosp@m.</span>drexe<span style="display: none;">.nosp@m.</span>l.ed<span style="display: none;">.nosp@m.</span>u</a> </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>11-26-15 </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a1749db0f497298d9ca13f26216bb5a37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1749db0f497298d9ca13f26216bb5a37">&#9670;&nbsp;</a></span>endsWithString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool StrUtils::endsWithString </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>str</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>end</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Determine if string ends with another string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>The string to be searched </td></tr>
+    <tr><td class="paramname">end</td><td>The string to search for </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if str ends with end, false otherwise </dd></dl>
+
+</div>
+</div>
 <a id="ae7ee22228acd706d0ce9c4a7deb5c2b5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae7ee22228acd706d0ce9c4a7deb5c2b5">&#9670;&nbsp;</a></span>parseOnCharDelim()</h2>
 
@@ -184,6 +236,52 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a9d81ba30148fa0f0211f75745dda29bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d81ba30148fa0f0211f75745dda29bb">&#9670;&nbsp;</a></span>startsWithString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool StrUtils::startsWithString </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>str</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>start</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Determine if string starts with another string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>The string to be searched </td></tr>
+    <tr><td class="paramname">start</td><td>The string to search for </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if str starts with start, false otherwise </dd></dl>
 
 </div>
 </div>

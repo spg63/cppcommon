@@ -38,7 +38,6 @@ namespace FileUtils{
     inline bool isDir(const std::string &dirpath);
     inline bool isExc(const std::string &filepath);
     inline bool fexists(const std::string &filepath);
-    inline bool endsWithString(const std::string &str, const std::string &end);
     inline bool mkdirWrapper(const std::string &dirpath);
     inline std::vector<std::vector<std::string>> csvToMatrix(const std::string &filename);
     inline void appendToFile(const std::string &filepath, const std::string &msg);
@@ -138,7 +137,7 @@ std::vector<std::string> FileUtils::getFilesInDir(const std::string &dirPath, co
                 if(ext != ""){
                     // Note: This can easily be fooled
                     std::string f_name(ent->d_name);
-                    if(endsWithString(f_name, ext))
+                    if(StrUtils::endsWithString(f_name, ext))
                         files.push_back(f_name);
                 }
                 // Don't care what the file extension is
@@ -213,16 +212,6 @@ bool FileUtils::isExc(const std::string& path){
     return false;
 }
 
-/**
-    \brief Determine if string ends with another string
-    @param str The string to be searched
-    @param end The string to search for
-    @return True if str ends with end, false otherwise
-*/
-bool FileUtils::endsWithString(const std::string &str, const std::string &end){
-    return end.size() <= str.size() && str.find(end, str.size() - end.size()) != str.npos;
-}
-    
 /**
     \brief Wrapper to create a directory
     @param path The path to where the directory should be created
