@@ -200,8 +200,7 @@ private:
             // Use try_and_pop instead of wait_and_pop so the thread can be immediately killed
             // if necessary; wait_and_pop will block on the thread while the queue is empty
             logmessage_t msg;
-            bool did_receive_message{false};
-            did_receive_message = msg_queue_.try_and_pop(msg, timeout_);
+            bool did_receive_message = did_receive_message = msg_queue_.try_and_pop(msg, timeout_);
             
             // Process the received message and write it to the log file
             if(did_receive_message){
