@@ -46,6 +46,10 @@ namespace NumUtils{
     inline int randomInt(int start, int end);
     inline double randomDouble(double start, double end);
     inline size_t factorial(unsigned int x);
+    
+    template<class T>
+    inline double getRadians(T degrees){ return degrees * M_PI / 180; }
+
 }
 
 /**
