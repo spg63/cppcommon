@@ -30,8 +30,8 @@ private:
 public:
     Mat() { init_store(); }
     Mat(const std::vector<std::vector<double>> &mat){
-        if(mat.size() > 4
-        init_store();
+        if(mat.size() > 4)
+           init_store();
         
         
     }
