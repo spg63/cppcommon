@@ -11,11 +11,9 @@
 #include <type_traits>
 #include "NumUtils.hpp"
 
-#define GL_TYPES_FLOAT
-
-#if defined(GL_TYPES) && defined(__APPLE__)
+#if (defined(GL_TYPES_FLOAT) || defined(GL_TYPES_DOUBLE)) && defined(__APPLE__)
     #include <OpenGL/gl3.h>
-#elif defined(GL_TYPES) && !defined(__APPLE__)
+#elif (defined(GL_TYPES_FLOAT) || defined(GL_TYPES_DOUBLE)) && !defined(__APPLE__)
     #include <GL/gl.h>
 #endif
 
@@ -24,7 +22,7 @@
 #elif defined(GL_TYPES_FLOAT)
     using num_t = GLfloat;
 #else
-    using num_t = double;
+    using num_t = float;
 #endif
 
 
@@ -40,59 +38,39 @@ publically exposed to the user. Documentation, however, is not provided for Vec 
 */
 
 enum POS {X, Y, Z, W};
-const unsigned MAX_POINTS{4};
+namespace VecN{
+    static const unsigned DEFAULT_POINTS{4};
+}
 
 class Vec{
 private:
-    std::array<num_t, MAX_POINTS> points_;
+    size_t size_;
+    std::vector<num_t> points_;
+    void init_vec() { points_ = std::vector<num_t>(size_, 0.0); }
     
 public:
-    
-    Vec(){ points_ = {0.0, 0.0, 0.0, 0.0}; }
-    Vec(const std::vector<std::string> &points){
-        if(points.size() > MAX_POINTS)
-            throw std::invalid_argument("Too many points");
+    Vec() : size_(VecN::DEFAULT_POINTS) { init_vec(); }
+    template<class T> Vec(const std::vector<T> &points) : size_(points.size()), points_(points) {}
  
-        points_ = {0.0, 0.0, 0.0, 0.0};
+    Vec(const std::vector<std::string> &points)
+    : size_(points.size())
+    {
+        init_vec();
         
-        std::vector<num_t> pts;
-        try{
-            for(auto &&pt : points)
-                pts.emplace_back(NumUtils::strToDouble(pt));
-        }
-        catch(std::runtime_error &err){
-#ifdef PRINT_LIB_ERRORS
-            fprintf(stderr, "Couldn't convert string in points to double\n");
-#endif
-            throw;
-        }
-        
-        auto sz = pts.size();
-        for(auto i = 0; i < sz; ++i)
-            points_[i] = pts[i];
+        for(auto i = 0; i < size_; ++i)
+            points_[i] = NumUtils::strToDouble(points[i]);
     }
     
-    template<class T>
-    Vec(const std::vector<T> &points){
-        static_assert(std::is_arithmetic<T>::value, "Numeric types only");
-        if(points.size() > MAX_POINTS)
-            throw std::invalid_argument("Too many points");
-        
-        points_ = {0.0, 0.0, 0.0, 0.0};
-        auto sz = points.size();
-        for(auto i = 0; i < sz; ++i)
-            points_[i] = points[i];
+    
+    Vec(num_t val, size_t num_points = VecN::DEFAULT_POINTS) : size_(num_points)
+    {
+        init_vec();
+        for(auto i = 0; i < size_; ++i)
+            points_[i] = val;
     }
     
-    template<class T, std::size_t N>
-    Vec(const std::array<T, N> &points){
-        static_assert(N <= MAX_POINTS, "Too many points");
-        static_assert(std::is_arithmetic<T>::value, "Must be arithmetic type");
-        
-        points_ = {0.0, 0.0, 0.0, 0.0};
-        for(auto i = 0; i < N; ++i)
-            points_[i] = points[i];
-    }
+    num_t& operator[] (const int idx) { return points_[idx]; }
+    const num_t& operator[] (const int idx) const { return points_[idx]; }
     
     num_t x() const { return points_[POS::X]; }
     num_t y() const { return points_[POS::Y]; }
@@ -104,19 +82,13 @@ public:
     void z(num_t val){ points_[POS::Z] = val; }
     void w(num_t val){ points_[POS::W] = val; }
     
-    std::vector<num_t> allPointsVector() const {
-        std::vector<num_t> pts;
-        for(auto &&pt : points_)
-            pts.push_back(pt);
-        return pts;
-    }
-    
-    std::array<num_t, MAX_POINTS> allPointsArray() const{
-        return points_;
-    }
+    size_t size() const { return size_; }
+    std::vector<num_t> points() const { return points_; }
     
     bool operator==(const Vec &other) const{
-        for(auto i = 0; i < MAX_POINTS; ++i)
+        if(size_ != other.size_)
+            return false;
+        for(auto i = 0; i < size_; ++i)
             if(points_[i] != other.points_[i])
                 return false;
         return true;
@@ -127,48 +99,65 @@ public:
     }
     
     Vec& operator+=(const Vec &rhs){
-        for(auto i = 0; i < MAX_POINTS; ++i)
+        if(size_ != rhs.size_)
+            throw std::runtime_error("element-wise addition requires matrices of equal dimensions");
+        for(auto i = 0; i < size_; ++i)
             points_[i] += rhs.points_[i];
         return *this;
     }
     
     Vec& operator-=(const Vec &rhs){
-        for(auto i = 0; i < MAX_POINTS; ++i)
+        if(size_ != rhs.size_)
+            throw std::runtime_error("element-wise subtraction requires matrices of equal dimensions");
+        for(auto i = 0; i < size_; ++i)
             points_[i] -= rhs.points_[i];
         return *this;
     }
     
     Vec& operator*=(const Vec &rhs){
-        for(auto i = 0; i < MAX_POINTS; ++i)
+        if(size_ != rhs.size_)
+            throw std::runtime_error("element-wise multiplication requires matrices of equal dimensions");            
+        for(auto i = 0; i < size_; ++i)
             points_[i] *= rhs.points_[i];
         return *this;
     }
     
     Vec& operator/=(const Vec &rhs){
-        for(auto i = 0; i < MAX_POINTS; ++i)
+        if(size_ != rhs.size_)
+            throw std::runtime_error("element-wise division requires matrices of equal dimensions");            
+        for(auto i = 0; i < size_; ++i)
             points_[i] /= rhs.points_[i];
         return *this;
     }
     
     Vec operator-() const{
         Vec r;
-        for(auto i = 0; i < MAX_POINTS; ++i)
+        for(auto i = 0; i < size_; ++i)
             r.points_[i] = -points_[i];
         return r;
     }
     
     Vec& operator*=(num_t s){
-        for(auto i = 0; i < MAX_POINTS; ++i)
+        for(auto i = 0; i < size_; ++i)
             points_[i] *= s;
         return *this;
     }
     
     Vec& operator/=(num_t s){
-        for(auto i = 0; i < MAX_POINTS; ++i)
+        for(auto i = 0; i < size_; ++i)
             points_[i] /= s;
         return *this;
     }
+    
+    inline friend std::ostream &operator<<(std::ostream &out, const Vec &v);
 };
+
+inline std::ostream &operator<<(std::ostream &out, const Vec &v){
+    for(auto i = 0; i < v.size(); ++i)
+        out << std::to_string(v[i]) << " ";
+    return out;
+}
+
 
 inline Vec operator+(const Vec &lhs, const Vec &rhs) { return Vec(lhs) += rhs; }
 inline Vec operator-(const Vec &lhs, const Vec &rhs) { return Vec(lhs) -= rhs; }
@@ -184,14 +173,16 @@ inline Vec operator/(const Vec &lhs, num_t s){ return Vec(lhs) /= s; }
 class Vec2{
 private:
     Vec v_;
-    static const size_t SZ{2};
     
 public:
     Vec2() {}
     Vec2(const std::vector<std::string> &points) : v_(points) {}
     template<class T> Vec2(const std::vector<T> &points) : v_(points) {}
-    Vec2(num_t x, num_t y) : v_(std::array<num_t, SZ>{x, y}) {}
-    Vec2(num_t val) : v_(std::array<num_t, SZ>{val, val}) {}
+    Vec2(num_t x, num_t y) : v_(std::vector<num_t>{x, y}) {}
+    Vec2(num_t val) : v_(std::vector<num_t>{val, val}) {}
+    
+    num_t& operator[] (const int idx) { return v_[idx]; }
+    const num_t& operator[] (const int idx) const { return v_[idx]; }
     
     num_t x() const { return v_.x(); }
     num_t y() const { return v_.y(); }
@@ -239,16 +230,18 @@ inline Vec2 normalize(const Vec2 &v){ return v / length(v); }
 class Vec3{
 private:
     Vec v_;
-    static const size_t SZ{3};
     
 public:
     Vec3() {}
     Vec3(const std::vector<std::string> &points) : v_(points) {}
     template<class T> Vec3(const std::vector<T> &points) : v_(points) {}
-    Vec3(num_t x, num_t y, num_t z) : v_(std::array<num_t, SZ>{x, y, z}) {}
-    Vec3(Vec2 v, num_t z) : v_(std::array<num_t, SZ>{v.x(), v.y(), z}) {}
-    Vec3(num_t x, Vec2 v) : v_(std::array<num_t, SZ>{x, v.x(), v.y()}) {}
-    Vec3(num_t val) : v_(std::array<num_t, SZ>{val, val, val}) {}
+    Vec3(num_t x, num_t y, num_t z) : v_(std::vector<num_t>{x, y, z}) {}
+    Vec3(Vec2 v, num_t z) : v_(std::vector<num_t>{v.x(), v.y(), z}) {}
+    Vec3(num_t x, Vec2 v) : v_(std::vector<num_t>{x, v.x(), v.y()}) {}
+    Vec3(num_t val) : v_(std::vector<num_t>{val, val, val}) {}
+
+    num_t& operator[] (const int idx) { return v_[idx]; }
+    const num_t& operator[] (const int idx) const { return v_[idx]; }
     
     num_t x() const { return v_.x(); }
     num_t y() const { return v_.y(); }
@@ -310,18 +303,20 @@ inline Vec3 cross(const Vec3 &lhs, const Vec3 &rhs){
 class Vec4{
 private:
     Vec v_;
-    static const size_t SZ{4};
     
 public:
     Vec4() {}
     Vec4(const std::vector<std::string> &points) : v_(points) {}
     template<class T> Vec4(const std::vector<T> &points) : v_(points) {}
-    Vec4(num_t x, num_t y, num_t z, num_t w) : v_(std::array<num_t, SZ>{x, y, z, w}) {}
-    Vec4(Vec3 v, num_t w = 1) : v_(std::array<num_t, SZ>{v.x(), v.y(), v.z(), w}) {}
-    Vec4(num_t x, Vec3 v) : v_(std::array<num_t, SZ>{x, v.x(), v.y(), v.z()}) {}
-    Vec4(Vec2 vl, Vec2 vr) : v_(std::array<num_t, SZ>{vl.x(), vl.y(), vr.x(), vr.y()}) {}
-    Vec4(num_t val) : v_(std::array<num_t, SZ>{val, val, val, val}) {}
+    Vec4(num_t x, num_t y, num_t z, num_t w) : v_(std::vector<num_t>{x, y, z, w}) {}
+    Vec4(Vec3 v, num_t w = 1) : v_(std::vector<num_t>{v.x(), v.y(), v.z(), w}) {}
+    Vec4(num_t x, Vec3 v) : v_(std::vector<num_t>{x, v.x(), v.y(), v.z()}) {}
+    Vec4(Vec2 vl, Vec2 vr) : v_(std::vector<num_t>{vl.x(), vl.y(), vr.x(), vr.y()}) {}
+    Vec4(num_t val) : v_(std::vector<num_t>{val, val, val, val}) {}
     Vec4(Vec3 v) : Vec4(v, 1) {}
+    
+    num_t& operator[] (const int idx) { return v_[idx]; }
+    const num_t& operator[] (const int idx) const { return v_[idx]; }
     
     num_t x() const { return v_.x(); }
     num_t y() const { return v_.y(); }
