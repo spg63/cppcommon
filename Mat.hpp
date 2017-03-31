@@ -161,10 +161,19 @@ public:
     }
     
     Mat& operator*=(const Mat &rhs){
-        if(rows_ != rhs.rows_ || cols_ != rhs.cols_)
-            throw std::runtime_error("element-wise multiplcation requires matrices of equal dimensions");
-        for(auto i = 0; i < size_; ++i)
-            mat_[i] *= rhs.mat_[i];
+        if(cols_ != rhs.rows())
+            throw std::runtime_error("lhs cols != rhs rows");
+        Mat tmp(0, this->rows_, rhs.cols());
+        for(auto i = 0; i < rows_; ++i){
+            for(auto j = 0; j < rhs.cols(); ++j){
+                num_t sum = 0;
+                for(auto k = 0; k < rhs.rows(); ++k){
+                    sum += this->operator()(i, k) * rhs(k, j);
+                }
+                tmp(i, j) = sum;
+            }
+        }
+        *this = tmp;
         return *this;
     }
     
@@ -217,9 +226,19 @@ inline Mat operator*(num_t s, const Mat &rhs) { return Mat(rhs) *= s; }
 inline Mat operator*(const Mat &lhs, num_t s) { return Mat(lhs) *= s; }
 inline Mat operator/(const Mat &lhs, num_t s) { return Mat(lhs) /= s; }
 
+inline Mat matrixCompMult(const Mat &lhs, const Mat &rhs){
+    if(lhs.rows() != rhs.rows() || lhs.cols() != rhs.cols())
+        throw std::runtime_error("element-wise multiplcation requires matrices of equal dimensions");
+    auto size = lhs.size();
+    Mat re = lhs;
+    for(auto i = 0; i < size; ++i)
+        re[i] *= rhs[i];
+    return re;
+}
+
+
 namespace{
     inline Mat simple_transpose_(const Mat &m){
-        std::cout << "simple\n";
         auto cols = m.cols();
         auto rows = m.rows();
         Mat re(0, cols, rows);
@@ -230,7 +249,6 @@ namespace{
     }
     
     inline Mat tiling_transpose_(const Mat &m){
-        std::cout << "tiling\n";
         auto cols = m.cols();
         auto rows = m.rows();
         Mat re(0, cols, rows);
@@ -263,10 +281,10 @@ namespace{
    
     
     inline Mat simd_transpose_(const Mat &m){
+        throw std::runtime_error("Not implemented");
         std::cout << "simd\n";
         auto cols = m.cols();
         auto rows = m.rows();
-        auto size = m.size();
         auto raw = m.mat1d();
         
         int lda = ROUND_UP(static_cast<int>(cols), BLOCK_SIZE);
@@ -312,19 +330,14 @@ inline Mat transpose(const Mat &m){
     else
         return tiling_transpose_(m);
 #else
-    // tiling_transpose_() could be called on matrices smaller than BLOCK_SIZE, but no performance
-    // benefit
     if(m.cols() < BLOCK_SIZE && m.rows() < BLOCK_SIZE)
         return simple_transpose_(m);
-    // simd can only be called on square matrices, this shouldn't be the case but I've got a bug
-    // somewhere and no time to find it at the moment, so if it's not square just do a simple
-    // tiling transpose and move on
     //else if((m.rows() != m.cols()) || m.size() < PARALLEL)
-    //else
-    //    return tiling_transpose_(m);
-    // Finally, if all conditions are met, use SSE instructions to significantly speed things along
     else
-        return simd_transpose_(m);
+        return tiling_transpose_(m);
+    // Finally, if all conditions are met, use SSE instructions to significantly speed things along
+    //else
+    //    return simd_transpose_(m);
 #endif
 }
 
