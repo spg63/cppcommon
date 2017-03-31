@@ -13,6 +13,7 @@
 #include <x86intrin.h>
 
 #define ROUND_UP(x, s) (((x)+((s)-1)) & -(s))
+#define ROUND_DOWN(x, s) ((x) & ~((s)-1))
 
 #if (defined(GL_TYPES_FLOAT) || defined(GL_TYPES_DOUBLE)) && defined(__APPLE__)
     #include <OpenGL/gl3.h>
@@ -32,7 +33,7 @@ namespace{
     const size_t PARALLEL       {64 * 64}; // NOTE: This must remain larger than block_size^2
     const size_t DEFAULT_ROWS   {4};
     const size_t DEFAULT_COLS   {4};
-    const int block_size        {32};
+    const int BLOCK_SIZE        {16};
     size_t get1D(size_t num_cols, size_t row, size_t col){ return (num_cols * row) + col; }
 }
 
@@ -111,6 +112,9 @@ public:
     size_t rows() const { return rows_; }
     size_t cols() const { return cols_; }
     size_t size() const { return size_; }
+    
+    num_t& operator()(size_t i, size_t j){ return mat_[get1D(cols_, i, j)]; }
+    const num_t& operator()(size_t i, size_t j) const { return mat_[get1D(cols_, i, j)]; }
     
     num_t& operator[] (const size_t idx) { return mat_[idx]; }
     const num_t& operator[] (const size_t idx) const { return mat_[idx]; }
@@ -204,45 +208,52 @@ inline std::ostream &operator<<(std::ostream &out, const Mat &m){
     return out;
 }
 
+inline Mat operator+(const Mat &lhs, const Mat &rhs) { return Mat(lhs) += rhs; }
+inline Mat operator-(const Mat &lhs, const Mat &rhs) { return Mat(lhs) -= rhs; }
+inline Mat operator*(const Mat &lhs, const Mat &rhs) { return Mat(lhs) *= rhs; }
+inline Mat operator/(const Mat &lhs, const Mat &rhs) { return Mat(lhs) /= rhs; }
+
+inline Mat operator*(num_t s, const Mat &rhs) { return Mat(rhs) *= s; }
+inline Mat operator*(const Mat &lhs, num_t s) { return Mat(lhs) *= s; }
+inline Mat operator/(const Mat &lhs, num_t s) { return Mat(lhs) /= s; }
+
 namespace{
     inline Mat simple_transpose_(const Mat &m){
+        std::cout << "simple\n";
         auto cols = m.cols();
         auto rows = m.rows();
-        auto size = m.size();
-        auto raw = m.mat1d();
-        std::vector<num_t> transpose_vec(size, 0.0);
-        for(auto i = 0; i < rows; ++i)
-            for(auto j = 0; j < cols; ++j)
-                transpose_vec[get1D(cols, i, j)] = raw[get1D(rows, j, i)];
-        return Mat(transpose_vec, cols, rows); //Note: cols and rows are reversed
+        Mat re(0, cols, rows);
+        for(auto i = 0; i < cols; ++i)
+            for(auto j = 0; j < rows; ++j)
+                re(i, j) = m(j, i);
+        return re;
     }
     
     inline Mat tiling_transpose_(const Mat &m){
+        std::cout << "tiling\n";
         auto cols = m.cols();
         auto rows = m.rows();
-        auto size = m.size();
-        auto raw = m.mat1d();
-        std::vector<num_t> transpose_vec(size, 0.0);
+        Mat re(0, cols, rows);
         
-        for(auto i = 0; i < rows; i += block_size){
-            for(auto j = 0; j < cols; j += block_size){
-                int max_k = i + block_size < rows ? i + block_size : static_cast<int>(rows);
-                int max_l = j + block_size < cols ? j + block_size : static_cast<int>(cols);
+        for(auto i = 0; i < cols; i += BLOCK_SIZE){
+            for(auto j = 0; j < rows; j += BLOCK_SIZE){
+                int max_k = i + BLOCK_SIZE < cols ? i + BLOCK_SIZE : static_cast<int>(cols);
+                int max_l = j + BLOCK_SIZE < rows ? j + BLOCK_SIZE : static_cast<int>(rows);
                 for(auto k = i; k < max_k; ++k){
                     for(auto l = j; l < max_l; ++l){
-                        transpose_vec[get1D(cols, k, l)] = raw[get1D(rows, l, k)];
+                        re(k, l) = m(l, k);
                     }
                 }
             }
         }
-        return Mat(transpose_vec, cols, rows);
+        return re;
     }
     
-    inline void transpose4x4_SSE(float *A, float *B, const int lda, const int ldb){
-        __m128 row1 = _mm_load_ps(&A[0*lda]);
-        __m128 row2 = _mm_load_ps(&A[1*lda]);
-        __m128 row3 = _mm_load_ps(&A[2*lda]);
-        __m128 row4 = _mm_load_ps(&A[3*lda]);
+    inline void transpose4x4_SSE(const float *A, float *B, const int lda, const int ldb){
+        __m128 row1 = _mm_loadu_ps(&A[0*lda]);
+        __m128 row2 = _mm_loadu_ps(&A[1*lda]);
+        __m128 row3 = _mm_loadu_ps(&A[2*lda]);
+        __m128 row4 = _mm_loadu_ps(&A[3*lda]);
         _MM_TRANSPOSE4_PS(row1, row2, row3, row4);
         _mm_store_ps(&B[0*ldb], row1);
         _mm_store_ps(&B[1*ldb], row2);
@@ -252,70 +263,74 @@ namespace{
    
     
     inline Mat simd_transpose_(const Mat &m){
+        std::cout << "simd\n";
         auto cols = m.cols();
         auto rows = m.rows();
         auto size = m.size();
         auto raw = m.mat1d();
         
-        int lda = ROUND_UP(static_cast<int>(cols), block_size);
-        int ldb = ROUND_UP(static_cast<int>(rows), block_size);
+        int lda = ROUND_UP(static_cast<int>(cols), BLOCK_SIZE);
+        int ldb = ROUND_UP(static_cast<int>(rows), BLOCK_SIZE);
         
-        float *A = (float*)_mm_malloc(sizeof(float) * lda * ldb, 64);
-        if(!A) return tiling_transpose_(m);
+        //float *A = (float*)_mm_malloc(sizeof(float) * lda * ldb, 64);
+        //if(!A) return tiling_transpose_(m);
+        const float *A = m.mat1d().data();
         
         float *B = (float*)_mm_malloc(sizeof(float) * lda * lda, 64);
-        if(!B){ _mm_free(A); return tiling_transpose_(m); }
-            
+        //if(!B){ _mm_free(A); return tiling_transpose_(m); }
+        
+        /*
         for(auto i = 0; i < size; ++i)
             A[i] = raw[i];
+        */
         
-        for(int i = 0; i < rows; i+= block_size){
-            for(int j = 0; j < cols; j+= block_size){
-                int max_i2 = i + block_size < rows ? i + block_size : static_cast<int>(rows);
-                int max_j2 = j + block_size < cols ? j + block_size : static_cast<int>(cols);
-                for(int i2 = i; i2 < max_i2; i2 += 4){
-                    for(int j2 = j; j2 < max_j2; j2 += 4){
-                        transpose4x4_SSE(&A[i2 * lda + j2], &B[j2 * ldb + i2], lda, ldb);
+        for(int i = 0; i < cols; i += BLOCK_SIZE){
+            for(int j = 0; j < rows; j += BLOCK_SIZE){
+                int max_k = i + BLOCK_SIZE < cols ? i + BLOCK_SIZE : static_cast<int>(cols);
+                int max_l = j + BLOCK_SIZE < rows ? j + BLOCK_SIZE : static_cast<int>(rows);
+                for(int k = i; k < max_k; k += 4){
+                    for(int l = j; l < max_l; l += 4){
+                        transpose4x4_SSE(&A[k * lda + l], &B[l * ldb + k], lda, ldb);
                     }
                 }
             }
         }
         
         std::vector<float> transpose_vec(B, B + (cols * rows));
+        Mat re(transpose_vec, cols, rows);
         
-        if(A) _mm_free(A);
+        //if(A) _mm_free(A);
         if(B) _mm_free(B);
-        std::cout << "used fancy\n";
-        return Mat(transpose_vec, cols, rows);
+        return re;
     }
 }
 
 inline Mat transpose(const Mat &m){
 #if defined(GL_TYPES_FLOAT) || defined(GL_TYPES_DOUBLE)
-    return tiling_transpose_(m);
-#else
-    // Note: m.size() < block_size^2 shouldn't be hit due to the PARALLEL check
-    // Must be a square matrix because apparently I suck...not sure where I'm going wrong
-    if((m.rows() != m.cols()) || m.size() < PARALLEL || m.size() < (block_size * block_size))
+    if(m.cols() < BLOCK_SIZE && m.rows() < BLOCK_SIZE)
+        return simple_transpose_(m);
+    else
         return tiling_transpose_(m);
+#else
+    // tiling_transpose_() could be called on matrices smaller than BLOCK_SIZE, but no performance
+    // benefit
+    if(m.cols() < BLOCK_SIZE && m.rows() < BLOCK_SIZE)
+        return simple_transpose_(m);
+    // simd can only be called on square matrices, this shouldn't be the case but I've got a bug
+    // somewhere and no time to find it at the moment, so if it's not square just do a simple
+    // tiling transpose and move on
+    //else if((m.rows() != m.cols()) || m.size() < PARALLEL)
+    //else
+    //    return tiling_transpose_(m);
+    // Finally, if all conditions are met, use SSE instructions to significantly speed things along
     else
         return simd_transpose_(m);
 #endif
 }
 
-/*
-inline Mat identity() { return Mat(1); }
-inline Mat operator+(const Mat &lhs, const Mat &rhs) { return Mat(lhs) += rhs; }
-inline Mat operator-(const Mat &lhs, const Mat &rhs) { return Mat(lhs) -= rhs; }
-inline Mat operator*(const Mat &lhs, const Mat &rhs) { return Mat(lhs) *= rhs; }
-inline Mat operator/(const Mat &lhs, const Mat &rhs) { return Mat(lhs) /= rhs; }
-
-inline Mat operator*(num_t s, const Mat &rhs) { return Mat(rhs) *= s; }
-inline Mat operator*(const Mat &lhs, num_t s) { return Mat(lhs) *= s; }
-inline Mat operator/(const Mat &lhs, num_t s) { return Mat(lhs) /= s; }
-inline Mat transpose(const Mat &m) { return Mat(m).transpose(); }
-*/
-
+inline Mat identity(size_t dims = DEFAULT_ROWS) {
+    return Mat(1, dims, dims);
+}
 
 
 

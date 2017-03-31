@@ -339,6 +339,11 @@ public:
     bool operator==(const Vec4 &other) const { return v_ == other.v_; }
     bool operator!=(const Vec4 &other) const { return !(*this == other); }
     Vec4& operator+=(const Vec4 &rhs) { v_ += rhs.v_; return *this; }
+    /*
+    Vec4& operator+=(const Vec4 &rhs){
+        
+    }
+    */
     Vec4& operator-=(const Vec4 &rhs) { v_ -= rhs.v_; return *this; }
     Vec4& operator*=(const Vec4 &rhs) { v_ *= rhs.v_; return *this; }
     Vec4& operator/=(const Vec4 &rhs) { v_ /= rhs.v_; return *this; }
