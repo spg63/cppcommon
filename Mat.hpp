@@ -361,9 +361,9 @@ namespace{
         return tmp;
     }
     
-    inline void dot_mt_partial_(const Mat &lhs, const Mat &rhs, Mat &result, int slice){
-        int from = static_cast<int>((slice * lhs.rows()) / NUM_THREADS);
-        int to = static_cast<int>(((slice + 1) * lhs.rows()) / NUM_THREADS);
+    inline void dot_mt_partial_(const Mat &lhs, const Mat &rhs, Mat &result, int slice, unsigned num_threads){
+        int from = static_cast<int>((slice * lhs.rows()) / num_threads);
+        int to = static_cast<int>(((slice + 1) * lhs.rows()) / num_threads);
         
         for(auto i = from; i < to; ++i){
             for(auto j = 0; j < rhs.cols(); ++j){
@@ -375,14 +375,14 @@ namespace{
         }
     }
     
-    inline Mat dot_mt_(const Mat &lhs, const Mat &rhs){
+    inline Mat dot_mt_(const Mat &lhs, const Mat &rhs, unsigned num_threads = NUM_THREADS){
         Mat tmp(0, lhs.rows(), rhs.cols());
         std::vector<std::thread> threads;
         
-        for(auto i = 0; i < NUM_THREADS; ++i)
-            threads.emplace_back(std::thread(dot_mt_partial_, std::ref(lhs), std::ref(rhs), std::ref(tmp), i));
+        for(auto i = 0; i < num_threads; ++i)
+            threads.emplace_back(std::thread(dot_mt_partial_, std::ref(lhs), std::ref(rhs), std::ref(tmp), i, num_threads));
         
-        for(auto i = 0; i < NUM_THREADS; ++i)
+        for(auto i = 0; i < num_threads; ++i)
             threads[i].join();
         
         return tmp;
