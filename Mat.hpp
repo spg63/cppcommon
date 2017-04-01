@@ -7,10 +7,10 @@
 //
 
 #pragma once
-#include <array>
 #include <vector>
-#include "NumUtils.hpp"
 #include <x86intrin.h>
+#include <thread>
+#include "NumUtils.hpp"
 
 #define ROUND_UP(x, s) (((x)+((s)-1)) & -(s))
 #define ROUND_DOWN(x, s) ((x) & ~((s)-1))
@@ -30,10 +30,13 @@
 #endif
 
 namespace{
-    const size_t PARALLEL       {64 * 64}; // NOTE: This must remain larger than block_size^2
+    const size_t SIMD           {64 * 64}; // NOTE: This must remain larger than block_size^2
+    const size_t DOT_TRANSPOSE  {24 * 24};
+    const size_t DOT_THREADED   {36 * 36};
     const size_t DEFAULT_ROWS   {4};
     const size_t DEFAULT_COLS   {4};
     const int BLOCK_SIZE        {16};
+    const unsigned NUM_THREADS = std::thread::hardware_concurrency();
     size_t get1D(size_t num_cols, size_t row, size_t col){ return (num_cols * row) + col; }
 }
 
@@ -217,26 +220,6 @@ inline std::ostream &operator<<(std::ostream &out, const Mat &m){
     return out;
 }
 
-inline Mat operator+(const Mat &lhs, const Mat &rhs) { return Mat(lhs) += rhs; }
-inline Mat operator-(const Mat &lhs, const Mat &rhs) { return Mat(lhs) -= rhs; }
-inline Mat operator*(const Mat &lhs, const Mat &rhs) { return Mat(lhs) *= rhs; }
-inline Mat operator/(const Mat &lhs, const Mat &rhs) { return Mat(lhs) /= rhs; }
-
-inline Mat operator*(num_t s, const Mat &rhs) { return Mat(rhs) *= s; }
-inline Mat operator*(const Mat &lhs, num_t s) { return Mat(lhs) *= s; }
-inline Mat operator/(const Mat &lhs, num_t s) { return Mat(lhs) /= s; }
-
-inline Mat matrixCompMult(const Mat &lhs, const Mat &rhs){
-    if(lhs.rows() != rhs.rows() || lhs.cols() != rhs.cols())
-        throw std::runtime_error("element-wise multiplcation requires matrices of equal dimensions");
-    auto size = lhs.size();
-    Mat re = lhs;
-    for(auto i = 0; i < size; ++i)
-        re[i] *= rhs[i];
-    return re;
-}
-
-
 namespace{
     inline Mat simple_transpose_(const Mat &m){
         auto cols = m.cols();
@@ -278,7 +261,7 @@ namespace{
         _mm_store_ps(&B[2*ldb], row3);
         _mm_store_ps(&B[3*ldb], row4);
     }
-   
+    
     
     inline Mat simd_transpose_(const Mat &m){
         throw std::runtime_error("Not implemented");
@@ -298,9 +281,9 @@ namespace{
         //if(!B){ _mm_free(A); return tiling_transpose_(m); }
         
         /*
-        for(auto i = 0; i < size; ++i)
-            A[i] = raw[i];
-        */
+         for(auto i = 0; i < size; ++i)
+         A[i] = raw[i];
+         */
         
         for(int i = 0; i < cols; i += BLOCK_SIZE){
             for(int j = 0; j < rows; j += BLOCK_SIZE){
@@ -332,7 +315,7 @@ inline Mat transpose(const Mat &m){
 #else
     if(m.cols() < BLOCK_SIZE && m.rows() < BLOCK_SIZE)
         return simple_transpose_(m);
-    //else if((m.rows() != m.cols()) || m.size() < PARALLEL)
+    //else if((m.rows() != m.cols()) || m.size() < SIMD)
     else
         return tiling_transpose_(m);
     // Finally, if all conditions are met, use SSE instructions to significantly speed things along
@@ -341,14 +324,108 @@ inline Mat transpose(const Mat &m){
 #endif
 }
 
-inline Mat identity(size_t dims = DEFAULT_ROWS) {
-    return Mat(1, dims, dims);
+namespace{
+    inline Mat dot_(const Mat &lhs, const Mat &rhs){
+        auto lhs_r = lhs.rows();
+        auto rhs_r = rhs.rows();
+        auto rhs_c = rhs.cols();
+        
+        Mat tmp(0, lhs_r, rhs_c);
+        for(auto i = 0; i < lhs_r; ++i){
+            for(auto j = 0; j < rhs_c; ++j){
+                num_t sum = 0;
+                for(auto k = 0; k < rhs_r; ++k)
+                    sum += lhs(i, k) * rhs(k, j);
+                tmp(i, j) = sum;
+            }
+        }
+        return tmp;
+    }
+    
+    inline Mat dot_transpose_(const Mat &lhs, const Mat &rhs){
+        auto lhs_r = lhs.rows();
+        auto rhs_r = rhs.rows();
+        auto rhs_c = rhs.cols();
+        
+        auto rhs_t = transpose(rhs);
+        
+        Mat tmp(0, lhs_r, rhs_c);
+        for(auto i = 0; i < lhs_r; ++i){
+            for(auto j = 0; j < rhs_c; ++j){
+                num_t sum = 0;
+                for(auto k = 0; k < rhs_r; ++k)
+                    sum += lhs(i, k) * rhs_t(j, k);
+                tmp(i, j) = sum;
+            }
+        }
+        return tmp;
+    }
+    
+    inline void dot_mt_partial_(const Mat &lhs, const Mat &rhs, Mat &result, int slice){
+        int from = static_cast<int>((slice * lhs.rows()) / NUM_THREADS);
+        int to = static_cast<int>(((slice + 1) * lhs.rows()) / NUM_THREADS);
+        
+        for(auto i = from; i < to; ++i){
+            for(auto j = 0; j < rhs.cols(); ++j){
+                num_t sum = 0;
+                for(auto k = 0; k < rhs.rows(); ++k)
+                    sum += lhs(i, k) * rhs(k, j);
+                result(i, j) = sum;
+            }
+        }
+    }
+    
+    inline Mat dot_mt_(const Mat &lhs, const Mat &rhs){
+        Mat tmp(0, lhs.rows(), rhs.cols());
+        std::vector<std::thread> threads;
+        
+        for(auto i = 0; i < NUM_THREADS; ++i)
+            threads.emplace_back(std::thread(dot_mt_partial_, std::ref(lhs), std::ref(rhs), std::ref(tmp), i));
+        
+        for(auto i = 0; i < NUM_THREADS; ++i)
+            threads[i].join();
+        
+        return tmp;
+    }
+}
+
+inline Mat operator*(const Mat &lhs, const Mat &rhs) {
+    if(lhs.cols() != rhs.rows())
+        throw std::runtime_error("lhs cols != rhs rows");
+    
+    // If it's tiny, just multiply it out and move on
+    if(rhs.size() < DOT_TRANSPOSE)
+        return dot_(lhs, rhs);
+    // If it's medium size, take the time to transpose rhs and then multiply it out
+    else if(lhs.size() < DOT_THREADED || rhs.size() < DOT_THREADED)
+        return dot_transpose_(lhs, rhs);
+    // If the matrices are large, take the time to spin up some threads and multiply everything out
+    else
+        return dot_mt_(lhs, rhs);
+}
+
+inline Mat operator+(const Mat &lhs, const Mat &rhs) { return Mat(lhs) += rhs; }
+inline Mat operator-(const Mat &lhs, const Mat &rhs) { return Mat(lhs) -= rhs; }
+inline Mat operator/(const Mat &lhs, const Mat &rhs) { return Mat(lhs) /= rhs; }
+
+inline Mat operator*(num_t s, const Mat &rhs) { return Mat(rhs) *= s; }
+inline Mat operator*(const Mat &lhs, num_t s) { return Mat(lhs) *= s; }
+inline Mat operator/(const Mat &lhs, num_t s) { return Mat(lhs) /= s; }
+
+inline Mat matrixCompMult(const Mat &lhs, const Mat &rhs){
+    if(lhs.rows() != rhs.rows() || lhs.cols() != rhs.cols())
+        throw std::runtime_error("element-wise multiplcation requires matrices of equal dimensions");
+    auto size = lhs.size();
+    Mat re = lhs;
+    for(auto i = 0; i < size; ++i)
+        re[i] *= rhs[i];
+    return re;
 }
 
 
-
-
-
+inline Mat identity(size_t dims = DEFAULT_ROWS) {
+    return Mat(1, dims, dims);
+}
 
 
 
