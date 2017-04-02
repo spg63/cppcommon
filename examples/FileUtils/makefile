@@ -48,7 +48,3 @@ clean:
 	$(RM) copied_file.txt
 	$(RM_DIR) fromDir
 	$(RM_DIR) toDir
-
-
-    
-
