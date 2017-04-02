@@ -118,8 +118,7 @@ int main(){
     FileUtils::copyDir(baseFrom, baseTo);
     
     //----- fileSize
-
-
+    std::cout << "filesize\n";
     
     //----- appendToFile
     std::string fake_csv_str{"sean,grimes\nbob,dole"};

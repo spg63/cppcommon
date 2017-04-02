@@ -47,7 +47,4 @@ clean:
 	$(RM) moved_file.txt
 	$(RM) copied_file.txt
 	$(RM_DIR) fromDir
-
-
-    
-
+	$(RM_DIR) toDir
