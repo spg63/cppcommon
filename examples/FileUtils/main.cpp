@@ -2,7 +2,21 @@
 #include <iostream>
 #include <vector>
 
+const std::string TEST_FILE = "fake_file.txt";
+const std::string TEST_DIR = "fake_dir";
+const std::string TEST_TEXT = "nothing worthwhile here";
+
+void createFile(const std::string &path = ""){
+    std::ofstream f;
+    if(path != "")
+        f.open(path);
+    else
+        f.open(TEST_FILE);
+    f << TEST_TEXT;
+}
+
 int main(){
+    createFile();
     const std::string LICENSE = "../../LICENSE";
     //----- readFullFile
     auto license_str = FileUtils::readFullFile(LICENSE);
@@ -26,10 +40,10 @@ int main(){
         std::cout << file << '\n';
     std::cout << std::endl;
     
-    //----- mkdirWrapper
-    auto success = FileUtils::mkdirWrapper("test_dir");
-    if(success) std::cout << "mkdirWrapper successful for 'test_dir'\n";
-    else std::cout << "mkdirWrapper failed for 'test_dir'\n";
+    //----- makeDir
+    auto success = FileUtils::makeDir(TEST_DIR);
+    if(success) std::cout << "makeDir successful for " << TEST_DIR << "\n";
+    else std::cout << "makeDir failed for " << TEST_DIR << "\n";
     std::cout << std::endl;
 
     //----- getDirsInDir
@@ -39,34 +53,73 @@ int main(){
     std::cout << std::endl;
 
     //----- isFile
-    std::cout << "isFile (main.cpp): " << FileUtils::isFile("main.cpp") << "\n";
-    std::cout << "isFile (test_dir): " << FileUtils::isFile("test_dir") << "\n";
+    std::cout << "isFile (" << TEST_FILE << "): " << FileUtils::isFile(TEST_FILE) << "\n";
+    std::cout << "isFile (" << TEST_DIR << "): " << FileUtils::isFile(TEST_DIR) << "\n";
     std::cout << std::endl;
 
     //----- isDir
-    std::cout << "isDir (test_dir): " << FileUtils::isDir("test_dir") << "\n";
-    std::cout << "isDir (main.cpp): " << FileUtils::isDir("main.cpp") << "\n";
+    std::cout << "isDir (" << TEST_DIR << "): " << FileUtils::isDir(TEST_DIR) << "\n";
+    std::cout << "isDir (" << TEST_FILE << "): " << FileUtils::isDir(TEST_FILE) << "\n";
     std::cout << std::endl;
 
     //----- isExc
     std::cout << "isExc (out): " << FileUtils::isExc("out") << "\n";
-    std::cout << "isExc (main.cpp): " << FileUtils::isExc("main.cpp") << "\n";
+    std::cout << "isExc (" << TEST_FILE << "): " << FileUtils::isExc(TEST_FILE) << "\n";
     std::cout << std::endl;
 
     //----- fexists
-    std::cout << "fexists (main.cpp): " << FileUtils::fexists("main.cpp") << "\n";
+    std::cout << "fexists (" << TEST_FILE << "): " << FileUtils::fexists(TEST_FILE) << "\n";
     std::cout << "fexists (fake_file.txt): " << FileUtils::fexists("fake_file.txt") << "\n";
     std::cout << std::endl;
 
-    //----- endsWithString
-    std::string str{"this string"};
-    std::string end{"string"};
-    std::string not_end{"blah"};
-    std::cout << "endsWithString (this string)[string]: " << FileUtils::endsWithString(str, end) 
-              << "\n";
-    std::cout << "endsWithString (this string)[blah]: " << FileUtils::endsWithString(str, not_end)
-              << "\n";
+    //----- dexists
+    std::cout << "dexists (" << TEST_DIR << "): " << FileUtils::dexists(TEST_DIR) << "\n";
+    std::cout << "dexists (fake_dir): " << FileUtils::dexists("fake_dir") << "\n";
     std::cout << std::endl;
+
+    //----- deleteFile
+    std::cout << "fexists (" << TEST_FILE << "): " << FileUtils::fexists(TEST_FILE) << "\n";
+    FileUtils::deleteFile(TEST_FILE);
+    std::cout << "after deleteFile fexists(" << TEST_FILE << "): " << FileUtils::fexists(TEST_FILE) << "\n";
+    std::cout << std::endl;
+
+    //----- deleteDir
+
+    
+    //----- moveFile
+    createFile();
+    std::string mf = "moved_file.txt";
+    std::cout << "moveFile(" << TEST_FILE << ", " << mf << "): " << FileUtils::moveFile(TEST_FILE, mf) << "\n";
+    std::cout << "fexists(" << TEST_FILE << "): " << FileUtils::fexists(TEST_FILE) << "\n";
+    std::cout << "fexists(" << mf << "): " << FileUtils::fexists(mf) << "\n";
+    std::cout << std::endl;
+
+    //----- copyFile
+    createFile();
+    std::string cf = "copied_file.txt";
+    std::cout << "copyFile(" << TEST_FILE << ", " << cf << "): " << FileUtils::copyFile(TEST_FILE, cf) << "\n";
+    std::cout << "fexists(" << TEST_FILE << "): " << FileUtils::fexists(TEST_FILE) << "\n";
+    std::cout << "fexists(" << cf << "): " << FileUtils::fexists(cf) << "\n";
+    std::cout << "fileSize(" << TEST_FILE << "): " << FileUtils::fileSize(TEST_FILE) << "\n";
+    std::cout << "fileSize(" << cf << "): " << FileUtils::fileSize(cf) << "\n";
+    std::cout << std::endl;
+
+    //----- copyDir
+    std::string baseFrom = "fromDir";
+    std::string baseTo = "toDir";
+    FileUtils::makeDir(baseFrom);
+    FileUtils::makeDir(baseFrom + "/" + "sub1");
+    FileUtils::makeDir(baseFrom + "/" + "sub1" + "/" + "subsub1");
+    FileUtils::makeDir(baseFrom + "/" + "sub2");
+    createFile(baseFrom + "/" + "test1.file");
+    createFile(baseFrom + "/sub1/" + "test1.file");
+    createFile(baseFrom + "/sub1/subsub1/" + "test1.file");
+    createFile(baseFrom + "/sub2/" + "test1.file");
+    FileUtils::copyDir(baseFrom, baseTo);
+    
+    //----- fileSize
+
+
     
     //----- appendToFile
     std::string fake_csv_str{"sean,grimes\nbob,dole"};

@@ -34,6 +34,7 @@ namespace FileUtils{
     inline size_t lineCount(const std::string &filename);
     inline std::vector<std::string> getFilesInDir(const std::string &dirpath, const std::string &ext = "");
     inline std::vector<std::string> getDirsInDir(const std::string &path);
+    inline bool makeDir(const std::string &dirpath);
     inline bool isFile(const std::string &filepath);
     inline bool isDir(const std::string &dirpath);
     inline bool isExc(const std::string &filepath);
@@ -45,7 +46,6 @@ namespace FileUtils{
     inline bool moveDir(const std::string &curpath, const std::string &newpath);
     inline bool copyFile(const std::string &curpath, const std::string &newpath);
     inline bool copyDir(const std::string &curpath, const std::string &newpath);
-    inline bool makeDir(const std::string &dirpath);
     inline double fileSize(const std::string &filepath, const std::string &order = "b");
     inline std::vector<std::vector<std::string>> csvToMatrix(const std::string &filename);
     inline void appendToFile(const std::string &filepath, const std::string &msg);
@@ -160,43 +160,6 @@ std::vector<std::string> FileUtils::getFilesInDir(const std::string &dirPath, co
     return files;
 }
 
-inline bool FileUtils::copyDir(const std::string &curpath, const std::string &newpath){
-    if(!dexists(curpath) || !isDir(curpath))
-        return false;
-    
-    DIR *dir;
-    struct dirent *ent;
-    
-    if((dir = opendir(curpath.c_str())) == NULL)
-        throw std::runtime_error("Couldn't open " + curpath);
-    
-    // Step 1, create the directory at the new path
-    if(!makeDir(newpath))
-        throw std::runtime_error("Failed to create " + newpath);
-    
-    std::string this_dir_dot(".");
-    std::string previous_dir_dot("..");
-    
-    while((ent = readdir(dir)) != NULL){
-        std::string it(ent->d_name);
-        // Don't want to do anything if we're on a dot
-        if(this_dir_dot == it || previous_dir_dot == it)
-            continue;
-        std::string cur_item(curpath + "/" + it);
-        std::string new_item(newpath + "/" + it);
-        
-        if(isFile(cur_item))
-            copyFile(cur_item, new_item);
-        // Make the recursive call
-        else if(isDir(cur_item))
-            copyDir(cur_item, new_item);
-        else
-            throw std::runtime_error("Not sure what else we could have here...");
-    }
-    return dexists(newpath);
-}
-
-
 /**
     \brief Get a list of directories in directory
     @param path Path to the directory in question
@@ -263,6 +226,11 @@ bool FileUtils::isExc(const std::string& path){
 bool FileUtils::makeDir(const std::string &path){
     if(isDir(path))
         return true;
+    
+    // NOTE: I have no idea why flushing the stream is required, however without this flush only the root
+    // directory is created when creating multiple directories on macOS Sierra 10.12.3 (and possibly other
+    // systems)
+    std::cout << std::flush;
     mkdir(path.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
     return isDir(path);
 }
@@ -292,7 +260,7 @@ bool FileUtils::dexists(const std::string &path){
     @param filepath The path to the file
     @return True if the file does not exist at the end of the function
 */
-inline bool FileUtils::deleteFile(const std::string &filepath){
+bool FileUtils::deleteFile(const std::string &filepath){
     if(!fexists(filepath))
         return true;
     
@@ -306,7 +274,7 @@ inline bool FileUtils::deleteFile(const std::string &filepath){
     @param dirpath The path to the directory
     @return True if the directory does not exist at the end of the function
 */
-inline bool FileUtils::deleteDir(const std::string &dirpath){
+bool FileUtils::deleteDir(const std::string &dirpath){
 #warning not implemented
     if(!dexists(dirpath))
         return true;
@@ -319,7 +287,7 @@ inline bool FileUtils::deleteDir(const std::string &dirpath){
     @param newpath Where to move the file
     @return True if the file is successfully moved
 */
-inline bool FileUtils::moveFile(const std::string &curpath, const std::string &newpath){
+bool FileUtils::moveFile(const std::string &curpath, const std::string &newpath){
     if(!fexists(curpath) || !isFile(curpath))
         return false;
     
@@ -334,7 +302,7 @@ inline bool FileUtils::moveFile(const std::string &curpath, const std::string &n
     @param newpath Where to move the file
     @return True if the directory is successfully moved
 */
-inline bool FileUtils::moveDir(const std::string &curpath, const std::string &newpath){
+bool FileUtils::moveDir(const std::string &curpath, const std::string &newpath){
 #warning not implemented
     if(!dexists(curpath) || !isDir(curpath))
         return false;
@@ -349,7 +317,7 @@ inline bool FileUtils::moveDir(const std::string &curpath, const std::string &ne
     @param newpath Where to copy the file
     @return True if file is successfully copied
 */
-inline bool FileUtils::copyFile(const std::string &curpath, const std::string &newpath){
+bool FileUtils::copyFile(const std::string &curpath, const std::string &newpath){
     if(!fexists(curpath) || !isFile(curpath))
         return false;
     
@@ -368,6 +336,41 @@ inline bool FileUtils::copyFile(const std::string &curpath, const std::string &n
     @param newpath Where to copy the directory
     @return True if directory is successfully copied
 */
+bool FileUtils::copyDir(const std::string &curpath, const std::string &newpath){
+    if(!dexists(curpath) || !isDir(curpath))
+        return false;
+    
+    DIR *dir;
+    struct dirent *ent;
+    
+    if((dir = opendir(curpath.c_str())) == NULL)
+        throw std::runtime_error("Couldn't open " + curpath);
+    
+    // Step 1, create the directory at the new path
+    if(!makeDir(newpath))
+        throw std::runtime_error("Failed to create " + newpath);
+    
+    std::string this_dir_dot(".");
+    std::string previous_dir_dot("..");
+    
+    while((ent = readdir(dir)) != NULL){
+        std::string it(ent->d_name);
+        // Don't want to do anything if we're on a dot
+        if(this_dir_dot == it || previous_dir_dot == it)
+            continue;
+        std::string cur_item(curpath + "/" + it);
+        std::string new_item(newpath + "/" + it);
+        
+        if(isFile(cur_item))
+            copyFile(cur_item, new_item);
+        // Make the recursive call
+        else if(isDir(cur_item))
+            copyDir(cur_item, new_item);
+        else
+            throw std::runtime_error("Not sure what else we could have here...");
+    }
+    return dexists(newpath);
+}
 
 /**
     \brief Return size of file
@@ -381,7 +384,7 @@ inline bool FileUtils::copyFile(const std::string &curpath, const std::string &n
     \note This function returns a double, unlike standard size functions, to allow for partial
     values when getting size back in KB, MB, or GB
 */
-inline double FileUtils::fileSize(const std::string &filepath, const std::string &order){
+double FileUtils::fileSize(const std::string &filepath, const std::string &order){
     if(!fexists(filepath))
         throw std::runtime_error("Cannot find " + filepath);
     double sz;
