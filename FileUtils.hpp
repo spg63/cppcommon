@@ -38,7 +38,15 @@ namespace FileUtils{
     inline bool isDir(const std::string &dirpath);
     inline bool isExc(const std::string &filepath);
     inline bool fexists(const std::string &filepath);
-    inline bool mkdirWrapper(const std::string &dirpath);
+    inline bool dexists(const std::string &dirpath);
+    inline bool deleteFile(const std::string &filepath);
+    inline bool deleteDir(const std::string &dirpath);
+    inline bool moveFile(const std::string &curpath, const std::string &newpath);
+    inline bool moveDir(const std::string &curpath, const std::string &newpath);
+    inline bool copyFile(const std::string &curpath, const std::string &newpath);
+    inline bool copyDir(const std::string &curpath, const std::string &newpath);
+    inline bool makeDir(const std::string &dirpath);
+    inline double fileSize(const std::string &filepath, const std::string &order = "b");
     inline std::vector<std::vector<std::string>> csvToMatrix(const std::string &filename);
     inline void appendToFile(const std::string &filepath, const std::string &msg);
 }
@@ -128,32 +136,66 @@ std::vector<std::string> FileUtils::getFilesInDir(const std::string &dirPath, co
         
     DIR *dir;
     struct dirent *ent;
+    
+    if((dir = opendir(dirPath.c_str())) == NULL)
+        throw std::runtime_error("Couldn't open " + dirPath);
         
-    if ((dir = opendir(dirPath.c_str())) != NULL) {
-        // print all the files and directories within directory
-        while ((ent = readdir(dir)) != NULL) {
-            if(isFile(std::string(dirPath + "/" + ent->d_name))){
-                // Only add files with the requested file extension
-                if(ext != ""){
-                    // Note: This can easily be fooled
-                    std::string f_name(ent->d_name);
-                    if(StrUtils::endsWithString(f_name, ext))
-                        files.push_back(f_name);
-                }
-                // Don't care what the file extension is
-                else{
-                    files.emplace_back(ent->d_name);
-                }
+    // print all the files and directories within directory
+    while ((ent = readdir(dir)) != NULL) {
+        if(isFile(std::string(dirPath + "/" + ent->d_name))){
+            // Only add files with the requested file extension
+            if(ext != ""){
+                // Note: This can easily be fooled
+                std::string f_name(ent->d_name);
+                if(StrUtils::endsWithString(f_name, ext))
+                    files.push_back(f_name);
             }
+            // Don't care what the file extension is
+            else
+                files.emplace_back(ent->d_name);
         }
-        closedir(dir);
     }
-    else {
-        // could not open directory
-        throw std::runtime_error("Could not open dir " + dirPath);
-    }
+    closedir(dir);
+    
     return files;
 }
+
+inline bool FileUtils::copyDir(const std::string &curpath, const std::string &newpath){
+    if(!dexists(curpath) || !isDir(curpath))
+        return false;
+    
+    DIR *dir;
+    struct dirent *ent;
+    
+    if((dir = opendir(curpath.c_str())) == NULL)
+        throw std::runtime_error("Couldn't open " + curpath);
+    
+    // Step 1, create the directory at the new path
+    if(!makeDir(newpath))
+        throw std::runtime_error("Failed to create " + newpath);
+    
+    std::string this_dir_dot(".");
+    std::string previous_dir_dot("..");
+    
+    while((ent = readdir(dir)) != NULL){
+        std::string it(ent->d_name);
+        // Don't want to do anything if we're on a dot
+        if(this_dir_dot == it || previous_dir_dot == it)
+            continue;
+        std::string cur_item(curpath + "/" + it);
+        std::string new_item(newpath + "/" + it);
+        
+        if(isFile(cur_item))
+            copyFile(cur_item, new_item);
+        // Make the recursive call
+        else if(isDir(cur_item))
+            copyDir(cur_item, new_item);
+        else
+            throw std::runtime_error("Not sure what else we could have here...");
+    }
+    return dexists(newpath);
+}
+
 
 /**
     \brief Get a list of directories in directory
@@ -164,12 +206,15 @@ std::vector<std::string> FileUtils::getDirsInDir(const std::string &path){
     std::vector<std::string> dirs;
     DIR *dir;
     struct dirent *ent;
-    if((dir = opendir(path.c_str())) != NULL){
-        while((ent = readdir(dir)) != NULL){
-            if(isDir(std::string(path + "/" + ent->d_name)))
-                dirs.emplace_back(ent->d_name);
-        }
+    
+    if((dir = opendir(path.c_str())) == NULL)
+        throw std::runtime_error("Couldn't open " + path);
+    
+    while((ent = readdir(dir)) != NULL){
+        if(isDir(std::string(path + "/" + ent->d_name)))
+            dirs.emplace_back(ent->d_name);
     }
+
     return dirs;
 }
 
@@ -186,7 +231,7 @@ std::vector<std::string> FileUtils::getDirsInDir(const std::string &path){
 bool FileUtils::isFile(const std::string &path){
     struct stat buffer;
     stat(path.c_str(), &buffer);
-    return S_ISREG(buffer.st_mode);
+    return fexists(path) && S_ISREG(buffer.st_mode);
 }
 
 /**
@@ -207,9 +252,7 @@ bool FileUtils::isDir(const std::string &path){
 */
 bool FileUtils::isExc(const std::string& path){
     struct stat buffer;
-    if(stat(path.c_str(), &buffer) == 0 && buffer.st_mode & S_IXUSR)
-        return true;
-    return false;
+    return (stat(path.c_str(), &buffer) == 0 && buffer.st_mode & S_IXUSR);
 }
 
 /**
@@ -217,7 +260,7 @@ bool FileUtils::isExc(const std::string& path){
     @param path The path to where the directory should be created
     @return True if the directory is created successfully
 */
-bool FileUtils::mkdirWrapper(const std::string &path){
+bool FileUtils::makeDir(const std::string &path){
     if(isDir(path))
         return true;
     mkdir(path.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
@@ -231,8 +274,132 @@ bool FileUtils::mkdirWrapper(const std::string &path){
 */
 bool FileUtils::fexists(const std::string &path){
     struct stat buffer;
-    return (stat(path.c_str(), &buffer) == 0);
+    return (stat(path.c_str(), &buffer) == 0 && S_ISREG(buffer.st_mode));
 }
+
+/**
+ \brief Determine if a directory exists
+ @param path Path to the directory in question
+ @return True if directory exists, false otherwise
+*/
+bool FileUtils::dexists(const std::string &path){
+    struct stat buffer;
+    return (stat(path.c_str(), &buffer) == 0 && S_ISDIR(buffer.st_mode));
+}
+
+/**
+    \brief Delete a file
+    @param filepath The path to the file
+    @return True if the file does not exist at the end of the function
+*/
+inline bool FileUtils::deleteFile(const std::string &filepath){
+    if(!fexists(filepath))
+        return true;
+    
+    std::remove(filepath.c_str());
+    
+    return !fexists(filepath);
+}
+
+/**
+    \brief Delete a directory and contents
+    @param dirpath The path to the directory
+    @return True if the directory does not exist at the end of the function
+*/
+inline bool FileUtils::deleteDir(const std::string &dirpath){
+#warning not implemented
+    if(!dexists(dirpath))
+        return true;
+    return false;
+}
+
+/**
+    \brief Move a file 
+    @param curpath The current path to the file
+    @param newpath Where to move the file
+    @return True if the file is successfully moved
+*/
+inline bool FileUtils::moveFile(const std::string &curpath, const std::string &newpath){
+    if(!fexists(curpath) || !isFile(curpath))
+        return false;
+    
+    std::rename(curpath.c_str(), newpath.c_str());
+    
+    return !fexists(curpath) && fexists(newpath);
+}
+
+/**
+    \brief Move a directory
+    @param curpath The current path to the directory
+    @param newpath Where to move the file
+    @return True if the directory is successfully moved
+*/
+inline bool FileUtils::moveDir(const std::string &curpath, const std::string &newpath){
+#warning not implemented
+    if(!dexists(curpath) || !isDir(curpath))
+        return false;
+ 
+    return false;
+    
+}
+
+/**
+    \brief Copy a file
+    @param curpath The current path to the file
+    @param newpath Where to copy the file
+    @return True if file is successfully copied
+*/
+inline bool FileUtils::copyFile(const std::string &curpath, const std::string &newpath){
+    if(!fexists(curpath) || !isFile(curpath))
+        return false;
+    
+    {
+        std::ifstream src(curpath, std::ios::binary);
+        std::ofstream dst(newpath, std::ios::binary);
+        dst << src.rdbuf();
+    }
+
+    return fexists(curpath) && fexists(newpath);
+}
+
+/**
+    \brief Copy a directory
+    @param curpath The current path to the directory
+    @param newpath Where to copy the directory
+    @return True if directory is successfully copied
+*/
+
+/**
+    \brief Return size of file
+    \details Optional second parameter to select the return value\n 
+    bytes = "b"\n
+    kilobytes = "kb"\n
+    megabytes = "mb"\n
+    gigabytes = "gb"
+    @param filepath The path to the file
+    @return The file size if the file exists in bytes (or in specified value, if used)
+    \note This function returns a double, unlike standard size functions, to allow for partial
+    values when getting size back in KB, MB, or GB
+*/
+inline double FileUtils::fileSize(const std::string &filepath, const std::string &order){
+    if(!fexists(filepath))
+        throw std::runtime_error("Cannot find " + filepath);
+    double sz;
+    {
+        std::ifstream f(filepath, std::ifstream::ate | std::ifstream::binary);
+        sz = static_cast<double>(f.tellg());
+    }
+    
+    if("kb" == order)
+        return sz / 1000;
+    else if("mb" == order)
+        return sz / 1000000;
+    else if("gb" == order)
+        return sz / 1000000000;
+    else
+        return sz;
+}
+
 
 /**
     \brief Parse a csv file into a 2D vector

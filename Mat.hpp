@@ -397,7 +397,7 @@ inline Mat operator*(const Mat &lhs, const Mat &rhs) {
     if(rhs.size() < DOT_TRANSPOSE)
         return dot_(lhs, rhs);
     // If it's medium size, take the time to transpose rhs and then multiply it out
-    else if(lhs.size() < DOT_THREADED || rhs.size() < DOT_THREADED)
+    else if(lhs.size() < DOT_THREADED && rhs.size() < DOT_THREADED)
         return dot_transpose_(lhs, rhs);
     // If the matrices are large, take the time to spin up some threads and multiply everything out
     else
