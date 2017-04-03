@@ -314,6 +314,9 @@ bool FileUtils::deleteDir(const std::string &dirpath){
     if((dir = opendir(dirpath.c_str())) == NULL)
         throw std::runtime_error("Couldn't open " + dirpath + " for deletion");
     
+    if(isDir(dirpath) && dirEmpty(dirpath))
+        std::remove(dirpath.c_str());
+    
     while((ent = readdir(dir)) != NULL){
         std::string it(ent->d_name);
         
@@ -337,6 +340,17 @@ bool FileUtils::deleteDir(const std::string &dirpath){
     
     return !dexists(dirpath);
 }
+/*
+dexists(movedDir): 1
+Recursive call on: movedDir/sub1
+Recursive call on: movedDir/sub1/subsub1
+Deleting: movedDir/sub1/subsub1/test1.file
+Deleting: movedDir/sub1/test1.file
+Recursive call on: movedDir/sub2
+Deleting: movedDir/sub2/test1.file
+Deleting: movedDir/test1.file
+dexists(movedDir): 1
+*/
 
 /**
     \brief Move a file 
