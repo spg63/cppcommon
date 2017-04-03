@@ -274,7 +274,10 @@ bool FileUtils::dirEmpty(const std::string &dirpath){
         throw std::runtime_error("Couldn't open " + dirpath);
     
     while((ent = readdir(dir)) != NULL){
-        std::string it(dirpath + "/" + ent->d_name);
+        std::string item(ent->d_name);
+        if(THIS_DIR_DOT == item || PREV_DIR_DOT == item)
+            continue;
+        std::string it(dirpath + "/" + item);
         if(isFile(it) || isDir(it))
             return false;
     }
