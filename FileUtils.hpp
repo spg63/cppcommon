@@ -49,6 +49,9 @@ namespace FileUtils{
     inline double fileSize(const std::string &filepath, const std::string &order = "b");
     inline std::vector<std::vector<std::string>> csvToMatrix(const std::string &filename);
     inline void appendToFile(const std::string &filepath, const std::string &msg);
+    
+    const std::string THIS_DIR_DOT{"."};
+    const std::string PREV_DIR_DOT{".."};
 }
 
 /**
@@ -104,10 +107,9 @@ size_t FileUtils::lineCount(const std::string &fileName){
     const char *fname = fileName.c_str();
     static const auto BUF_SIZE = 16*1024;
     int fd = open(fname, O_RDONLY);
-    if(fd == -1){
+    if(fd == -1)
         throw std::runtime_error("Couldn't open " + std::string(fname));
-    }
-        
+    
     char buf[BUF_SIZE + 1];
     size_t lines = 0;
     
@@ -232,7 +234,7 @@ bool FileUtils::makeDir(const std::string &path){
     // systems)
     std::cout << std::flush;
     mkdir(path.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
-    return isDir(path);
+    return dexists(path) && isDir(path);
 }
 
 /**
@@ -275,10 +277,32 @@ bool FileUtils::deleteFile(const std::string &filepath){
     @return True if the directory does not exist at the end of the function
 */
 bool FileUtils::deleteDir(const std::string &dirpath){
-#warning not implemented
     if(!dexists(dirpath))
         return true;
-    return false;
+    
+    DIR *dir;
+    struct dirent *ent;
+    
+    if((dir = opendir(dirpath.c_str())) == NULL)
+        throw std::runtime_error("Couldn't open " + dirpath + " for deletion");
+    
+    while((ent = readdir(dir)) != NULL){
+        std::string it(ent->d_name);
+        
+        if(THIS_DIR_DOT == it || PREV_DIR_DOT == it)
+            continue;
+        
+        std::string relative_it(dirpath + "/" + it);
+        
+        if(isFile(relative_it))
+            std::remove(relative_it.c_str());
+        else if(isDir(relative_it))
+            deleteDir(relative_it);
+        else
+            throw std::runtime_error("Not sure what else we could have here...");
+    }
+    
+    return !dexists(dirpath);
 }
 
 /**
@@ -303,12 +327,36 @@ bool FileUtils::moveFile(const std::string &curpath, const std::string &newpath)
     @return True if the directory is successfully moved
 */
 bool FileUtils::moveDir(const std::string &curpath, const std::string &newpath){
-#warning not implemented
     if(!dexists(curpath) || !isDir(curpath))
         return false;
- 
-    return false;
     
+    DIR *dir;
+    struct dirent *ent;
+    
+    if((dir = opendir(curpath.c_str())) == NULL)
+        throw std::runtime_error("Couldn't open " + curpath);
+    
+    if(!makeDir(newpath))
+        throw std::runtime_error("Failed to create " + newpath);
+    
+    while((ent = readdir(dir)) != NULL){
+        std::string it(ent->d_name);
+        
+        if(THIS_DIR_DOT == it || PREV_DIR_DOT == it)
+            continue;
+        
+        std::string cur_item(curpath + "/" + it);
+        std::string new_item(newpath + "/" + it);
+        
+        if(isFile(cur_item))
+            moveFile(cur_item, new_item);
+        else if(isDir(cur_item))
+            moveDir(cur_item, new_item);
+        else
+            throw std::runtime_error("Not sure what else we could have here...");
+    }
+    
+    return dexists(newpath);
 }
 
 /**
@@ -350,13 +398,10 @@ bool FileUtils::copyDir(const std::string &curpath, const std::string &newpath){
     if(!makeDir(newpath))
         throw std::runtime_error("Failed to create " + newpath);
     
-    std::string this_dir_dot(".");
-    std::string previous_dir_dot("..");
-    
     while((ent = readdir(dir)) != NULL){
         std::string it(ent->d_name);
         // Don't want to do anything if we're on a dot
-        if(this_dir_dot == it || previous_dir_dot == it)
+        if(THIS_DIR_DOT == it || PREV_DIR_DOT == it)
             continue;
         std::string cur_item(curpath + "/" + it);
         std::string new_item(newpath + "/" + it);
