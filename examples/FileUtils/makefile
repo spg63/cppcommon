@@ -40,11 +40,4 @@ obj/%.o: %.cpp
 
 clean:
 	$(RM_DIR) $(OBJ_DIR)
-	$(RM_DIR) fake_dir
 	$(RM) $(EXC)
-	$(RM) fake.csv
-	$(RM) fake_file.txt
-	$(RM) moved_file.txt
-	$(RM) copied_file.txt
-	$(RM_DIR) fromDir
-	$(RM_DIR) toDir
