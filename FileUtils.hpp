@@ -40,6 +40,7 @@ namespace FileUtils{
     inline bool isExc(const std::string &filepath);
     inline bool fexists(const std::string &filepath);
     inline bool dexists(const std::string &dirpath);
+    inline bool dirEmpty(const std::string &dirpath);
     inline bool deleteFile(const std::string &filepath);
     inline bool deleteDir(const std::string &dirpath);
     inline bool moveFile(const std::string &curpath, const std::string &newpath);
@@ -258,6 +259,30 @@ bool FileUtils::dexists(const std::string &path){
 }
 
 /**
+    \breif Determine if a directory contains any files
+    @param dirpath The path to the directory in question
+    @return True if the directory is empty
+*/
+bool FileUtils::dirEmpty(const std::string &dirpath){
+    if(!dexists(dirpath))
+        throw std::runtime_error("Can't find " + dirpath);
+    
+    DIR *dir;
+    struct dirent *ent;
+    
+    if((dir = opendir(dirpath.c_str())) == NULL)
+        throw std::runtime_error("Couldn't open " + dirpath);
+    
+    while((ent = readdir(dir)) != NULL){
+        std::string it(dirpath + "/" + ent->d_name);
+        if(isFile(it) || isDir(it))
+            return false;
+    }
+    closedir(dir);
+    return true;
+}
+
+/**
     \brief Delete a file
     @param filepath The path to the file
     @return True if the file does not exist at the end of the function
@@ -301,6 +326,7 @@ bool FileUtils::deleteDir(const std::string &dirpath){
         else
             throw std::runtime_error("Not sure what else we could have here...");
     }
+    closedir(dir);
     
     return !dexists(dirpath);
 }
@@ -355,6 +381,7 @@ bool FileUtils::moveDir(const std::string &curpath, const std::string &newpath){
         else
             throw std::runtime_error("Not sure what else we could have here...");
     }
+    closedir(dir);
     
     return dexists(newpath);
 }
@@ -414,6 +441,7 @@ bool FileUtils::copyDir(const std::string &curpath, const std::string &newpath){
         else
             throw std::runtime_error("Not sure what else we could have here...");
     }
+    closedir(dir);
     return dexists(newpath);
 }
 
