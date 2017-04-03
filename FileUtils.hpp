@@ -314,29 +314,33 @@ bool FileUtils::deleteDir(const std::string &dirpath){
     if((dir = opendir(dirpath.c_str())) == NULL)
         throw std::runtime_error("Couldn't open " + dirpath + " for deletion");
     
-    if(isDir(dirpath) && dirEmpty(dirpath))
-        std::remove(dirpath.c_str());
-    
     while((ent = readdir(dir)) != NULL){
         std::string it(ent->d_name);
         
+        // Be very careful not to traverse vertically out of the directory
         if(THIS_DIR_DOT == it || PREV_DIR_DOT == it)
             continue;
         
         std::string relative_it(dirpath + "/" + it);
         
         if(isDir(relative_it)){
+            // This really shouldn't ever be the case, since we couldn't be in this loop
             if(dirEmpty(relative_it))
                 std::remove(relative_it.c_str());
+            // Make the recursive call
             else
                 deleteDir(relative_it);
         }
+        // Remove all the files from the directory
         else if(isFile(relative_it))
             std::remove(relative_it.c_str());
         else
             throw std::runtime_error("Not sure what else we could have here...");
     }
     closedir(dir);
+    
+    if(isDir(dirpath) && dirEmpty(dirpath))
+        std::remove(dirpath.c_str());
     
     return !dexists(dirpath);
 }
