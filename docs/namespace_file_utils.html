@@ -59,7 +59,8 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">FileUtils Namespace Reference</div>  </div>
 </div><!--header-->
@@ -85,6 +86,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a9d05c9c25547907005ffea5848726e13"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_file_utils.html#a9d05c9c25547907005ffea5848726e13">getDirsInDir</a> (const std::string &amp;path)</td></tr>
 <tr class="memdesc:a9d05c9c25547907005ffea5848726e13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list of directories in directory.  <a href="#a9d05c9c25547907005ffea5848726e13">More...</a><br /></td></tr>
 <tr class="separator:a9d05c9c25547907005ffea5848726e13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7dbf9b09fa94b27424c68ad97c5b4f9a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_file_utils.html#a7dbf9b09fa94b27424c68ad97c5b4f9a">makeDir</a> (const std::string &amp;dirpath)</td></tr>
+<tr class="memdesc:a7dbf9b09fa94b27424c68ad97c5b4f9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper to create a directory.  <a href="#a7dbf9b09fa94b27424c68ad97c5b4f9a">More...</a><br /></td></tr>
+<tr class="separator:a7dbf9b09fa94b27424c68ad97c5b4f9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f945f0a254281bce5297721388be492"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_file_utils.html#a0f945f0a254281bce5297721388be492">isFile</a> (const std::string &amp;filepath)</td></tr>
 <tr class="memdesc:a0f945f0a254281bce5297721388be492"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine if resource at path is a file.  <a href="#a0f945f0a254281bce5297721388be492">More...</a><br /></td></tr>
 <tr class="separator:a0f945f0a254281bce5297721388be492"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -97,15 +101,47 @@ Functions</h2></td></tr>
 <tr class="memitem:aba7f9b4137d411931b7f0f9dc95bd02e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_file_utils.html#aba7f9b4137d411931b7f0f9dc95bd02e">fexists</a> (const std::string &amp;filepath)</td></tr>
 <tr class="memdesc:aba7f9b4137d411931b7f0f9dc95bd02e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine if a file exists.  <a href="#aba7f9b4137d411931b7f0f9dc95bd02e">More...</a><br /></td></tr>
 <tr class="separator:aba7f9b4137d411931b7f0f9dc95bd02e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67ba01c62f8fb6be1b210a41c9b70859"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_file_utils.html#a67ba01c62f8fb6be1b210a41c9b70859">mkdirWrapper</a> (const std::string &amp;dirpath)</td></tr>
-<tr class="memdesc:a67ba01c62f8fb6be1b210a41c9b70859"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper to create a directory.  <a href="#a67ba01c62f8fb6be1b210a41c9b70859">More...</a><br /></td></tr>
-<tr class="separator:a67ba01c62f8fb6be1b210a41c9b70859"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9335ab9678cbb39b413df7acae8bc373"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_file_utils.html#a9335ab9678cbb39b413df7acae8bc373">dexists</a> (const std::string &amp;dirpath)</td></tr>
+<tr class="memdesc:a9335ab9678cbb39b413df7acae8bc373"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine if a directory exists.  <a href="#a9335ab9678cbb39b413df7acae8bc373">More...</a><br /></td></tr>
+<tr class="separator:a9335ab9678cbb39b413df7acae8bc373"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc4343b2effa0864897e3cb08c2f6660"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_file_utils.html#abc4343b2effa0864897e3cb08c2f6660">dirEmpty</a> (const std::string &amp;dirpath)</td></tr>
+<tr class="separator:abc4343b2effa0864897e3cb08c2f6660"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9a19d0e7e990ba445a98733d4b9bd65"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_file_utils.html#ac9a19d0e7e990ba445a98733d4b9bd65">deleteFile</a> (const std::string &amp;filepath)</td></tr>
+<tr class="memdesc:ac9a19d0e7e990ba445a98733d4b9bd65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a file.  <a href="#ac9a19d0e7e990ba445a98733d4b9bd65">More...</a><br /></td></tr>
+<tr class="separator:ac9a19d0e7e990ba445a98733d4b9bd65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b2c14678ff3fd2144ddfa53702aec79"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_file_utils.html#a5b2c14678ff3fd2144ddfa53702aec79">deleteDir</a> (const std::string &amp;dirpath)</td></tr>
+<tr class="memdesc:a5b2c14678ff3fd2144ddfa53702aec79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a directory and contents.  <a href="#a5b2c14678ff3fd2144ddfa53702aec79">More...</a><br /></td></tr>
+<tr class="separator:a5b2c14678ff3fd2144ddfa53702aec79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac63c2f21092a6d9a465a9fdb3cd1a618"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_file_utils.html#ac63c2f21092a6d9a465a9fdb3cd1a618">moveFile</a> (const std::string &amp;curpath, const std::string &amp;newpath)</td></tr>
+<tr class="memdesc:ac63c2f21092a6d9a465a9fdb3cd1a618"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move a file.  <a href="#ac63c2f21092a6d9a465a9fdb3cd1a618">More...</a><br /></td></tr>
+<tr class="separator:ac63c2f21092a6d9a465a9fdb3cd1a618"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95fc257511e6f0801b0e586828955d39"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_file_utils.html#a95fc257511e6f0801b0e586828955d39">moveDir</a> (const std::string &amp;curpath, const std::string &amp;newpath)</td></tr>
+<tr class="memdesc:a95fc257511e6f0801b0e586828955d39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move a directory.  <a href="#a95fc257511e6f0801b0e586828955d39">More...</a><br /></td></tr>
+<tr class="separator:a95fc257511e6f0801b0e586828955d39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a793003397a89008cf42371e13b92e216"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_file_utils.html#a793003397a89008cf42371e13b92e216">copyFile</a> (const std::string &amp;curpath, const std::string &amp;newpath)</td></tr>
+<tr class="memdesc:a793003397a89008cf42371e13b92e216"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy a file.  <a href="#a793003397a89008cf42371e13b92e216">More...</a><br /></td></tr>
+<tr class="separator:a793003397a89008cf42371e13b92e216"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06b8f75161b7935306fa06bd91068803"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_file_utils.html#a06b8f75161b7935306fa06bd91068803">copyDir</a> (const std::string &amp;curpath, const std::string &amp;newpath)</td></tr>
+<tr class="memdesc:a06b8f75161b7935306fa06bd91068803"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy a directory.  <a href="#a06b8f75161b7935306fa06bd91068803">More...</a><br /></td></tr>
+<tr class="separator:a06b8f75161b7935306fa06bd91068803"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54858a2d0df9a9ded19878fb6c651761"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_file_utils.html#a54858a2d0df9a9ded19878fb6c651761">fileSize</a> (const std::string &amp;filepath, const std::string &amp;order=&quot;b&quot;)</td></tr>
+<tr class="memdesc:a54858a2d0df9a9ded19878fb6c651761"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return size of file.  <a href="#a54858a2d0df9a9ded19878fb6c651761">More...</a><br /></td></tr>
+<tr class="separator:a54858a2d0df9a9ded19878fb6c651761"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abc04b6839bde0cc69fda6829ab9d3581"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; std::string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_file_utils.html#abc04b6839bde0cc69fda6829ab9d3581">csvToMatrix</a> (const std::string &amp;filename)</td></tr>
 <tr class="memdesc:abc04b6839bde0cc69fda6829ab9d3581"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse a csv file into a 2D vector.  <a href="#abc04b6839bde0cc69fda6829ab9d3581">More...</a><br /></td></tr>
 <tr class="separator:abc04b6839bde0cc69fda6829ab9d3581"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae364ccc4ebb3a3f37727368f2ad41562"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_file_utils.html#ae364ccc4ebb3a3f37727368f2ad41562">appendToFile</a> (const std::string &amp;filepath, const std::string &amp;msg)</td></tr>
 <tr class="memdesc:ae364ccc4ebb3a3f37727368f2ad41562"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper to append text to a file.  <a href="#ae364ccc4ebb3a3f37727368f2ad41562">More...</a><br /></td></tr>
 <tr class="separator:ae364ccc4ebb3a3f37727368f2ad41562"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a82ff8d67746807011e023f0a57351b7b"><td class="memItemLeft" align="right" valign="top"><a id="a82ff8d67746807011e023f0a57351b7b"></a>
+const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>THIS_DIR_DOT</b> {&quot;.&quot;}</td></tr>
+<tr class="separator:a82ff8d67746807011e023f0a57351b7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7570f649653545e768eb21315932e87e"><td class="memItemLeft" align="right" valign="top"><a id="a7570f649653545e768eb21315932e87e"></a>
+const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>PREV_DIR_DOT</b> {&quot;..&quot;}</td></tr>
+<tr class="separator:a7570f649653545e768eb21315932e87e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Utility functions related to the file system. </p>
@@ -157,6 +193,98 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a06b8f75161b7935306fa06bd91068803"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06b8f75161b7935306fa06bd91068803">&#9670;&nbsp;</a></span>copyDir()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FileUtils::copyDir </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>curpath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>newpath</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Copy a directory. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">curpath</td><td>The current path to the directory </td></tr>
+    <tr><td class="paramname">newpath</td><td>Where to copy the directory </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if directory is successfully copied </dd></dl>
+
+</div>
+</div>
+<a id="a793003397a89008cf42371e13b92e216"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a793003397a89008cf42371e13b92e216">&#9670;&nbsp;</a></span>copyFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FileUtils::copyFile </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>curpath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>newpath</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Copy a file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">curpath</td><td>The current path to the file </td></tr>
+    <tr><td class="paramname">newpath</td><td>Where to copy the file </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if file is successfully copied </dd></dl>
+
+</div>
+</div>
 <a id="abc04b6839bde0cc69fda6829ab9d3581"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abc04b6839bde0cc69fda6829ab9d3581">&#9670;&nbsp;</a></span>csvToMatrix()</h2>
 
@@ -192,6 +320,144 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a5b2c14678ff3fd2144ddfa53702aec79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b2c14678ff3fd2144ddfa53702aec79">&#9670;&nbsp;</a></span>deleteDir()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FileUtils::deleteDir </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>dirpath</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Delete a directory and contents. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dirpath</td><td>The path to the directory </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the directory does not exist at the end of the function </dd></dl>
+
+</div>
+</div>
+<a id="ac9a19d0e7e990ba445a98733d4b9bd65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9a19d0e7e990ba445a98733d4b9bd65">&#9670;&nbsp;</a></span>deleteFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FileUtils::deleteFile </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>filepath</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Delete a file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filepath</td><td>The path to the file </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the file does not exist at the end of the function </dd></dl>
+
+</div>
+</div>
+<a id="a9335ab9678cbb39b413df7acae8bc373"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9335ab9678cbb39b413df7acae8bc373">&#9670;&nbsp;</a></span>dexists()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FileUtils::dexists </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Determine if a directory exists. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>Path to the directory in question </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if directory exists, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="abc4343b2effa0864897e3cb08c2f6660"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc4343b2effa0864897e3cb08c2f6660">&#9670;&nbsp;</a></span>dirEmpty()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FileUtils::dirEmpty </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>dirpath</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Determine if a directory contains any files </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dirpath</td><td>The path to the directory in question </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the directory is empty </dd></dl>
+
+</div>
+</div>
 <a id="aba7f9b4137d411931b7f0f9dc95bd02e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aba7f9b4137d411931b7f0f9dc95bd02e">&#9670;&nbsp;</a></span>fexists()</h2>
 
@@ -224,6 +490,56 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if file exists, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="a54858a2d0df9a9ded19878fb6c651761"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54858a2d0df9a9ded19878fb6c651761">&#9670;&nbsp;</a></span>fileSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double FileUtils::fileSize </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>filepath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>order</em> = <code>&quot;b&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return size of file. </p>
+<p>Optional second parameter to select the return value<br />
+ bytes = "b"<br />
+kilobytes = "kb"<br />
+megabytes = "mb"<br />
+gigabytes = "gb" </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filepath</td><td>The path to the file </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The file size if the file exists in bytes (or in specified value, if used) </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function returns a double, unlike standard size functions, to allow for partial values when getting size back in KB, MB, or GB </dd></dl>
 
 </div>
 </div>
@@ -448,8 +764,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a67ba01c62f8fb6be1b210a41c9b70859"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a67ba01c62f8fb6be1b210a41c9b70859">&#9670;&nbsp;</a></span>mkdirWrapper()</h2>
+<a id="a7dbf9b09fa94b27424c68ad97c5b4f9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7dbf9b09fa94b27424c68ad97c5b4f9a">&#9670;&nbsp;</a></span>makeDir()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -458,7 +774,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool FileUtils::mkdirWrapper </td>
+          <td class="memname">bool FileUtils::makeDir </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>path</em></td><td>)</td>
@@ -480,6 +796,98 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the directory is created successfully </dd></dl>
+
+</div>
+</div>
+<a id="a95fc257511e6f0801b0e586828955d39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95fc257511e6f0801b0e586828955d39">&#9670;&nbsp;</a></span>moveDir()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FileUtils::moveDir </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>curpath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>newpath</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Move a directory. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">curpath</td><td>The current path to the directory </td></tr>
+    <tr><td class="paramname">newpath</td><td>Where to move the file </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the directory is successfully moved </dd></dl>
+
+</div>
+</div>
+<a id="ac63c2f21092a6d9a465a9fdb3cd1a618"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac63c2f21092a6d9a465a9fdb3cd1a618">&#9670;&nbsp;</a></span>moveFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FileUtils::moveFile </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>curpath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>newpath</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Move a file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">curpath</td><td>The current path to the file </td></tr>
+    <tr><td class="paramname">newpath</td><td>Where to move the file </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the file is successfully moved </dd></dl>
 
 </div>
 </div>

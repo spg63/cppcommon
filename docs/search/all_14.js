@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['x',['x',['../class_vec3.html#ae500951df8f1bfa31e603e20e118909a',1,'Vec3::x(T x)'],['../class_vec3.html#aa0c360c4d0f99d61709283abbd6deaf9',1,'Vec3::x() const']]]
+  ['_7eclhelper',['~CLHelper',['../class_c_l_helper.html#af59ace7f61ae7cee62301968cc8b9917',1,'CLHelper']]],
+  ['_7etsqueue',['~TSQueue',['../class_t_s_queue.html#a0c7d1c76058d6755789b70e201ff7ae0',1,'TSQueue']]]
 ];
