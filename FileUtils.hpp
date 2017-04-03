@@ -322,14 +322,14 @@ bool FileUtils::deleteDir(const std::string &dirpath){
         
         std::string relative_it(dirpath + "/" + it);
         
-        if(isFile(relative_it))
-            std::remove(relative_it.c_str());
-        else if(isDir(relative_it)){
+        if(isDir(relative_it)){
             if(dirEmpty(relative_it))
                 std::remove(relative_it.c_str());
             else
                 deleteDir(relative_it);
         }
+        else if(isFile(relative_it))
+            std::remove(relative_it.c_str());
         else
             throw std::runtime_error("Not sure what else we could have here...");
     }
