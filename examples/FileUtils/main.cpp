@@ -87,25 +87,25 @@ int main(){
     std::cout << "after deleteFile fexists(" << TEST_FILE << "): " << FileUtils::fexists(TEST_FILE) << "\n";
     std::cout << std::endl;
     
-    //----- moveFile
+    //----- movef
     createFile();
     std::string mf = "moved_file.txt";
-    std::cout << "moveFile(" << TEST_FILE << ", " << mf << "): " << FileUtils::moveFile(TEST_FILE, mf) << "\n";
+    std::cout << "movef(" << TEST_FILE << ", " << mf << "): " << FileUtils::movef(TEST_FILE, mf) << "\n";
     std::cout << "fexists(" << TEST_FILE << "): " << FileUtils::fexists(TEST_FILE) << "\n";
     std::cout << "fexists(" << mf << "): " << FileUtils::fexists(mf) << "\n";
     std::cout << std::endl;
 
-    //----- copyFile
+    //----- copyf
     createFile();
     std::string cf = "copied_file.txt";
-    std::cout << "copyFile(" << TEST_FILE << ", " << cf << "): " << FileUtils::copyFile(TEST_FILE, cf) << "\n";
+    std::cout << "copyf(" << TEST_FILE << ", " << cf << "): " << FileUtils::copyf(TEST_FILE, cf) << "\n";
     std::cout << "fexists(" << TEST_FILE << "): " << FileUtils::fexists(TEST_FILE) << "\n";
     std::cout << "fexists(" << cf << "): " << FileUtils::fexists(cf) << "\n";
-    std::cout << "fileSize(" << TEST_FILE << "): " << FileUtils::fileSize(TEST_FILE) << "\n";
-    std::cout << "fileSize(" << cf << "): " << FileUtils::fileSize(cf) << "\n";
+    std::cout << "fsize(" << TEST_FILE << "): " << FileUtils::fsize(TEST_FILE) << "\n";
+    std::cout << "fsize(" << cf << "): " << FileUtils::fsize(cf) << "\n";
     std::cout << std::endl;
 
-    //----- copyDir
+    //----- copyd
     std::string baseFrom = "fromDir";
     std::string baseTo = "toDir";
     FileUtils::makeDir(baseFrom);
@@ -116,26 +116,26 @@ int main(){
     createFile(baseFrom + "/sub1/" + "test1.file");
     createFile(baseFrom + "/sub1/subsub1/" + "test1.file");
     createFile(baseFrom + "/sub2/" + "test1.file");
-    FileUtils::copyDir(baseFrom, baseTo);
+    FileUtils::copyd(baseFrom, baseTo);
 
-    //----- moveDir
+    //----- moved
     std::string moveFrom = "toDir";
     std::string movedTo = "movedToDir";
     std::cout << "Moving \"toDir\" to \"movedToDir\"\n";
     std::cout << "dexists(" << moveFrom << "): " << FileUtils::dexists(moveFrom) << "\n";
     std::cout << "dexists(" << movedTo << "): " << FileUtils::dexists(movedTo) << "\n";
-    FileUtils::moveDir(moveFrom, movedTo);
+    FileUtils::moved(moveFrom, movedTo);
     std::cout << "dexists(" << moveFrom << "): " << FileUtils::dexists(moveFrom) << "\n";
     std::cout << "dexists(" << movedTo << "): " << FileUtils::dexists(movedTo) << "\n";
     std::cout << std::endl;
 
-    //----- dirEmpty
+    //----- dempty
     std::string anotherDir = "anotherDir";
     std::cout << "Creating empty directory " << anotherDir << "\n";
     FileUtils::makeDir(anotherDir);
     std::cout << "dexists(" << anotherDir << "): " << FileUtils::dexists(anotherDir) << "\n";
-    std::cout << "dirEmpty(" << anotherDir << "): " << FileUtils::dirEmpty(anotherDir) << "\n";
-    std::cout << "dirEmpty(" << movedTo << "): " << FileUtils::dirEmpty(movedTo) << "\n";
+    std::cout << "dempty(" << anotherDir << "): " << FileUtils::dempty(anotherDir) << "\n";
+    std::cout << "dempty(" << movedTo << "): " << FileUtils::dempty(movedTo) << "\n";
     std::cout << std::endl;
 
     //----- deleteDir
@@ -145,9 +145,9 @@ int main(){
     std::cout << "dexists(" << movedTo << "): " << FileUtils::dexists(movedTo) << "\n";
     std::cout << std::endl;
     
-    //----- fileSize
-    std::cout << "fileSize(main.cpp) [bytes]: " << FileUtils::fileSize("main.cpp") << " B\n";
-    std::cout << "fileSize(main.cpp) [kilobytes]: " << FileUtils::fileSize("main.cpp", "kb") << " KB" << std::endl;
+    //----- fsize
+    std::cout << "fsize(main.cpp) [bytes]: " << FileUtils::fsize("main.cpp") << " B\n";
+    std::cout << "fsize(main.cpp) [kilobytes]: " << FileUtils::fsize("main.cpp", "kb") << " KB" << std::endl;
     
     //----- appendToFile
     std::string fake_csv_str{"sean,grimes\nbob,dole"};
