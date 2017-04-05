@@ -1,5 +1,5 @@
 //
-//  FileUtils.hpp
+//  FSUtils.hpp
 //  cppcommon
 //
 //  Created by Sean Grimes on 12/7/15.
@@ -27,7 +27,7 @@
     \author Sean Grimes, spg63@cs.drexel.edu
     \date 12-7-15
 */
-namespace FileUtils{
+namespace FSUtils{
     inline std::string readFullFile(const std::string &filename);
     inline std::vector<std::string> readLineByLine(const std::string &filename);
     inline size_t lineCount(const std::string &filename);
@@ -60,7 +60,7 @@ namespace FileUtils{
     @param fileName File name if file is in cwd, else path to file
     @return The full file as a string
 */
-std::string FileUtils::readFullFile(const std::string &fileName){
+std::string FSUtils::readFullFile(const std::string &fileName){
     std::ifstream ifs(fileName, std::ios::in | std::ios::binary | std::ios::ate);
     if(!ifs.is_open())
         throw std::runtime_error("Couldn't open " + fileName);
@@ -80,7 +80,7 @@ std::string FileUtils::readFullFile(const std::string &fileName){
     @param fileName File name if file is in cwd, else path to file
     @return A vector of strings which represent the lines of the file
 */
-std::vector<std::string> FileUtils::readLineByLine(const std::string &fileName){
+std::vector<std::string> FSUtils::readLineByLine(const std::string &fileName){
     std::string line;
     std::ifstream in(fileName);
     if(!in.is_open())
@@ -103,7 +103,7 @@ std::vector<std::string> FileUtils::readLineByLine(const std::string &fileName){
     @param fileName File name if file is in cwd, else path to file
     @return Number of lines in the file
 */
-size_t FileUtils::lineCount(const std::string &fileName){
+size_t FSUtils::lineCount(const std::string &fileName){
     const char *fname = fileName.c_str();
     static const auto BUF_SIZE = 16*1024;
     int fd = open(fname, O_RDONLY);
@@ -133,7 +133,7 @@ size_t FileUtils::lineCount(const std::string &fileName){
     @param ext Optional file extension, will only return files meeting passed file extension
     @return A vector of strings representing the files in the directory
 */
-std::vector<std::string> FileUtils::getFilesInDir(const std::string &dirPath, const std::string &ext){
+std::vector<std::string> FSUtils::getFilesInDir(const std::string &dirPath, const std::string &ext){
         std::vector<std::string> files;
         
     DIR *dir;
@@ -168,7 +168,7 @@ std::vector<std::string> FileUtils::getFilesInDir(const std::string &dirPath, co
     @param path Path to the directory in question
     @return A vector of strings representing the directories in the directory
 */
-std::vector<std::string> FileUtils::getDirsInDir(const std::string &path){
+std::vector<std::string> FSUtils::getDirsInDir(const std::string &path){
     std::vector<std::string> dirs;
     DIR *dir;
     struct dirent *ent;
@@ -197,7 +197,7 @@ std::vector<std::string> FileUtils::getDirsInDir(const std::string &path){
     @param path Path to the resource
     @return True if the resource is a file, false otherwise
 */
-bool FileUtils::isFile(const std::string &path){
+bool FSUtils::isFile(const std::string &path){
     struct stat buffer;
     stat(path.c_str(), &buffer);
     return fexists(path) && S_ISREG(buffer.st_mode);
@@ -208,7 +208,7 @@ bool FileUtils::isFile(const std::string &path){
     @param path Path to the resource
     @return True if the resource is a directory, false otherwise
 */
-bool FileUtils::isDir(const std::string &path){
+bool FSUtils::isDir(const std::string &path){
     struct stat buffer;
     stat(path.c_str(), &buffer);
     return S_ISDIR(buffer.st_mode);
@@ -219,7 +219,7 @@ bool FileUtils::isDir(const std::string &path){
     @param path Path to the resource
     @return True if the resource is executable, false otherwise
 */
-bool FileUtils::isExc(const std::string& path){
+bool FSUtils::isExc(const std::string& path){
     struct stat buffer;
     return (stat(path.c_str(), &buffer) == 0 && buffer.st_mode & S_IXUSR);
 }
@@ -229,7 +229,7 @@ bool FileUtils::isExc(const std::string& path){
     @param path The path to where the directory should be created
     @return True if the directory exists at the end of this function
 */
-bool FileUtils::makeDir(const std::string &path){
+bool FSUtils::makeDir(const std::string &path){
     if(dexists(path))
         return true;
     
@@ -246,7 +246,7 @@ bool FileUtils::makeDir(const std::string &path){
     @param path Path to the file in question
     @return True if file exists, false otherwise
 */
-bool FileUtils::fexists(const std::string &path){
+bool FSUtils::fexists(const std::string &path){
     struct stat buffer;
     return (stat(path.c_str(), &buffer) == 0 && S_ISREG(buffer.st_mode));
 }
@@ -256,7 +256,7 @@ bool FileUtils::fexists(const std::string &path){
  @param path Path to the directory in question
  @return True if directory exists, false otherwise
 */
-bool FileUtils::dexists(const std::string &path){
+bool FSUtils::dexists(const std::string &path){
     struct stat buffer;
     return (stat(path.c_str(), &buffer) == 0 && S_ISDIR(buffer.st_mode));
 }
@@ -267,7 +267,7 @@ bool FileUtils::dexists(const std::string &path){
     @param dirpath The path to the directory in question
     @return True if the directory is empty
 */
-bool FileUtils::dempty(const std::string &dirpath){
+bool FSUtils::dempty(const std::string &dirpath){
     if(!dexists(dirpath))
         throw std::runtime_error("Can't find " + dirpath);
     
@@ -294,7 +294,7 @@ bool FileUtils::dempty(const std::string &dirpath){
     @param filepath The path to the file
     @return True if the file does not exist at the end of the function
 */
-bool FileUtils::deleteFile(const std::string &filepath){
+bool FSUtils::deleteFile(const std::string &filepath){
     if(!fexists(filepath))
         return true;
     
@@ -308,7 +308,7 @@ bool FileUtils::deleteFile(const std::string &filepath){
     @param dirpath The path to the directory
     @return True if the directory does not exist at the end of the function
 */
-bool FileUtils::deleteDir(const std::string &dirpath){
+bool FSUtils::deleteDir(const std::string &dirpath){
     if(!dexists(dirpath))
         return true;
     
@@ -355,7 +355,7 @@ bool FileUtils::deleteDir(const std::string &dirpath){
     @param newpath Where to move the file
     @return True if the file is successfully moved
 */
-bool FileUtils::movef(const std::string &curpath, const std::string &newpath){
+bool FSUtils::movef(const std::string &curpath, const std::string &newpath){
     if(!fexists(curpath) || !isFile(curpath))
         return false;
     
@@ -370,7 +370,7 @@ bool FileUtils::movef(const std::string &curpath, const std::string &newpath){
     @param newpath Where to move the file
     @return True if the directory is successfully moved
 */
-bool FileUtils::moved(const std::string &curpath, const std::string &newpath){
+bool FSUtils::moved(const std::string &curpath, const std::string &newpath){
     if(!dexists(curpath) || !isDir(curpath))
         return false;
     
@@ -413,7 +413,7 @@ bool FileUtils::moved(const std::string &curpath, const std::string &newpath){
     @param newpath Where to copy the file
     @return True if file is successfully copied
 */
-bool FileUtils::copyf(const std::string &curpath, const std::string &newpath){
+bool FSUtils::copyf(const std::string &curpath, const std::string &newpath){
     if(!fexists(curpath) || !isFile(curpath))
         return false;
     
@@ -432,7 +432,7 @@ bool FileUtils::copyf(const std::string &curpath, const std::string &newpath){
     @param newpath Where to copy the directory
     @return True if directory is successfully copied
 */
-bool FileUtils::copyd(const std::string &curpath, const std::string &newpath){
+bool FSUtils::copyd(const std::string &curpath, const std::string &newpath){
     if(!dexists(curpath) || !isDir(curpath))
         return false;
     
@@ -478,7 +478,7 @@ bool FileUtils::copyd(const std::string &curpath, const std::string &newpath){
     \note This function returns a double, unlike standard size functions, to allow for partial
     values when getting size back in KB, MB, or GB
 */
-double FileUtils::fsize(const std::string &filepath, const std::string &order){
+double FSUtils::fsize(const std::string &filepath, const std::string &order){
     if(!fexists(filepath))
         throw std::runtime_error("Cannot find " + filepath);
     double sz;
@@ -505,7 +505,7 @@ double FileUtils::fsize(const std::string &filepath, const std::string &order){
     @param fileName File name if file is in cwd, else path to file
     @return A vector<vector<string>> that represents rows/column of the csv file
 */
-std::vector<std::vector<std::string>> FileUtils::csvToMatrix(const std::string& fileName){
+std::vector<std::vector<std::string>> FSUtils::csvToMatrix(const std::string& fileName){
     auto file_lines = readLineByLine(fileName);
     std::vector<std::vector<std::string>> matrix;
     for(auto &&line : file_lines)
@@ -518,7 +518,7 @@ std::vector<std::vector<std::string>> FileUtils::csvToMatrix(const std::string& 
     @param fileName File name if file is in cwd, else path to file
     @param msg The text to append to the file
 */
-void FileUtils::appendToFile(const std::string &fileName, const std::string &msg){
+void FSUtils::appendToFile(const std::string &fileName, const std::string &msg){
     std::ofstream out(fileName, std::ofstream::app);
     out << msg << "\n";
 }
