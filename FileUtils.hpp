@@ -227,10 +227,10 @@ bool FileUtils::isExc(const std::string& path){
 /**
     \brief Wrapper to create a directory
     @param path The path to where the directory should be created
-    @return True if the directory is created successfully
+    @return True if the directory exists at the end of this function
 */
 bool FileUtils::makeDir(const std::string &path){
-    if(isDir(path))
+    if(dexists(path))
         return true;
     
     // NOTE: I have no idea why flushing the stream is required, however without this flush only the root
