@@ -167,6 +167,9 @@ int main(){
             std::cout << "csv item: " << item << '\n';
     std::cout << std::endl;
 
+    //----- getWorkingDir
+    std::cout << "current working directory: " << FSUtils::getWorkingDir() << std::endl;
+
     // Clean up all the files/dirs that were created
     FSUtils::deleteFile(fake_csv_file);
     FSUtils::deleteFile(mf);

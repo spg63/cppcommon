@@ -20,10 +20,15 @@
 #include <unistd.h>
 #include <mutex>
 #include <fstream>
+#include <cstdlib>
+#include <climits>
 #include "StrUtils.hpp"
 
 /**
     \brief Utility functions related to the file system
+    \details FSUtils completely includes the older FileUtils namespace. In order to continue to use
+    code written for the FileUtils namespace you need to define DEPRECATED_NAMESPACE at compile time.
+    The definition will enable FileUtils by namespace FileUtils = FSUtils.
     \author Sean Grimes, spg63@cs.drexel.edu
     \date 12-7-15
 */
@@ -49,10 +54,16 @@ namespace FSUtils{
     inline double fsize(const std::string &filepath, const std::string &order = "b");
     inline std::vector<std::vector<std::string>> csvToMatrix(const std::string &filename);
     inline void appendToFile(const std::string &filepath, const std::string &msg);
+    inline std::string getWorkingDir();
     
     const std::string THIS_DIR_DOT{"."};
     const std::string PREV_DIR_DOT{".."};
 }
+
+#if defined(DEPRECATED_NAMESPACE)
+    namespace FileUtils = FSUtils;
+#endif
+
 
 /**
     \brief Read full file into a single string
@@ -522,3 +533,18 @@ void FSUtils::appendToFile(const std::string &fileName, const std::string &msg){
     std::ofstream out(fileName, std::ofstream::app);
     out << msg << "\n";
 }
+
+std::string FSUtils::getWorkingDir(){
+    size_t MAX_LEN = SHRT_MAX;
+    std::string std_path = "";
+    
+    {
+        char *path = new char[MAX_LEN];
+        getcwd(path, MAX_LEN - 1);
+        if(path != nullptr) std_path = path;
+        delete[] path;
+    }
+    
+    return std_path;
+}
+

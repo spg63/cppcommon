@@ -10,6 +10,7 @@
 #include <vector>
 #include <x86intrin.h>
 #include <thread>
+#include <future>
 #include "NumUtils.hpp"
 
 #define ROUND_UP(x, s) (((x)+((s)-1)) & -(s))
@@ -364,29 +365,35 @@ namespace{
     inline void dot_mt_partial_(const Mat &lhs, const Mat &rhs, Mat &result, int slice, unsigned num_threads){
         int from = static_cast<int>((slice * lhs.rows()) / num_threads);
         int to = static_cast<int>(((slice + 1) * lhs.rows()) / num_threads);
+        auto rhs_c = rhs.cols();
+        auto rhs_r = rhs.rows();
         
         for(auto i = from; i < to; ++i){
-            for(auto j = 0; j < rhs.cols(); ++j){
+            for(auto j = 0; j < rhs_c; ++j){
                 num_t sum = 0;
-                for(auto k = 0; k < rhs.rows(); ++k)
+                for(auto k = 0; k < rhs_r; ++k)
                     sum += lhs(i, k) * rhs(k, j);
                 result(i, j) = sum;
             }
         }
     }
-    
+   
     inline Mat dot_mt_(const Mat &lhs, const Mat &rhs, unsigned num_threads = NUM_THREADS){
         Mat tmp(0, lhs.rows(), rhs.cols());
-        std::vector<std::thread> threads;
         
-        for(auto i = 0; i < num_threads; ++i)
-            threads.emplace_back(std::thread(dot_mt_partial_, std::ref(lhs), std::ref(rhs), std::ref(tmp), i, num_threads));
-        
-        for(auto i = 0; i < num_threads; ++i)
-            threads[i].join();
+        {
+            std::vector<std::future<void>> futures;
+            for(auto i = 0; i < num_threads; ++i)
+                futures.emplace_back(std::async(std::launch::async, dot_mt_partial_, std::ref(lhs), std::ref(rhs), std::ref(tmp), i, num_threads));
+            
+            for(auto i = 0; i < num_threads; ++i)
+                futures[i].get();
+        }
         
         return tmp;
     }
+
+    
 }
 
 inline Mat operator*(const Mat &lhs, const Mat &rhs) {
