@@ -534,6 +534,11 @@ void FSUtils::appendToFile(const std::string &fileName, const std::string &msg){
     out << msg << "\n";
 }
 
+/**
+    \brief Get the current working directory
+    \details Will fail on path lengths > than SHRT_MAX
+    @return A string representing the current working directory, blank string on failure
+*/
 std::string FSUtils::getWorkingDir(){
     size_t MAX_LEN = SHRT_MAX;
     std::string std_path = "";

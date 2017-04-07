@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['fileutils',['FileUtils',['../namespace_file_utils.html',1,'']]]
+  ['fsutils',['FSUtils',['../namespace_f_s_utils.html',1,'']]]
 ];

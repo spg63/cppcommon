@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['linecount',['lineCount',['../namespace_file_utils.html#a5b7b5a090febd34e5bfd598494bf31a6',1,'FileUtils']]]
+  ['linecount',['lineCount',['../namespace_f_s_utils.html#a49eaf865750a6cdd48b8d5b7a1b9ff9e',1,'FSUtils']]]
 ];
