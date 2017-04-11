@@ -82,10 +82,10 @@ Functions</h2></td></tr>
 <tr class="memitem:aa1064916361b94d9fefd196389a735ed"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_num_utils.html#aa1064916361b94d9fefd196389a735ed">minValueVec</a> (const std::vector&lt; T &gt; &amp;vec)</td></tr>
 <tr class="memdesc:aa1064916361b94d9fefd196389a735ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the min element in vector  <a href="#aa1064916361b94d9fefd196389a735ed">More...</a><br /></td></tr>
 <tr class="separator:aa1064916361b94d9fefd196389a735ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad67c1243acf1977a715cdb307f73869d"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:ad67c1243acf1977a715cdb307f73869d"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_num_utils.html#ad67c1243acf1977a715cdb307f73869d">minMaxInVec</a> (const std::vector&lt; T &gt; &amp;vec, size_t begin, size_t end)</td></tr>
-<tr class="memdesc:ad67c1243acf1977a715cdb307f73869d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the min and max element in a vector between range.  <a href="#ad67c1243acf1977a715cdb307f73869d">More...</a><br /></td></tr>
-<tr class="separator:ad67c1243acf1977a715cdb307f73869d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2917b3d2037e0d2cf2c61384607e28d"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:aa2917b3d2037e0d2cf2c61384607e28d"><td class="memTemplItemLeft" align="right" valign="top">std::pair&lt; T, T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_num_utils.html#aa2917b3d2037e0d2cf2c61384607e28d">minMaxInVec</a> (const std::vector&lt; T &gt; &amp;vec)</td></tr>
+<tr class="memdesc:aa2917b3d2037e0d2cf2c61384607e28d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the min and max element in a vector between range.  <a href="#aa2917b3d2037e0d2cf2c61384607e28d">More...</a><br /></td></tr>
+<tr class="separator:aa2917b3d2037e0d2cf2c61384607e28d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42cce4154610080e2416ec6d7b001d9a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_num_utils.html#a42cce4154610080e2416ec6d7b001d9a">strToInt</a> (const std::string &amp;s)</td></tr>
 <tr class="memdesc:a42cce4154610080e2416ec6d7b001d9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert std::string to int.  <a href="#a42cce4154610080e2416ec6d7b001d9a">More...</a><br /></td></tr>
 <tr class="separator:a42cce4154610080e2416ec6d7b001d9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -305,8 +305,8 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
-<a id="ad67c1243acf1977a715cdb307f73869d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad67c1243acf1977a715cdb307f73869d">&#9670;&nbsp;</a></span>minMaxInVec()</h2>
+<a id="aa2917b3d2037e0d2cf2c61384607e28d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2917b3d2037e0d2cf2c61384607e28d">&#9670;&nbsp;</a></span>minMaxInVec()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -317,27 +317,11 @@ template&lt;class T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt; T &gt; NumUtils::minMaxInVec </td>
+          <td class="memname">std::pair&lt; T, T &gt; NumUtils::minMaxInVec </td>
           <td>(</td>
           <td class="paramtype">const std::vector&lt; T &gt; &amp;&#160;</td>
-          <td class="paramname"><em>vec</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>vec</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>begin</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>end</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -351,14 +335,11 @@ template&lt;class T &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">vec</td><td>The vector to be searched </td></tr>
-    <tr><td class="paramname">begin</td><td>The start of the search range, inclusive </td></tr>
-    <tr><td class="paramname">end</td><td>The end of the search range, inclusive </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>: A vector of type 'T', holding 2 entries: <br />
- M[0] - holds the min value of vec <br />
- M[1] - holds the max value of vec </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>: A std::pair&lt;T, T&gt; of the min and max element pair.first - holds the min value of vec <br />
+ pair.second - holds the max value of vec </dd></dl>
 
 </div>
 </div>

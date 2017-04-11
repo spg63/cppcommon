@@ -124,9 +124,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a79de6ea13e758f6fcfdbbbb9c9176fff"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_f_s_utils.html#a79de6ea13e758f6fcfdbbbb9c9176fff">copyd</a> (const std::string &amp;curpath, const std::string &amp;newpath)</td></tr>
 <tr class="memdesc:a79de6ea13e758f6fcfdbbbb9c9176fff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy a directory.  <a href="#a79de6ea13e758f6fcfdbbbb9c9176fff">More...</a><br /></td></tr>
 <tr class="separator:a79de6ea13e758f6fcfdbbbb9c9176fff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4c1322f70a2d91dd27b2d6dbc5a48fbb"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_f_s_utils.html#a4c1322f70a2d91dd27b2d6dbc5a48fbb">fsize</a> (const std::string &amp;filepath, const std::string &amp;order=&quot;b&quot;)</td></tr>
-<tr class="memdesc:a4c1322f70a2d91dd27b2d6dbc5a48fbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return size of file.  <a href="#a4c1322f70a2d91dd27b2d6dbc5a48fbb">More...</a><br /></td></tr>
-<tr class="separator:a4c1322f70a2d91dd27b2d6dbc5a48fbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11fb84f3df7114bebe23e1ae90acb84e"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_f_s_utils.html#a11fb84f3df7114bebe23e1ae90acb84e">fsize</a> (const std::string &amp;filepath, const std::string &amp;order=&quot;b&quot;)</td></tr>
+<tr class="memdesc:a11fb84f3df7114bebe23e1ae90acb84e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return size of file.  <a href="#a11fb84f3df7114bebe23e1ae90acb84e">More...</a><br /></td></tr>
+<tr class="separator:a11fb84f3df7114bebe23e1ae90acb84e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac74dc502b92fdaa50acd9008a1574990"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; std::string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_f_s_utils.html#ac74dc502b92fdaa50acd9008a1574990">csvToMatrix</a> (const std::string &amp;filename)</td></tr>
 <tr class="memdesc:ac74dc502b92fdaa50acd9008a1574990"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse a csv file into a 2D vector.  <a href="#ac74dc502b92fdaa50acd9008a1574990">More...</a><br /></td></tr>
 <tr class="separator:ac74dc502b92fdaa50acd9008a1574990"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -136,6 +136,15 @@ Functions</h2></td></tr>
 <tr class="memitem:ad41d52b2c29b5bf32849cc9e7c33de53"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_f_s_utils.html#ad41d52b2c29b5bf32849cc9e7c33de53">getWorkingDir</a> ()</td></tr>
 <tr class="memdesc:ad41d52b2c29b5bf32849cc9e7c33de53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current working directory.  <a href="#ad41d52b2c29b5bf32849cc9e7c33de53">More...</a><br /></td></tr>
 <tr class="separator:ad41d52b2c29b5bf32849cc9e7c33de53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e961a02f7ca058de520fa0a2c4e09f4"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_f_s_utils.html#a0e961a02f7ca058de520fa0a2c4e09f4">getPermissions</a> (const std::string &amp;path)</td></tr>
+<tr class="memdesc:a0e961a02f7ca058de520fa0a2c4e09f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the permissions (user group global) of specified file or directory.  <a href="#a0e961a02f7ca058de520fa0a2c4e09f4">More...</a><br /></td></tr>
+<tr class="separator:a0e961a02f7ca058de520fa0a2c4e09f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade404bb2355d9f6eac11f97536ab0d90"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_f_s_utils.html#ade404bb2355d9f6eac11f97536ab0d90">getModifiedTime</a> (const std::string &amp;path)</td></tr>
+<tr class="memdesc:ade404bb2355d9f6eac11f97536ab0d90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the last modified time of a file or directory.  <a href="#ade404bb2355d9f6eac11f97536ab0d90">More...</a><br /></td></tr>
+<tr class="separator:ade404bb2355d9f6eac11f97536ab0d90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2dc195f1c1d31cb9c352931f057195d3"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_f_s_utils.html#a2dc195f1c1d31cb9c352931f057195d3">getAccessTime</a> (const std::string &amp;path)</td></tr>
+<tr class="memdesc:a2dc195f1c1d31cb9c352931f057195d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the last access time of a file or directory.  <a href="#a2dc195f1c1d31cb9c352931f057195d3">More...</a><br /></td></tr>
+<tr class="separator:a2dc195f1c1d31cb9c352931f057195d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -239,6 +248,12 @@ const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>PREV_DIR
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if directory is successfully copied </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if curpath can't be opened or newpath can't be created </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -355,6 +370,12 @@ const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>PREV_DIR
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the directory does not exist at the end of the function </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if dirpath can't be opened </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -424,6 +445,12 @@ const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>PREV_DIR
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the directory is empty </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if dirpath is not found </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -497,8 +524,8 @@ const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>PREV_DIR
 
 </div>
 </div>
-<a id="a4c1322f70a2d91dd27b2d6dbc5a48fbb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4c1322f70a2d91dd27b2d6dbc5a48fbb">&#9670;&nbsp;</a></span>fsize()</h2>
+<a id="a11fb84f3df7114bebe23e1ae90acb84e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11fb84f3df7114bebe23e1ae90acb84e">&#9670;&nbsp;</a></span>fsize()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -507,7 +534,7 @@ const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>PREV_DIR
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double FSUtils::fsize </td>
+          <td class="memname">float FSUtils::fsize </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>filepath</em>, </td>
@@ -544,6 +571,47 @@ gigabytes = "gb" </p><dl class="params"><dt>Parameters</dt><dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The file size if the file exists in bytes (or in specified value, if used) </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>This function returns a double, unlike standard size functions, to allow for partial values when getting size back in KB, MB, or GB </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if filepath can't be found </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2dc195f1c1d31cb9c352931f057195d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2dc195f1c1d31cb9c352931f057195d3">&#9670;&nbsp;</a></span>getAccessTime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string FSUtils::getAccessTime </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the last access time of a file or directory. </p>
+<dl class="section return"><dt>Returns</dt><dd>A time string </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if path can't be found </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -579,6 +647,12 @@ gigabytes = "gb" </p><dl class="params"><dt>Parameters</dt><dd>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A vector of strings representing the directories in the directory </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if path can't be opened </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -625,6 +699,82 @@ gigabytes = "gb" </p><dl class="params"><dt>Parameters</dt><dd>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A vector of strings representing the files in the directory </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if dirPath can't be opened </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ade404bb2355d9f6eac11f97536ab0d90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade404bb2355d9f6eac11f97536ab0d90">&#9670;&nbsp;</a></span>getModifiedTime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string FSUtils::getModifiedTime </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the last modified time of a file or directory. </p>
+<dl class="section return"><dt>Returns</dt><dd>A time string </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if path can't be found </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a0e961a02f7ca058de520fa0a2c4e09f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e961a02f7ca058de520fa0a2c4e09f4">&#9670;&nbsp;</a></span>getPermissions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string FSUtils::getPermissions </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the permissions (user group global) of specified file or directory. </p>
+<dl class="section return"><dt>Returns</dt><dd>A string representing the 3 digit permissions </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if path can't be found </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -793,6 +943,12 @@ gigabytes = "gb" </p><dl class="params"><dt>Parameters</dt><dd>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Number of lines in the file </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if fileName can't be opened </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -874,6 +1030,12 @@ gigabytes = "gb" </p><dl class="params"><dt>Parameters</dt><dd>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the directory is successfully moved </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if curpath can't be opened or if newpath can't be created </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -955,6 +1117,12 @@ gigabytes = "gb" </p><dl class="params"><dt>Parameters</dt><dd>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The full file as a string </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if fileName can't be opened </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -990,6 +1158,12 @@ gigabytes = "gb" </p><dl class="params"><dt>Parameters</dt><dd>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A vector of strings which represent the lines of the file </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if fileName can't be opened </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
