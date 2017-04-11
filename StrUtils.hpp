@@ -136,7 +136,7 @@ std::vector<std::string> StrUtils::trimStrVec(const std::vector<std::string> &v)
     @param line The string to be parsed
     @param delim The character to split the string on
 */
-std::vector<std::string> StrUtils::parseOnCharDelim(const std::string &line, const char delim){
+std::vector<std::string> StrUtils::parseOnCharDelim(const std::string &line, char delim){
     std::vector<std::string> vec;
     std::stringstream ss{line};
     std::string tmp;

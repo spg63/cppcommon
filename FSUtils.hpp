@@ -51,10 +51,13 @@ namespace FSUtils{
     inline bool moved(const std::string &curpath, const std::string &newpath);
     inline bool copyf(const std::string &curpath, const std::string &newpath);
     inline bool copyd(const std::string &curpath, const std::string &newpath);
-    inline double fsize(const std::string &filepath, const std::string &order = "b");
+    inline float fsize(const std::string &filepath, const std::string &order = "b");
     inline std::vector<std::vector<std::string>> csvToMatrix(const std::string &filename);
     inline void appendToFile(const std::string &filepath, const std::string &msg);
     inline std::string getWorkingDir();
+    inline std::string getPermissions(const std::string &path);
+    inline std::string getModifiedTime(const std::string &path);
+    inline std::string getAccessTime(const std::string &path);
     
     const std::string THIS_DIR_DOT{"."};
     const std::string PREV_DIR_DOT{".."};
@@ -70,6 +73,7 @@ namespace FSUtils{
     \details Will read a full file, all content, into a single string
     @param fileName File name if file is in cwd, else path to file
     @return The full file as a string
+    @throws std::runtime_error if fileName can't be opened
 */
 std::string FSUtils::readFullFile(const std::string &fileName){
     std::ifstream ifs(fileName, std::ios::in | std::ios::binary | std::ios::ate);
@@ -90,6 +94,7 @@ std::string FSUtils::readFullFile(const std::string &fileName){
     \details Will read the full file then proceed to split it into a vector<string> of lines
     @param fileName File name if file is in cwd, else path to file
     @return A vector of strings which represent the lines of the file
+    @throws std::runtime_error if fileName can't be opened
 */
 std::vector<std::string> FSUtils::readLineByLine(const std::string &fileName){
     std::string line;
@@ -113,6 +118,7 @@ std::vector<std::string> FSUtils::readLineByLine(const std::string &fileName){
     after a brief search I can't find the author on the GNU source website
     @param fileName File name if file is in cwd, else path to file
     @return Number of lines in the file
+    @throws std::runtime_error if fileName can't be opened
 */
 size_t FSUtils::lineCount(const std::string &fileName){
     const char *fname = fileName.c_str();
@@ -143,6 +149,7 @@ size_t FSUtils::lineCount(const std::string &fileName){
     @param dirPath Path to the directory in question
     @param ext Optional file extension, will only return files meeting passed file extension
     @return A vector of strings representing the files in the directory
+    @throws std::runtime_error if dirPath can't be opened
 */
 std::vector<std::string> FSUtils::getFilesInDir(const std::string &dirPath, const std::string &ext){
         std::vector<std::string> files;
@@ -178,6 +185,7 @@ std::vector<std::string> FSUtils::getFilesInDir(const std::string &dirPath, cons
     \details "." and ".." will not be returned in the list of directories
     @param path Path to the directory in question
     @return A vector of strings representing the directories in the directory
+    @throws std::runtime_error if path can't be opened
 */
 std::vector<std::string> FSUtils::getDirsInDir(const std::string &path){
     std::vector<std::string> dirs;
@@ -211,7 +219,7 @@ std::vector<std::string> FSUtils::getDirsInDir(const std::string &path){
 bool FSUtils::isFile(const std::string &path){
     struct stat buffer;
     stat(path.c_str(), &buffer);
-    return fexists(path) && S_ISREG(buffer.st_mode);
+    return S_ISREG(buffer.st_mode);
 }
 
 /**
@@ -277,6 +285,7 @@ bool FSUtils::dexists(const std::string &path){
     \details Will ignore "." and ".."
     @param dirpath The path to the directory in question
     @return True if the directory is empty
+    @throws std::runtime_error if dirpath is not found
 */
 bool FSUtils::dempty(const std::string &dirpath){
     if(!dexists(dirpath))
@@ -293,7 +302,7 @@ bool FSUtils::dempty(const std::string &dirpath){
         if(THIS_DIR_DOT == item || PREV_DIR_DOT == item)
             continue;
         std::string it(dirpath + "/" + item);
-        if(isFile(it) || isDir(it))
+        if(fexists(it) || dexists(it))
             return false;
     }
     closedir(dir);
@@ -318,6 +327,7 @@ bool FSUtils::deleteFile(const std::string &filepath){
     \brief Delete a directory and contents
     @param dirpath The path to the directory
     @return True if the directory does not exist at the end of the function
+    @throws std::runtime_error if dirpath can't be opened
 */
 bool FSUtils::deleteDir(const std::string &dirpath){
     if(!dexists(dirpath))
@@ -380,6 +390,7 @@ bool FSUtils::movef(const std::string &curpath, const std::string &newpath){
     @param curpath The current path to the directory
     @param newpath Where to move the file
     @return True if the directory is successfully moved
+    @throws std::runtime_error if curpath can't be opened or if newpath can't be created
 */
 bool FSUtils::moved(const std::string &curpath, const std::string &newpath){
     if(!dexists(curpath) || !isDir(curpath))
@@ -442,6 +453,7 @@ bool FSUtils::copyf(const std::string &curpath, const std::string &newpath){
     @param curpath The current path to the directory
     @param newpath Where to copy the directory
     @return True if directory is successfully copied
+    @throws std::runtime_error if curpath can't be opened or newpath can't be created
 */
 bool FSUtils::copyd(const std::string &curpath, const std::string &newpath){
     if(!dexists(curpath) || !isDir(curpath))
@@ -488,14 +500,16 @@ bool FSUtils::copyd(const std::string &curpath, const std::string &newpath){
     @return The file size if the file exists in bytes (or in specified value, if used)
     \note This function returns a double, unlike standard size functions, to allow for partial
     values when getting size back in KB, MB, or GB
+    @throws std::runtime_error if filepath can't be found
 */
-double FSUtils::fsize(const std::string &filepath, const std::string &order){
+float FSUtils::fsize(const std::string &filepath, const std::string &order){
     if(!fexists(filepath))
         throw std::runtime_error("Cannot find " + filepath);
-    double sz;
+    float sz;
+    
     {
         std::ifstream f(filepath, std::ifstream::ate | std::ifstream::binary);
-        sz = static_cast<double>(f.tellg());
+        sz = static_cast<float>(f.tellg());
     }
     
     if("kb" == order)
@@ -520,7 +534,7 @@ std::vector<std::vector<std::string>> FSUtils::csvToMatrix(const std::string& fi
     auto file_lines = readLineByLine(fileName);
     std::vector<std::vector<std::string>> matrix;
     for(auto &&line : file_lines)
-        matrix.emplace_back(StrUtils::parseOnCharDelim(line, ','));
+        matrix.emplace_back(StrUtils::parseOnCharDelim(StrUtils::trim(line), ','));
     return matrix;
 }
 
@@ -547,9 +561,58 @@ std::string FSUtils::getWorkingDir(){
         char *path = new char[MAX_LEN];
         getcwd(path, MAX_LEN - 1);
         if(path != nullptr) std_path = path;
-        delete[] path;
+        if(path != nullptr) delete[] path;
     }
     
     return std_path;
 }
 
+
+/**
+    \brief Return the permissions (user group global) of specified file or directory
+    @return A string representing the 3 digit permissions
+    @throws std::runtime_error if path can't be found
+*/
+std::string FSUtils::getPermissions(const std::string &path){
+    if(!dexists(path) && !fexists(path))
+        throw std::runtime_error("Can't find " + path);
+    
+    struct stat buffer;
+    stat(path.c_str(), &buffer);
+    auto user = (buffer.st_mode & S_IRWXU) >> 6;
+    auto group = (buffer.st_mode & S_IRWXG) >> 3;
+    auto world = (buffer.st_mode & S_IRWXO);
+    
+    auto perms = std::to_string(user) + std::to_string(group) + std::to_string(world);
+    return perms;
+}
+
+/**
+    \brief Return the last modified time of a file or directory
+    \return A time string
+    @throws std::runtime_error if path can't be found
+*/
+std::string FSUtils::getModifiedTime(const std::string &path){
+    if(!dexists(path) && !fexists(path))
+        throw std::runtime_error("Can't find " + path);
+    
+    struct stat buffer;
+    stat(path.c_str(), &buffer);
+    struct tm *timeinfo = localtime(&buffer.st_mtime);
+    return std::string(asctime(timeinfo));
+}
+
+/**
+    \brief Return the last access time of a file or directory
+    \return A time string
+    @throws std::runtime_error if path can't be found
+*/
+std::string FSUtils::getAccessTime(const std::string &path){
+    if(!dexists(path) && !fexists(path))
+        throw std::runtime_error("Can't find " + path);
+    
+    struct stat buffer;
+    stat(path.c_str(), &buffer);
+    struct tm *timeinfo = localtime(&buffer.st_atime);
+    return std::string(asctime(timeinfo));
+}

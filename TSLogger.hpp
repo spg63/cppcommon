@@ -76,7 +76,7 @@ public:
         \brief Your choice c'tor
         \details Set log file and backing queue timeout
         @param logFile The log file
-        @param queue_cond_var_time Timeout for backing queue, std::chrono::milliseconds
+        @param queue_cond_var_timeout Timeout for backing queue, std::chrono::milliseconds
     */
     TSLogger(std::string logFile, std::chrono::milliseconds queue_cond_var_timeout)
         : logFile_(logFile)
@@ -200,7 +200,7 @@ private:
             // Use try_and_pop instead of wait_and_pop so the thread can be immediately killed
             // if necessary; wait_and_pop will block on the thread while the queue is empty
             logmessage_t msg;
-            bool did_receive_message = did_receive_message = msg_queue_.try_and_pop(msg, timeout_);
+            bool did_receive_message = msg_queue_.try_and_pop(msg, timeout_);
             
             // Process the received message and write it to the log file
             if(did_receive_message){
@@ -211,10 +211,8 @@ private:
                 if(fnamestr != "")
                     fnamestr += ": ";
                 
-                std::string type{msg.log_message_type_};
-                
                 std::stringstream ss;
-                ss << time_str << " " << type << ": " << fnamestr;
+                ss << time_str << " " << msg.log_message_type_ << ": " << fnamestr;
                 ss << msg.message_to_be_logged_ << '\n';
                 std::ofstream out(logFile_, std::ios::out | std::ios::app);
                 out << ss.str() << std::flush;

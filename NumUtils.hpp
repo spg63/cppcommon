@@ -19,6 +19,7 @@
 #include <limits.h>
 #include <cstdint>
 #include <unordered_map>
+#include <utility>
 
 /**
  \brief Utility functions related to numerics
@@ -36,7 +37,7 @@ namespace NumUtils{
     inline T minValueVec(const std::vector<T> &vec);
     
     template<class T>
-    inline std::vector<T> minMaxInVec(const std::vector<T> &vec, size_t begin, size_t end);
+    inline std::pair<T, T> minMaxInVec(const std::vector<T> &vec);
     
     inline int strToInt(const std::string &s);
     inline double strToDouble(const std::string &s);
@@ -49,7 +50,6 @@ namespace NumUtils{
     
     template<class T>
     inline double getRadians(T degrees){ return degrees * M_PI / 180; }
-
 }
 
 /**
@@ -86,7 +86,7 @@ T NumUtils::getMedian(std::vector<T> &vec){
         
     }
 }
-    
+
 /**
     \brief get the max element in vector
     \details Only works for std::is_arithmetic types
@@ -116,35 +116,13 @@ T NumUtils::minValueVec(const std::vector<T> &vec){
 /**
     \brief Get the min and max element in a vector between range
     @param vec The vector to be searched
-    @param begin The start of the search range, inclusive
-    @param end The end of the search range, inclusive
-    @return: A vector of type 'T', holding 2 entries: \n
-        M[0] - holds the min value of vec \n
-        M[1] - holds the max value of vec
+    @return: A std::pair<T, T> of the min and max element
+        pair.first - holds the min value of vec \n
+        pair.second - holds the max value of vec
 */
 template<typename T>
-std::vector<T> NumUtils::minMaxInVec(const std::vector<T> &vec, size_t begin, size_t end){
-    std::vector<T> M(2);
-    if(end == begin){
-        M[0] = vec[begin]; M[1] = vec[end];
-        return M;
-    }
-    if(end - begin == 1){
-        if(vec[begin] <= vec[end]){
-            M[0] = vec[begin]; M[1] = vec[end];
-        }
-        else{
-            M[0] = vec[end]; M[1] = vec[begin];
-        }
-        return M;
-    }
-    auto m = (end + begin) / 2;
-    std::vector<T> M1(2), M2(2);
-    M1 = minMaxInVec(vec, begin, m);
-    M2 = minMaxInVec(vec, m+1, end);
-    M[0] = std::min(M1[0], M2[0]);
-    M[1] = std::max(M1[1], M2[1]);
-    return M;
+std::pair<T, T> NumUtils::minMaxInVec(const std::vector<T> &vec){
+    return std::make_pair(minValueVec(vec), maxValueVec(vec));
 }
 
 /**
