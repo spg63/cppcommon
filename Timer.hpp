@@ -26,12 +26,31 @@ public:
     /**
         \brief start the timer
     */
-    void start_timer() {start_ = time_device::now();}
+    void startTimer() { start_ = time_device::now(); }
 
     /**
         \brief stop the timer
     */
-    void stop_timer() {stop_ = time_device::now();}
+    void stopTimer() { stop_ = time_device::now(); }
+    
+    /**
+        \brief pause the timer
+    */
+    void pauseTimer() { pause_start_ = time_device::now(); }
+    
+    /**
+        \brief resumse a paused timer
+    */
+    void resumeTimer() {
+        pause_stop_ = time_device::now();
+        auto this_pause_duration = pause_stop_ - pause_start_;
+        total_paused_time_ += std::chrono::duration_cast<std::chrono::nanoseconds>(this_pause_duration).count();
+    }
+    
+    /**
+        \brief return current pause time
+    */
+    double totalPausedNano() { return total_paused_time_; }
     
     /**
         \brief get time in seconds
@@ -41,7 +60,8 @@ public:
     double seconds() {
         auto duration = stop_ - start_;
         exe_time_sec_ = std::chrono::duration_cast<std::chrono::seconds>(duration).count();
-        return exe_time_sec_;
+        double paused_seconds = total_paused_time_ / 1000000000.0;
+        return exe_time_sec_ - paused_seconds;
     }
 
     /**
@@ -52,7 +72,8 @@ public:
     double milliseconds() {
         auto duration = stop_ - start_;
         exe_time_ms_ = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
-        return exe_time_ms_;
+        double paused_milliseconds = total_paused_time_ / 1000000.0;
+        return exe_time_ms_ - paused_milliseconds;
     }
     
     /**
@@ -63,7 +84,8 @@ public:
     double microseconds() {
         auto duration = stop_ - start_;
         exe_time_micro_ = std::chrono::duration_cast<std::chrono::microseconds>(duration).count();
-        return exe_time_micro_;
+        double paused_microseconds = total_paused_time_ / 1000.0;
+        return exe_time_micro_ - paused_microseconds;
     }
     
     /**
@@ -74,12 +96,15 @@ public:
     double nanoseconds() {
         auto duration = stop_ - start_;
         exe_time_ns_ = std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count();
-        return exe_time_ns_;
+        return exe_time_ns_ - total_paused_time_;
     }
    
 private:
     time_p start_;
     time_p stop_;
+    time_p pause_start_;
+    time_p pause_stop_;
+    double total_paused_time_{0.0};
     double exe_time_sec_{};
     double exe_time_ms_{};
     double exe_time_micro_{};

@@ -36,7 +36,8 @@ namespace FSUtils{
     inline std::string readFullFile(const std::string &filename);
     inline std::vector<std::string> readLineByLine(const std::string &filename);
     inline size_t lineCount(const std::string &filename);
-    inline std::vector<std::string> getFilesInDir(const std::string &dirpath, const std::string &ext = "");
+    inline std::vector<std::string> getFilesInDir(const std::string &dirpath,
+                                                  const std::string &ext = "");
     inline std::vector<std::string> getDirsInDir(const std::string &path);
     inline bool makeDir(const std::string &dirpath);
     inline bool isFile(const std::string &filepath);
@@ -58,6 +59,7 @@ namespace FSUtils{
     inline std::string getPermissions(const std::string &path);
     inline std::string getModifiedTime(const std::string &path);
     inline std::string getAccessTime(const std::string &path);
+    inline bool clearFile(const std::string &path);
     
     const std::string THIS_DIR_DOT{"."};
     const std::string PREV_DIR_DOT{".."};
@@ -360,7 +362,7 @@ bool FSUtils::deleteDir(const std::string &dirpath){
         else if(isFile(relative_it))
             std::remove(relative_it.c_str());
         else
-            throw std::runtime_error("Not sure what else we could have here...");
+            throw std::runtime_error("Is that a symlink?? Uh...not implemented!");
     }
     closedir(dir);
     
@@ -419,7 +421,7 @@ bool FSUtils::moved(const std::string &curpath, const std::string &newpath){
         else if(isDir(cur_item))
             moved(cur_item, new_item);
         else
-            throw std::runtime_error("Not sure what else we could have here...");
+            throw std::runtime_error("Is that a symlink?? Uh...not implemented!");
     }
     closedir(dir);
     
@@ -438,6 +440,8 @@ bool FSUtils::moved(const std::string &curpath, const std::string &newpath){
 bool FSUtils::copyf(const std::string &curpath, const std::string &newpath){
     if(!fexists(curpath) || !isFile(curpath))
         return false;
+    if(fexists(newpath) || dexists(newpath))
+        throw std::runtime_error(newpath + " already exists");
     
     {
         std::ifstream src(curpath, std::ios::binary);
@@ -458,6 +462,8 @@ bool FSUtils::copyf(const std::string &curpath, const std::string &newpath){
 bool FSUtils::copyd(const std::string &curpath, const std::string &newpath){
     if(!dexists(curpath) || !isDir(curpath))
         return false;
+    if(fexists(newpath) || dexists(newpath))
+        throw std::runtime_error(newpath + " already exists");
     
     DIR *dir;
     struct dirent *ent;
@@ -483,7 +489,7 @@ bool FSUtils::copyd(const std::string &curpath, const std::string &newpath){
         else if(isDir(cur_item))
             copyd(cur_item, new_item);
         else
-            throw std::runtime_error("Not sure what else we could have here...");
+            throw std::runtime_error("Is that a symlink?? Uh...not implemented!");
     }
     closedir(dir);
     return dexists(newpath);
@@ -512,6 +518,8 @@ float FSUtils::fsize(const std::string &filepath, const std::string &order){
         sz = static_cast<float>(f.tellg());
     }
     
+    if("b" == order)
+        return sz;
     if("kb" == order)
         return sz / 1000;
     else if("mb" == order)
@@ -599,7 +607,8 @@ std::string FSUtils::getModifiedTime(const std::string &path){
     struct stat buffer;
     stat(path.c_str(), &buffer);
     struct tm *timeinfo = localtime(&buffer.st_mtime);
-    return std::string(asctime(timeinfo));
+    std::string remove_newline(asctime(timeinfo));
+    return remove_newline.substr(0, remove_newline.length() - 1);
 }
 
 /**
@@ -614,5 +623,20 @@ std::string FSUtils::getAccessTime(const std::string &path){
     struct stat buffer;
     stat(path.c_str(), &buffer);
     struct tm *timeinfo = localtime(&buffer.st_atime);
-    return std::string(asctime(timeinfo));
+    std::string remove_newline(asctime(timeinfo));
+    return remove_newline.substr(0, remove_newline.length() - 1);
+}
+
+/**
+    \brief Clear the contents of a file
+    \return True if file has been opened and cleared successfully
+    @throws std::runtime_error if path can't be found
+*/
+inline bool FSUtils::clearFile(const std::string &path){
+    if(!fexists(path))
+        throw std::runtime_error("Can't fine " + path);
+    std::ofstream ofs;
+    ofs.open(path, std::ofstream::out | std::ofstream::trunc);
+    ofs.close();
+    return fsize(path) == 0;
 }
