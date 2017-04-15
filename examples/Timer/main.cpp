@@ -8,9 +8,14 @@ int main(){
     
     std::cout << "Going to sleep for ~25 milliseconds\n";
 
-    t.start_timer();
+    t.startTimer();
     std::this_thread::sleep_for(std::chrono::milliseconds(25));
-    t.stop_timer();
+
+    t.pauseTimer();
+    std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    t.resumeTimer();
+
+    t.stopTimer();
 
     std::cout << "Total time (nanoseconds): " << t.nanoseconds() << "ns\n";
     std::cout << "Total time (milliseconds): " << t.milliseconds() << "ms\n";

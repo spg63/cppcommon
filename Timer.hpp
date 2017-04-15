@@ -61,6 +61,7 @@ public:
         auto duration = stop_ - start_;
         exe_time_sec_ = std::chrono::duration_cast<std::chrono::seconds>(duration).count();
         double paused_seconds = total_paused_time_ / 1000000000.0;
+        if(paused_seconds < 1) paused_seconds = 0;
         return exe_time_sec_ - paused_seconds;
     }
 
@@ -73,6 +74,7 @@ public:
         auto duration = stop_ - start_;
         exe_time_ms_ = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
         double paused_milliseconds = total_paused_time_ / 1000000.0;
+        if(paused_milliseconds < 1) paused_milliseconds = 0;
         return exe_time_ms_ - paused_milliseconds;
     }
     
@@ -85,6 +87,7 @@ public:
         auto duration = stop_ - start_;
         exe_time_micro_ = std::chrono::duration_cast<std::chrono::microseconds>(duration).count();
         double paused_microseconds = total_paused_time_ / 1000.0;
+        if(paused_microseconds < 1) paused_microseconds = 0;
         return exe_time_micro_ - paused_microseconds;
     }
     
