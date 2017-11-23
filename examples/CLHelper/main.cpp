@@ -1,4 +1,4 @@
-#include "../../CLHelper.hpp"
+#include "../../src/CLHelper.hpp"
 #include <iostream>
 #include <vector>
 

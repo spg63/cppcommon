@@ -24,6 +24,10 @@
 #include <climits>
 #include "StrUtils.hpp"
 
+// Windows stat
+#ifdef WIN32
+    #define stat _stat
+#endif
 /**
     \brief Utility functions related to the file system
     \details FSUtils completely includes the older FileUtils namespace. In order to continue to use
@@ -304,8 +308,10 @@ bool FSUtils::dempty(const std::string &dirpath){
         if(THIS_DIR_DOT == item || PREV_DIR_DOT == item)
             continue;
         std::string it(dirpath + "/" + item);
-        if(fexists(it) || dexists(it))
+        if(fexists(it) || dexists(it)) {
+            closedir(dir);
             return false;
+        }
     }
     closedir(dir);
     return true;
@@ -520,7 +526,7 @@ float FSUtils::fsize(const std::string &filepath, const std::string &order){
     
     if("b" == order)
         return sz;
-    if("kb" == order)
+    else if("kb" == order)
         return sz / 1000;
     else if("mb" == order)
         return sz / 1000000;
@@ -632,9 +638,9 @@ std::string FSUtils::getAccessTime(const std::string &path){
     \return True if file has been opened and cleared successfully
     @throws std::runtime_error if path can't be found
 */
-inline bool FSUtils::clearFile(const std::string &path){
+bool FSUtils::clearFile(const std::string &path){
     if(!fexists(path))
-        throw std::runtime_error("Can't fine " + path);
+        throw std::runtime_error("Can't find " + path);
     std::ofstream ofs;
     ofs.open(path, std::ofstream::out | std::ofstream::trunc);
     ofs.close();

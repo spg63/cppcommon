@@ -11,6 +11,9 @@
 #include <type_traits>
 #include <functional>
 #include <csignal>
+#include <chrono>
+#include <iomanip>
+#include <sstream>
 
 
 /**
@@ -21,6 +24,7 @@
 namespace Utils{
     template <class T, class U>
     inline bool isSameType(T first, U second);
+    inline std::string timeStamp();
     
     void default_sig_handler_(int signum);
     void install_SIGINT(void (*f)(int) = default_sig_handler_);
@@ -40,6 +44,25 @@ namespace Utils{
 template <class T, class U>
 bool Utils::isSameType(T first, U second){
     return std::is_same<T, U>::value;
+}
+
+/**
+ \brief Get current time stamp using chrono
+ \details time stamp format: YEAR-MONTH-DAY HOUR:MINUTE:SECOND.MILLISECOND
+ @return time stamp as a string
+ */
+std::string Utils::timeStamp() {
+    using clock_t = std::chrono::system_clock;
+    auto now = clock_t::now();
+    auto count = clock_t::to_time_t(now);
+    auto secs = std::chrono::time_point_cast<std::chrono::milliseconds>(now);
+    auto partial = now - secs;
+    auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(partial);
+
+    std::ostringstream oss;
+    oss << std::put_time(std::localtime(&count), "%Y-%m-%d %X");
+    oss << "." << ms.count();
+    return oss.str();
 }
 
 void Utils::default_sig_handler_(int signum){

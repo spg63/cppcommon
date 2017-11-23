@@ -28,7 +28,9 @@ private:
     std::string permissions_    {""};
     std::string last_access_    {""};
     std::string last_modified_  {""};
-    
+    // 0 for file, 1 for dir
+    short file_or_dir_          {-1};
+
     bool hasBeenModified(){
         auto modded = FSUtils::getModifiedTime(path_);
         if(last_modified_ == modded)
@@ -36,12 +38,21 @@ private:
         last_modified_ = modded;
         return true;
     }
-    
+
+
 public:
     FileHandle(const std::string &path) : FileHandle(path, false) {}
     FileHandle(const std::string &path, bool overwrite_if_existing) : path_(path) {
+        /*
+        if(FSUtils::isFile(path_))
+            file_or_dir_ = 0;
+        else if(FSUtils::isDir(path_))
+            file_or_dir_ = 1;
+         */
         // Check if it exists
         if(FSUtils::fexists(path_)){
+           // if(FSUtils::isFile(path_)) file_or_dir_ = 0;
+            //else if(FSUtils::isDir(path_)) file_or_dir_ = 1;
             // Overwrite it if necessary
             if(overwrite_if_existing){
                 auto cleared = FSUtils::clearFile(path_);

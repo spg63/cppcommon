@@ -9,6 +9,7 @@
 #pragma once
 #include <array>
 #include <type_traits>
+#include <iostream>
 #include "NumUtils.hpp"
 
 #if (defined(GL_TYPES_FLOAT) || defined(GL_TYPES_DOUBLE)) && defined(__APPLE__)
@@ -58,7 +59,7 @@ public:
         init_vec();
         
         for(auto i = 0; i < size_; ++i)
-            points_[i] = NumUtils::strToDouble(points[i]);
+            points_[i] = static_cast<num_t>(NumUtils::strToDouble(points[i]));
     }
     
     
@@ -99,8 +100,10 @@ public:
     }
     
     Vec& operator+=(const Vec &rhs){
-        if(size_ != rhs.size_)
+        if(size_ != rhs.size_) {
+            std::cerr << "size_: " << size_ << " | rhs.size_: " << rhs.size_ << std::endl;
             throw std::runtime_error("element-wise addition requires matrices of equal dimensions");
+        }
         for(auto i = 0; i < size_; ++i)
             points_[i] += rhs.points_[i];
         return *this;
@@ -232,7 +235,7 @@ private:
     Vec v_;
     
 public:
-    Vec3() {}
+    Vec3() : v_(std::vector<num_t>{0,0,0}) {}
     Vec3(const std::vector<std::string> &points) : v_(points) {}
     template<class T> Vec3(const std::vector<T> &points) : v_(points) {}
     Vec3(num_t x, num_t y, num_t z) : v_(std::vector<num_t>{x, y, z}) {}

@@ -17,7 +17,12 @@
 
 /**
  \brief Easy to use sqlite3 interface for c++
- \details dbHelper provides an easy to use interface to sqlite3. Most sqlite3 functionality is available through this class by passing SQL queries to the provided functions; however it is not a full featured c++ wrapper for sqlite3. If more advanced features are needed I recommend looking elsewhere. Defining "DB_NO_EXCEPT" at compile-time will disable exceptions for dbHelper and make available a new variable, db_errno, which will be set to 0 on success and -1 on failure of any function calls.
+ \details dbHelper provides an easy to use interface to sqlite3. Most sqlite3 functionality is
+ available through this class by passing SQL queries to the provided functions; however it is not a
+ full featured c++ wrapper for sqlite3. If more advanced features are needed I recommend looking
+ elsewhere. Defining "DB_NO_EXCEPT" at compile-time will disable exceptions for dbHelper and make
+ available a new variable, db_errno, which will be set to 0 on success and -1 on failure of any
+ function calls.
  \author Sean Grimes, spg63@cs.drexel.edu
  \date 8-14-15
 */

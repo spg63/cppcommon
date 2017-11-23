@@ -1,4 +1,4 @@
-#include "../../OutputModifier.hpp"
+#include "../../src/OutputModifier.hpp"
 #include <iostream>
 
 int main(){

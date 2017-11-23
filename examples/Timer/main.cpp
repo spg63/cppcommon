@@ -1,7 +1,7 @@
 #include <thread>
 #include <chrono>
 #include <iostream>
-#include "../../Timer.hpp"
+#include "../../src/Timer.hpp"
 
 int main(){
     Timer t;

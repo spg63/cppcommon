@@ -17,6 +17,7 @@ using time_p = std::chrono::high_resolution_clock::time_point;
 /**
  \brief A simple code exection timer
  \details exetimer allows one to start and stop timer, and get the time between start and stop calls in seconds, milliseconds, microseconds, or nanoseconds
+ \note If the pause time is less than a full unit of your requested time the pause time is ignored. i.e if you paused a timer for 100 milliseconds and request your time in seconds the paused time will be ignored.
  \author Sean Grimes, spg63@cs.drexel.edu
  \date 11-30-15
 */

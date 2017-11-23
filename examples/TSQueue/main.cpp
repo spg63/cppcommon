@@ -1,7 +1,7 @@
 #include <thread>
 #include <iostream>
 #include <vector>
-#include "../../TSQueue.hpp"
+#include "../../src/TSQueue.hpp"
 
 const int NUM_PUSHES{25};
 const int NUM_THREADS{4};
@@ -12,12 +12,12 @@ void consumer(TSQueue<int> &queue);
 int main(){
     TSQueue<int> q;
     std::vector<std::thread> producers;
-    for(auto i = 0; i < NUM_PUSHES; ++i)
+    for(auto i = 0; i < NUM_THREADS; ++i)
         producers.push_back(std::thread(producer, std::ref(q)));
 
     std::thread con(consumer, std::ref(q));
 
-    for(auto i = 0; i < NUM_PUSHES; ++i)
+    for(auto i = 0; i < NUM_THREADS; ++i)
         producers[i].join();
     
     con.join();

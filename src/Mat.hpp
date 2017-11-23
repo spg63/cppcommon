@@ -103,7 +103,7 @@ public:
         
         // Create the diagonal matrix by default
         if(rows_ == cols_){
-            for(auto i = 0; i < rows_; ++i)
+            for(size_t i = 0; i < rows_; ++i)
                 mat_[get1D(cols_, i, i)] = val;
         }
         // Just fill the matrix with values if rows_ != cols_
@@ -208,7 +208,6 @@ public:
         return *this;
     }
 
-    
     inline friend std::ostream &operator<<(std::ostream &out, const Mat &m);
 };
 
@@ -250,7 +249,7 @@ namespace{
         }
         return re;
     }
-    
+/*
     inline void transpose4x4_SSE(const float *A, float *B, const int lda, const int ldb){
         __m128 row1 = _mm_loadu_ps(&A[0*lda]);
         __m128 row2 = _mm_loadu_ps(&A[1*lda]);
@@ -266,7 +265,6 @@ namespace{
     
     inline Mat simd_transpose_(const Mat &m){
         throw std::runtime_error("Not implemented");
-        std::cout << "simd\n";
         auto cols = m.cols();
         auto rows = m.rows();
         auto raw = m.mat1d();
@@ -281,10 +279,10 @@ namespace{
         float *B = (float*)_mm_malloc(sizeof(float) * lda * lda, 64);
         //if(!B){ _mm_free(A); return tiling_transpose_(m); }
         
-        /*
-         for(auto i = 0; i < size; ++i)
-         A[i] = raw[i];
-         */
+
+         //for(auto i = 0; i < size; ++i)
+         //A[i] = raw[i];
+
         
         for(int i = 0; i < cols; i += BLOCK_SIZE){
             for(int j = 0; j < rows; j += BLOCK_SIZE){
@@ -305,6 +303,7 @@ namespace{
         if(B) _mm_free(B);
         return re;
     }
+*/
 }
 
 inline Mat transpose(const Mat &m){

@@ -7,7 +7,7 @@
 //
 
 #include <iostream>
-#include "../../CmdLineParser.hpp"
+#include "../../src/CmdLineParser.hpp"
 
 int main(int argc, const char **argv) {
     /*

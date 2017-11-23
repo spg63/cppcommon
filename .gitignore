@@ -11,6 +11,16 @@
 
 *.plist
 
+CMakeLists.txt
+
+cmake-build-debug/*
+
+*.DS_Store
+
+.idea/*
+
+main.cpp
+
 cppcommon_proj_updater/cppcommon_proj_updater/main.cpp
 
 cppcommon_proj_updater/*

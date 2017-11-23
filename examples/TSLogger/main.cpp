@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../../TSLogger.hpp"
+#include "../../src/TSLogger.hpp"
 
 void log_from_func(){
     TSLogger l("example.log");

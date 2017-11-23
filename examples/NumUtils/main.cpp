@@ -1,4 +1,4 @@
-#include "../../NumUtils.hpp"
+#include "../../src/NumUtils.hpp"
 #include <iostream>
 
 int main(){
@@ -20,8 +20,8 @@ int main(){
     std::cout << std::endl;
 
     //----- minMaxInVec
-    auto minimax_res = NumUtils::minMaxInVec(int_vec, 0, int_vec.size() - 1);
-    std::cout << "vector min: " << minimax_res[0] << "   vector max: " << minimax_res[1] << "\n";
+    auto minimax_res = NumUtils::minMaxInVec(int_vec);
+    std::cout << "vector min: " << minimax_res.first << "   vector max: " << minimax_res.second << "\n";
     std::cout << std::endl;
 
     //----- strToInt

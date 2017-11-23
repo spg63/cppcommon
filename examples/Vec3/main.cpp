@@ -1,4 +1,4 @@
-#include "../../Vec3.hpp"
+#include "../../src/Vec.hpp"
 #include <iostream>
 #include <vector>
 
@@ -19,7 +19,7 @@ int main(){
     double str_x = v4.x();
     double str_y = v4.y();
     double str_z = v4.z();
-    std::vector<double> float_pts = v3.getAllPts();
+    //std::vector<double> float_pts = v3.points();
 
     //----- Streaming
     std::cout << "v1 (5, 10, 15): " << v1 << "\n";

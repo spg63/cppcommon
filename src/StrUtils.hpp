@@ -31,7 +31,6 @@ namespace StrUtils{
     inline std::string trim(const std::string &s);
     inline std::vector<std::string> trimStrVec(const std::vector<std::string> &vec);
     inline std::vector<std::string> parseOnCharDelim(const std::string &line, const char delim);
-    inline std::string timeStamp();
     inline bool endsWithString(const std::string &str, const std::string &end);
     inline bool startsWithString(const std::string &str, const std::string &start);
 }
@@ -143,24 +142,6 @@ std::vector<std::string> StrUtils::parseOnCharDelim(const std::string &line, cha
     while(std::getline(ss, tmp, delim))
         vec.push_back(tmp);
     return vec;
-}
-
-/**
- \brief Get current time stamp using chrono
- \details time stamp format: YEAR-MONTH-DAY HOUR:MINUTE:SECOND.MILLISECOND
- @return time stamp as a string
- */
-std::string StrUtils::timeStamp() {
-    auto now = std::chrono::system_clock::now();
-    auto count = std::chrono::system_clock::to_time_t(now);
-    auto secs = std::chrono::time_point_cast<std::chrono::seconds>(now);
-    auto partial = now - secs;
-    auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(partial);
-    
-    std::ostringstream oss;
-    oss << std::put_time(std::localtime(&count), "%Y-%m-%d %X");
-    oss << "." << ms.count();
-    return oss.str();
 }
 
 /**

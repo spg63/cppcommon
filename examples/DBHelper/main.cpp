@@ -8,7 +8,7 @@
 
 #include <iostream>
 #include <string>
-#include "../../DBHelper.hpp"
+#include "../../src/DBHelper.hpp"
 
 int main(int argc, const char * argv[]) {
 

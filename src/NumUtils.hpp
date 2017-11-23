@@ -13,10 +13,10 @@
 #include <sstream>
 #include <string>
 #include <cstdlib>
-#include <string.h>
-#include <float.h>
+#include <cstring>
+#include <cfloat>
 #include <random>
-#include <limits.h>
+#include <climits>
 #include <cstdint>
 #include <unordered_map>
 #include <utility>
@@ -28,7 +28,7 @@
 */
 namespace NumUtils{
     template<class T>
-    inline T getMedian(std::vector<T> &vec);
+    inline T getMedian(const std::vector<T> &vec);
     
     template<class T>
     inline T maxValueVec(const std::vector<T> &vec);
@@ -57,31 +57,36 @@ namespace NumUtils{
     @param vec vector of elements to get the median from
     @return the median
     @author Andrew W.E. McDonald
+    @throws std::invalid_argument when vector is empty
  */
 template<class T>
-T NumUtils::getMedian(std::vector<T> &vec){
-    size_t v_size = vec.size();
+T NumUtils::getMedian(const std::vector<T> &vec){
+    auto vec_local = vec;
+    size_t v_size = vec_local.size();
+    if(v_size == 0) throw std::invalid_argument("Vector is empty");
+    if(v_size == 1) return vec_local.back();
+
     // will automatically round down due to int division, subtract 1 due to 0 indexing
     size_t mid = (v_size/2) - 1;
     size_t midpo = mid + 1;
     if (v_size % 2 == 1){
-        std::nth_element(vec.begin(), vec.begin()+(midpo), vec.end(),
+        std::nth_element(vec_local.begin(), vec_local.begin()+(midpo), vec_local.end(),
                          [](T const a, T const b){
                              return b > a;
                          });
-        return vec[midpo];
+        return vec_local[midpo];
     }
     else{
-        std::nth_element(vec.begin(), vec.begin()+(mid), vec.end(),
+        std::nth_element(vec_local.begin(), vec_local.begin()+(mid), vec_local.end(),
                          [](T const a, T const b){
                              return b > a;
                          });
-        T m1 = vec[mid];
-        std::nth_element(vec.begin(), vec.begin()+(midpo), vec.end(),
+        T m1 = vec_local[mid];
+        std::nth_element(vec_local.begin(), vec_local.begin()+(midpo), vec_local.end(),
                          [](T const a, T const b){
                              return b > a;
                          });
-        T m2 = vec[midpo];
+        T m2 = vec_local[midpo];
         return ((m1+m2)/2.f);
         
     }
@@ -96,6 +101,8 @@ T NumUtils::getMedian(std::vector<T> &vec){
 */
 template<typename T>
 T NumUtils::maxValueVec(const std::vector<T> &vec){
+    if(vec.size() == 0) throw std::invalid_argument("Vector is empty");
+    if(vec.size() == 1) return vec.back();
     auto max = std::max_element(std::begin(vec), std::end(vec));
     return vec[std::distance(std::begin(vec), max)];
 }
@@ -109,6 +116,8 @@ T NumUtils::maxValueVec(const std::vector<T> &vec){
 */
 template<typename T>
 T NumUtils::minValueVec(const std::vector<T> &vec){
+    if(vec.size() == 0) throw std::invalid_argument("Vector is empty");
+    if(vec.size() == 1) return vec.back();
     auto min = std::min_element(std::begin(vec), std::end(vec));
     return vec[std::distance(std::begin(vec), min)];
 }
@@ -122,6 +131,8 @@ T NumUtils::minValueVec(const std::vector<T> &vec){
 */
 template<typename T>
 std::pair<T, T> NumUtils::minMaxInVec(const std::vector<T> &vec){
+    if(vec.size() == 0) throw std::invalid_argument("Vector is empty");
+    if(vec.size() == 1) return std::make_pair(vec.back(), vec.back());
     return std::make_pair(minValueVec(vec), maxValueVec(vec));
 }
 
@@ -134,7 +145,7 @@ std::pair<T, T> NumUtils::minMaxInVec(const std::vector<T> &vec){
 int NumUtils::strToInt(const std::string &s){
     char *end;
     long l;
-    char *c_str = new char[s.length() + 1];
+    auto c_str = new char[s.length() + 1];
     strcpy(c_str, s.c_str());
     std::string err = "strToInt Error: ";
     errno = 0;
@@ -147,9 +158,8 @@ int NumUtils::strToInt(const std::string &s){
         throw std::runtime_error(err + "Cannot convert " + s + " to an integer.");
     
     delete[] c_str;
-    c_str = nullptr;
-    
-    return (int) l;
+
+    return static_cast<int>(l);
 }
 
 /**
@@ -161,7 +171,7 @@ int NumUtils::strToInt(const std::string &s){
 double NumUtils::strToDouble(const std::string &s){
     char *end;
     double d;
-    char *c_str = new char[s.length() + 1];
+    auto c_str = new char[s.length() + 1];
     strcpy(c_str, s.c_str());
     std::string err = "strToDouble Error: ";
     errno = 0;
@@ -174,9 +184,8 @@ double NumUtils::strToDouble(const std::string &s){
         throw std::runtime_error(err + "Cannot convert " + s + " to a double.");
     
     delete[] c_str;
-    c_str = nullptr;
-    
-    return (double) d;
+
+    return d;
 }
     
 /**
@@ -194,19 +203,19 @@ int NumUtils::sumOfDigits(int x){
 }
     
 /**
-    \brief Get the fibonacci number, slowly
+    \brief Get the fibonacci number, slowly, using the classic definition of the fibonacci sequence; i.e. fib(0) = 0
     \note Be cautious of overflows on large numbers
     @param x The input number
     @return The fibonacci number
 */
 size_t NumUtils::fibonacci_lowmemory(int x){
     if(x <= 1)
-        return x;
+        return static_cast<size_t>(x);
     return(fibonacci_lowmemory(x - 1) + fibonacci_lowmemory(x - 2));
 }
 
 /**
- \brief Fibonacci number, using memoization
+ \brief Fibonacci number, using memoization, using the classic definition of the fibonacci sequence; i.e. fib(0) = 0
  \note Be cautious of overflows on large numbers
  \details Useful in graphic heavy applications
  @param x The input number
@@ -215,7 +224,7 @@ size_t NumUtils::fibonacci_lowmemory(int x){
 size_t NumUtils::fibonacci(int x){
     static std::unordered_map<int, size_t> memo;
     if(x <= 1)
-        return x;
+        return static_cast<size_t>(x);
     if(memo.find(x) != memo.end())
         return memo[x];
     size_t res = fibonacci(x - 1) + fibonacci(x - 2);
