@@ -15,6 +15,9 @@
 #include <iomanip>
 #include <sstream>
 
+namespace{
+    inline void default_sig_handler_(int signum) { exit(signum); }
+}
 
 /**
  \brief Utility functions that don't fall into any other category
@@ -26,7 +29,6 @@ namespace Utils{
     inline bool isSameType(T first, U second);
     inline std::string timeStamp();
     
-    void default_sig_handler_(int signum);
     void install_SIGINT(void (*f)(int) = default_sig_handler_);
     void install_SIGABRT(void (*f)(int) = default_sig_handler_);
     void install_SIGFPE(void (*f)(int) = default_sig_handler_);
@@ -47,7 +49,7 @@ bool Utils::isSameType(T first, U second){
 }
 
 /**
- \brief Get current time stamp using chrono
+ \brief Get current (localtime) time stamp using chrono
  \details time stamp format: YEAR-MONTH-DAY HOUR:MINUTE:SECOND.MILLISECOND
  @return time stamp as a string
  */
@@ -65,54 +67,38 @@ std::string Utils::timeStamp() {
     return oss.str();
 }
 
-void Utils::default_sig_handler_(int signum){
-    exit(signum);
-}
+/**
+ * \brief Set function for SIGINT handler, defaults to exit(signum)
+ * @param f
+ */
+void Utils::install_SIGINT(void (*f)(int))  { std::signal(SIGINT, f);   }
 
-void Utils::install_SIGINT(void (*f)(int)){
-    std::signal(SIGINT, f);
-}
+/**
+ * \brief Set function for SIGABRT handler, defaults to exit(signum)
+ * @param f
+ */
+void Utils::install_SIGABRT(void (*f)(int)) { std::signal(SIGABRT, f);  }
 
-/*
- 
- SIGABRT
- SIGFPE
- SIGILL
- SIGINT
- SIGSEGV
- SIGTERM
- 
- 
-#include <iostream>
-#include <csignal>
+/**
+ * \brief Set function for SIGFPR handler, defaults to exit(signum)
+ * @param f
+ */
+void Utils::install_SIGFPE(void (*f)(int))  { std::signal(SIGFPE, f);   }
 
-using namespace std;
+/**
+ * \brief Set function for SIGILL handler, defaults to exit(signum)
+ * @param f
+ */
+void Utils::install_SIGILL(void (*f)(int))  { std::signal(SIGILL, f);   }
 
-void signalHandler( int signum ) {
-    cout << "Interrupt signal (" << signum << ") received.\n";
-    
-    // cleanup and close up stuff here
-    // terminate program
-    
-    exit(signum);
-    
-}
+/**
+ * \brief Set function for SIGSEGV handler, defaults to exit(signum)
+ * @param f
+ */
+void Utils::install_SIGSEGV(void (*f)(int)) { std::signal(SIGSEGV, f);  }
 
-int main () {
-    int i = 0;
-    // register signal SIGINT and signal handler
-    signal(SIGINT, signalHandler);
-    
-    while(++i){
-        cout << "Going to sleep...." << endl;
-        
-        if( i == 3 ){
-            raise( SIGINT);
-        }
-        
-        sleep(1);
-    }
-    
-    return 0;
-}
-*/
+/**
+ * \brief Set function for SIGTERM handler, defaults to exit(signum)
+ * @param f
+ */
+void Utils::install_SIGTERM(void (*f)(int)) { std::signal(SIGTERM, f);  }

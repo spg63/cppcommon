@@ -207,5 +207,3 @@ bool StrUtils::startsWithString(const std::string &str, const std::string &start
 bool StrUtils::contains(const std::string &theString, const std::string &theSubString){
     return theString.find(theSubString) != std::string::npos;
 }
-
-
