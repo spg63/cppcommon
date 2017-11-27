@@ -28,11 +28,33 @@ namespace StrUtils{
     inline std::string removeCharFromStr(const std::string &s, const char ch);
     inline std::string toUpper(const std::string &s);
     inline std::string toLower(const std::string &s);
+    inline std::string trimSpecific(const std::string &s, const std::string &nonPrintCharsToRemove, bool removeWS);
     inline std::string trim(const std::string &s);
+    inline std::vector<std::string> trimSpecificVec(const std::vector<std::string> &vec,
+                                                    const std::string &nonPrintCharsToRemove, bool removeWS);
     inline std::vector<std::string> trimStrVec(const std::vector<std::string> &vec);
     inline std::vector<std::string> parseOnCharDelim(const std::string &line, const char delim);
     inline bool endsWithString(const std::string &str, const std::string &end);
     inline bool startsWithString(const std::string &str, const std::string &start);
+    inline bool contains(const std::string &theString, const std::string &theSubString);
+}
+
+namespace{
+    // Removes leading and trailing whitespace from a string
+    inline std::string removeLTWS(std::string &trimmed){
+        if(trimmed.empty()) return "";
+        // Create a new string without the leading whitespace
+        auto first_char = trimmed.find_first_not_of(" ");
+        auto last_char = trimmed.size() - first_char;
+        std::string no_leading_ws{trimmed.substr(first_char, last_char)};
+
+        // Reset first char to 0;
+        first_char = 0;
+
+        // Create a new string without the trailing whitespace
+        last_char = no_leading_ws.find_last_not_of(" ");
+        return no_leading_ws.substr(first_char, last_char + 1);
+    }
 }
 
 /**
@@ -88,33 +110,45 @@ std::string StrUtils::toLower(const std::string &s){
     @return The cleaned string
 */
 std::string StrUtils::trim(const std::string &s){
-    if(s.find_first_not_of("\t\n\a\b\f\r\v ") == std::string::npos)
+    // Remove all standard non-printing characters and leading / trailing WS by default
+    return trimSpecific(s, "\t\n\a\b\f\r\v", true);
+}
+
+/**
+    \brief Clean up a string of specified non-printing characters
+    \details trimSpecific removes the specified non-printing characters throughout the entire string, will remove
+    leading and trailing whitespace (spaces) if removeWS is true.
+    @param s The string to be cleaned up
+    @param nonPrintCharsToRemove A string of non-printing characters to remove
+    @param removeWS Will remove leading and trailing whitespace if true
+    @return The cleaned string
+ */
+std::string StrUtils::trimSpecific(const std::string &s, const std::string &nonPrintCharsToRemove, bool removeWS){
+    if((s.empty() || s.find_first_not_of(nonPrintCharsToRemove) == std::string::npos) && (!nonPrintCharsToRemove.empty()))
         return "";
-        
-    std::string trimmed = s;
-    // Removing tab chars
-    trimmed.erase(remove(std::begin(trimmed), std::end(trimmed), '\t'), std::end(trimmed));
-    // Removing new line chars
-    trimmed.erase(remove(std::begin(trimmed), std::end(trimmed), '\n'), std::end(trimmed));
-    // Removing 'audible bell'
-    trimmed.erase(remove(std::begin(trimmed), std::end(trimmed), '\a'), std::end(trimmed));
-    // Removing backspace
-    trimmed.erase(remove(std::begin(trimmed), std::end(trimmed), '\b'), std::end(trimmed));
-    // Removing form-feed
-    trimmed.erase(remove(std::begin(trimmed), std::end(trimmed), '\f'), std::end(trimmed));
-    // Removing carriage return
-    trimmed.erase(remove(std::begin(trimmed), std::end(trimmed), '\r'), std::end(trimmed));
-    // Removing vertical tab
-    trimmed.erase(remove(std::begin(trimmed), std::end(trimmed), '\v'), std::end(trimmed));
-        
-    auto first_char = trimmed.find_first_not_of(" ");
-    auto last_char = trimmed.size() - first_char;
-    std::string no_leading_ws = trimmed.substr(first_char, last_char);
-    // Resetting first_char to 0;
-    first_char = 0;
-    last_char = no_leading_ws.find_last_not_of(" ");
-    std::string all_trimmed = no_leading_ws.substr(first_char, last_char + 1);
-    return all_trimmed;
+
+    std::string trimmed{s};
+
+    // Loop through the supplied characters and clean it up
+    for(auto &&ch : nonPrintCharsToRemove)
+        trimmed.erase(remove(std::begin(trimmed), std::end(trimmed), ch), std::end(trimmed));
+
+    return removeWS ? removeLTWS(trimmed) : trimmed;
+}
+
+/**
+ * \brief Calls trimSpecific on all string in the vector using the specific charsToRemove string
+ * @param vec The vector of strings to be cleaned
+ * @param nonPrintCharsToRemove A string of non-printing characters to remove
+ * @param removeWS Will remove leading and trailing whitespace if true
+ * @return A vector of cleaned strings
+ */
+std::vector<std::string> StrUtils::trimSpecificVec(const std::vector<std::string> &vec,
+                                                const std::string &nonPrintCharsToRemove, bool removeWS){
+    std::vector<std::string> r_vec;
+    for(auto &&str : vec)
+        r_vec.push_back(trimSpecific(str, nonPrintCharsToRemove, removeWS));
+    return r_vec;
 }
 
 /**
@@ -123,9 +157,9 @@ std::string StrUtils::trim(const std::string &s){
     @return A vector of cleaned strings
 */
 std::vector<std::string> StrUtils::trimStrVec(const std::vector<std::string> &v){
-    std::vector<std::string> r_vec(v.size());
-    for(auto i = 0; i < v.size(); ++i)
-        r_vec[i] = trim(v[i]);
+    std::vector<std::string> r_vec;
+    for(auto &&str : v)
+        r_vec.push_back(trim(str));
     return r_vec;
 }
 
@@ -164,6 +198,14 @@ bool StrUtils::startsWithString(const std::string &str, const std::string &start
     return start.length() <= str.length() && std::equal(std::begin(start), std::end(start), std::begin(str));
 }
 
-
+/**
+ * \brief Returns true is theSubString is a substring of theString
+ * @param theString The full string to be searched
+ * @param theSubString The substring to look for in theString
+ * @return True if theSubString is a substring of theString
+ */
+bool StrUtils::contains(const std::string &theString, const std::string &theSubString){
+    return theString.find(theSubString) != std::string::npos;
+}
 
 

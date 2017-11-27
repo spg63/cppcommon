@@ -569,7 +569,7 @@ void FSUtils::appendToFile(const std::string &fileName, const std::string &msg){
 */
 std::string FSUtils::getWorkingDir(){
     size_t MAX_LEN = SHRT_MAX;
-    std::string std_path = "";
+    std::string std_path{};
     
     {
         char *path = new char[MAX_LEN];
