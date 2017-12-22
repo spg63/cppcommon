@@ -79,30 +79,82 @@ Functions</h2></td></tr>
 <tr class="memitem:ae95c9aa073050143492de7b873ecbb9f"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_str_utils.html#ae95c9aa073050143492de7b873ecbb9f">toLower</a> (const std::string &amp;s)</td></tr>
 <tr class="memdesc:ae95c9aa073050143492de7b873ecbb9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert string to all lowercase.  <a href="#ae95c9aa073050143492de7b873ecbb9f">More...</a><br /></td></tr>
 <tr class="separator:ae95c9aa073050143492de7b873ecbb9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b91b7450f12a598b5b4e7c3e1ef1403"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_str_utils.html#a2b91b7450f12a598b5b4e7c3e1ef1403">trimSpecific</a> (const std::string &amp;s, const std::string &amp;nonPrintCharsToRemove, bool removeWS)</td></tr>
+<tr class="memdesc:a2b91b7450f12a598b5b4e7c3e1ef1403"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clean up a string of specified non-printing characters.  <a href="#a2b91b7450f12a598b5b4e7c3e1ef1403">More...</a><br /></td></tr>
+<tr class="separator:a2b91b7450f12a598b5b4e7c3e1ef1403"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e389382b4a4aae2d9dd13a022f91881"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_str_utils.html#a6e389382b4a4aae2d9dd13a022f91881">trim</a> (const std::string &amp;s)</td></tr>
 <tr class="memdesc:a6e389382b4a4aae2d9dd13a022f91881"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clean up a string.  <a href="#a6e389382b4a4aae2d9dd13a022f91881">More...</a><br /></td></tr>
 <tr class="separator:a6e389382b4a4aae2d9dd13a022f91881"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a370d15a00b6392e509e4beab65828d37"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_str_utils.html#a370d15a00b6392e509e4beab65828d37">trimSpecificVec</a> (const std::vector&lt; std::string &gt; &amp;vec, const std::string &amp;nonPrintCharsToRemove, bool removeWS)</td></tr>
+<tr class="memdesc:a370d15a00b6392e509e4beab65828d37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls trimSpecific on all string in the vector using the specific charsToRemove string.  <a href="#a370d15a00b6392e509e4beab65828d37">More...</a><br /></td></tr>
+<tr class="separator:a370d15a00b6392e509e4beab65828d37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af440b5bf122c9a8f5597a327d398c476"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_str_utils.html#af440b5bf122c9a8f5597a327d398c476">trimStrVec</a> (const std::vector&lt; std::string &gt; &amp;vec)</td></tr>
 <tr class="memdesc:af440b5bf122c9a8f5597a327d398c476"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls trim on all strings in the vector.  <a href="#af440b5bf122c9a8f5597a327d398c476">More...</a><br /></td></tr>
 <tr class="separator:af440b5bf122c9a8f5597a327d398c476"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7ee22228acd706d0ce9c4a7deb5c2b5"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_str_utils.html#ae7ee22228acd706d0ce9c4a7deb5c2b5">parseOnCharDelim</a> (const std::string &amp;line, const char delim)</td></tr>
 <tr class="memdesc:ae7ee22228acd706d0ce9c4a7deb5c2b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Splits a string into vector based on a specific character.  <a href="#ae7ee22228acd706d0ce9c4a7deb5c2b5">More...</a><br /></td></tr>
 <tr class="separator:ae7ee22228acd706d0ce9c4a7deb5c2b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afef7b4fe00a9a412098a334eb4289491"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_str_utils.html#afef7b4fe00a9a412098a334eb4289491">timeStamp</a> ()</td></tr>
-<tr class="memdesc:afef7b4fe00a9a412098a334eb4289491"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current time stamp using chrono.  <a href="#afef7b4fe00a9a412098a334eb4289491">More...</a><br /></td></tr>
-<tr class="separator:afef7b4fe00a9a412098a334eb4289491"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1749db0f497298d9ca13f26216bb5a37"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_str_utils.html#a1749db0f497298d9ca13f26216bb5a37">endsWithString</a> (const std::string &amp;str, const std::string &amp;end)</td></tr>
 <tr class="memdesc:a1749db0f497298d9ca13f26216bb5a37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine if string ends with another string.  <a href="#a1749db0f497298d9ca13f26216bb5a37">More...</a><br /></td></tr>
 <tr class="separator:a1749db0f497298d9ca13f26216bb5a37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d81ba30148fa0f0211f75745dda29bb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_str_utils.html#a9d81ba30148fa0f0211f75745dda29bb">startsWithString</a> (const std::string &amp;str, const std::string &amp;start)</td></tr>
 <tr class="memdesc:a9d81ba30148fa0f0211f75745dda29bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine if string starts with another string.  <a href="#a9d81ba30148fa0f0211f75745dda29bb">More...</a><br /></td></tr>
 <tr class="separator:a9d81ba30148fa0f0211f75745dda29bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d2820e6be240b2caf9567e9b1692ec8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_str_utils.html#a4d2820e6be240b2caf9567e9b1692ec8">contains</a> (const std::string &amp;theString, const std::string &amp;theSubString)</td></tr>
+<tr class="memdesc:a4d2820e6be240b2caf9567e9b1692ec8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true is theSubString is a substring of theString.  <a href="#a4d2820e6be240b2caf9567e9b1692ec8">More...</a><br /></td></tr>
+<tr class="separator:a4d2820e6be240b2caf9567e9b1692ec8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Utility functions focusing on string. </p>
 <dl class="section author"><dt>Author</dt><dd>Sean Grimes, <a href="#" onclick="location.href='mai'+'lto:'+'spg'+'63'+'@cs'+'.d'+'rex'+'el'+'.ed'+'u'; return false;">spg63<span style="display: none;">.nosp@m.</span>@cs.<span style="display: none;">.nosp@m.</span>drexe<span style="display: none;">.nosp@m.</span>l.ed<span style="display: none;">.nosp@m.</span>u</a> </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>11-26-15 </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a4d2820e6be240b2caf9567e9b1692ec8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d2820e6be240b2caf9567e9b1692ec8">&#9670;&nbsp;</a></span>contains()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool StrUtils::contains </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>theString</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>theSubString</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns true is theSubString is a substring of theString. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">theString</td><td>The full string to be searched </td></tr>
+    <tr><td class="paramname">theSubString</td><td>The substring to look for in theString </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if theSubString is a substring of theString </dd></dl>
+
+</div>
+</div>
 <a id="a1749db0f497298d9ca13f26216bb5a37"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1749db0f497298d9ca13f26216bb5a37">&#9670;&nbsp;</a></span>endsWithString()</h2>
 
@@ -285,34 +337,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="afef7b4fe00a9a412098a334eb4289491"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afef7b4fe00a9a412098a334eb4289491">&#9670;&nbsp;</a></span>timeStamp()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string StrUtils::timeStamp </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Get current time stamp using chrono. </p>
-<p>time stamp format: YEAR-MONTH-DAY HOUR:MINUTE:SECOND.MILLISECOND </p><dl class="section return"><dt>Returns</dt><dd>time stamp as a string </dd></dl>
-
-</div>
-</div>
 <a id="ae95c9aa073050143492de7b873ecbb9f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae95c9aa073050143492de7b873ecbb9f">&#9670;&nbsp;</a></span>toLower()</h2>
 
@@ -415,6 +439,112 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The cleaned string </dd></dl>
+
+</div>
+</div>
+<a id="a2b91b7450f12a598b5b4e7c3e1ef1403"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b91b7450f12a598b5b4e7c3e1ef1403">&#9670;&nbsp;</a></span>trimSpecific()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string StrUtils::trimSpecific </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>nonPrintCharsToRemove</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>removeWS</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Clean up a string of specified non-printing characters. </p>
+<p>trimSpecific removes the specified non-printing characters throughout the entire string, will remove leading and trailing whitespace (spaces) if removeWS is true. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>The string to be cleaned up </td></tr>
+    <tr><td class="paramname">nonPrintCharsToRemove</td><td>A string of non-printing characters to remove </td></tr>
+    <tr><td class="paramname">removeWS</td><td>Will remove leading and trailing whitespace if true </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The cleaned string </dd></dl>
+
+</div>
+</div>
+<a id="a370d15a00b6392e509e4beab65828d37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a370d15a00b6392e509e4beab65828d37">&#9670;&nbsp;</a></span>trimSpecificVec()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::string &gt; StrUtils::trimSpecificVec </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>vec</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>nonPrintCharsToRemove</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>removeWS</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calls trimSpecific on all string in the vector using the specific charsToRemove string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vec</td><td>The vector of strings to be cleaned </td></tr>
+    <tr><td class="paramname">nonPrintCharsToRemove</td><td>A string of non-printing characters to remove </td></tr>
+    <tr><td class="paramname">removeWS</td><td>Will remove leading and trailing whitespace if true </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A vector of cleaned strings </dd></dl>
 
 </div>
 </div>

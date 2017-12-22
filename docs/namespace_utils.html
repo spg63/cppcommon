@@ -74,12 +74,189 @@ Functions</h2></td></tr>
 <tr class="memitem:af3899503a33cca9e3d22656962544603"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_utils.html#af3899503a33cca9e3d22656962544603">isSameType</a> (T first, U second)</td></tr>
 <tr class="memdesc:af3899503a33cca9e3d22656962544603"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine if two variables are of the same type.  <a href="#af3899503a33cca9e3d22656962544603">More...</a><br /></td></tr>
 <tr class="separator:af3899503a33cca9e3d22656962544603"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac5bfeae39fb1b6c2c112cebbb2c74c6"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_utils.html#aac5bfeae39fb1b6c2c112cebbb2c74c6">timeStamp</a> ()</td></tr>
+<tr class="memdesc:aac5bfeae39fb1b6c2c112cebbb2c74c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current (localtime) time stamp using chrono.  <a href="#aac5bfeae39fb1b6c2c112cebbb2c74c6">More...</a><br /></td></tr>
+<tr class="separator:aac5bfeae39fb1b6c2c112cebbb2c74c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbe76d68e15b9161e8e89f1dcf834f8e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_utils.html#acbe76d68e15b9161e8e89f1dcf834f8e">install_SIGINT</a> (void(*f)(int)=default_sig_handler_)</td></tr>
+<tr class="memdesc:acbe76d68e15b9161e8e89f1dcf834f8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set function for SIGINT handler, defaults to exit(signum)  <a href="#acbe76d68e15b9161e8e89f1dcf834f8e">More...</a><br /></td></tr>
+<tr class="separator:acbe76d68e15b9161e8e89f1dcf834f8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0b00f3caad0d533d9bfa93dba4e025e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_utils.html#af0b00f3caad0d533d9bfa93dba4e025e">install_SIGABRT</a> (void(*f)(int)=default_sig_handler_)</td></tr>
+<tr class="memdesc:af0b00f3caad0d533d9bfa93dba4e025e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set function for SIGABRT handler, defaults to exit(signum)  <a href="#af0b00f3caad0d533d9bfa93dba4e025e">More...</a><br /></td></tr>
+<tr class="separator:af0b00f3caad0d533d9bfa93dba4e025e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae194c9454dd8b4c5af4357393b073ef2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_utils.html#ae194c9454dd8b4c5af4357393b073ef2">install_SIGFPE</a> (void(*f)(int)=default_sig_handler_)</td></tr>
+<tr class="memdesc:ae194c9454dd8b4c5af4357393b073ef2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set function for SIGFPR handler, defaults to exit(signum)  <a href="#ae194c9454dd8b4c5af4357393b073ef2">More...</a><br /></td></tr>
+<tr class="separator:ae194c9454dd8b4c5af4357393b073ef2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ee04529f49264cb025a31c23ae9afdd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_utils.html#a7ee04529f49264cb025a31c23ae9afdd">install_SIGILL</a> (void(*f)(int)=default_sig_handler_)</td></tr>
+<tr class="memdesc:a7ee04529f49264cb025a31c23ae9afdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set function for SIGILL handler, defaults to exit(signum)  <a href="#a7ee04529f49264cb025a31c23ae9afdd">More...</a><br /></td></tr>
+<tr class="separator:a7ee04529f49264cb025a31c23ae9afdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09ff7b127eb431d5a0b1ed0ec33b4186"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_utils.html#a09ff7b127eb431d5a0b1ed0ec33b4186">install_SIGSEGV</a> (void(*f)(int)=default_sig_handler_)</td></tr>
+<tr class="memdesc:a09ff7b127eb431d5a0b1ed0ec33b4186"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set function for SIGSEGV handler, defaults to exit(signum)  <a href="#a09ff7b127eb431d5a0b1ed0ec33b4186">More...</a><br /></td></tr>
+<tr class="separator:a09ff7b127eb431d5a0b1ed0ec33b4186"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa802db77c998124cd28f7451a3bcc5c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_utils.html#aa802db77c998124cd28f7451a3bcc5c7">install_SIGTERM</a> (void(*f)(int)=default_sig_handler_)</td></tr>
+<tr class="memdesc:aa802db77c998124cd28f7451a3bcc5c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set function for SIGTERM handler, defaults to exit(signum)  <a href="#aa802db77c998124cd28f7451a3bcc5c7">More...</a><br /></td></tr>
+<tr class="separator:aa802db77c998124cd28f7451a3bcc5c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Utility functions that don't fall into any other category. </p>
 <dl class="section author"><dt>Author</dt><dd>Sean Grimes, <a href="#" onclick="location.href='mai'+'lto:'+'spg'+'63'+'@cs'+'.d'+'rex'+'el'+'.ed'+'u'; return false;">spg63<span style="display: none;">.nosp@m.</span>@cs.<span style="display: none;">.nosp@m.</span>drexe<span style="display: none;">.nosp@m.</span>l.ed<span style="display: none;">.nosp@m.</span>u</a> </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>02-08-16 </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="af0b00f3caad0d533d9bfa93dba4e025e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0b00f3caad0d533d9bfa93dba4e025e">&#9670;&nbsp;</a></span>install_SIGABRT()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Utils::install_SIGABRT </td>
+          <td>(</td>
+          <td class="paramtype">void(*)(int)&#160;</td>
+          <td class="paramname"><em>f</em> = <code>default_sig_handler_</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set function for SIGABRT handler, defaults to exit(signum) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae194c9454dd8b4c5af4357393b073ef2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae194c9454dd8b4c5af4357393b073ef2">&#9670;&nbsp;</a></span>install_SIGFPE()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Utils::install_SIGFPE </td>
+          <td>(</td>
+          <td class="paramtype">void(*)(int)&#160;</td>
+          <td class="paramname"><em>f</em> = <code>default_sig_handler_</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set function for SIGFPR handler, defaults to exit(signum) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7ee04529f49264cb025a31c23ae9afdd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ee04529f49264cb025a31c23ae9afdd">&#9670;&nbsp;</a></span>install_SIGILL()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Utils::install_SIGILL </td>
+          <td>(</td>
+          <td class="paramtype">void(*)(int)&#160;</td>
+          <td class="paramname"><em>f</em> = <code>default_sig_handler_</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set function for SIGILL handler, defaults to exit(signum) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="acbe76d68e15b9161e8e89f1dcf834f8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbe76d68e15b9161e8e89f1dcf834f8e">&#9670;&nbsp;</a></span>install_SIGINT()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Utils::install_SIGINT </td>
+          <td>(</td>
+          <td class="paramtype">void(*)(int)&#160;</td>
+          <td class="paramname"><em>f</em> = <code>default_sig_handler_</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set function for SIGINT handler, defaults to exit(signum) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a09ff7b127eb431d5a0b1ed0ec33b4186"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09ff7b127eb431d5a0b1ed0ec33b4186">&#9670;&nbsp;</a></span>install_SIGSEGV()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Utils::install_SIGSEGV </td>
+          <td>(</td>
+          <td class="paramtype">void(*)(int)&#160;</td>
+          <td class="paramname"><em>f</em> = <code>default_sig_handler_</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set function for SIGSEGV handler, defaults to exit(signum) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aa802db77c998124cd28f7451a3bcc5c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa802db77c998124cd28f7451a3bcc5c7">&#9670;&nbsp;</a></span>install_SIGTERM()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Utils::install_SIGTERM </td>
+          <td>(</td>
+          <td class="paramtype">void(*)(int)&#160;</td>
+          <td class="paramname"><em>f</em> = <code>default_sig_handler_</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set function for SIGTERM handler, defaults to exit(signum) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="af3899503a33cca9e3d22656962544603"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af3899503a33cca9e3d22656962544603">&#9670;&nbsp;</a></span>isSameType()</h2>
 
@@ -125,6 +302,34 @@ template&lt;class T , class U &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns true if both variables are of the same type, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="aac5bfeae39fb1b6c2c112cebbb2c74c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac5bfeae39fb1b6c2c112cebbb2c74c6">&#9670;&nbsp;</a></span>timeStamp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Utils::timeStamp </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get current (localtime) time stamp using chrono. </p>
+<p>time stamp format: YEAR-MONTH-DAY HOUR:MINUTE:SECOND.MILLISECOND </p><dl class="section return"><dt>Returns</dt><dd>time stamp as a string </dd></dl>
 
 </div>
 </div>

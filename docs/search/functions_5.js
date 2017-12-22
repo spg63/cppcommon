@@ -5,5 +5,6 @@ var searchData=
   ['fexists',['fexists',['../namespace_f_s_utils.html#a8e4393b4a8f3244a98e926b11f4680ac',1,'FSUtils']]],
   ['fibonacci',['fibonacci',['../namespace_num_utils.html#a3e76678cd1b441a3c62bb52d661c079d',1,'NumUtils']]],
   ['fibonacci_5flowmemory',['fibonacci_lowmemory',['../namespace_num_utils.html#aa16abdf7250851eca558ca6eb8a3b7ef',1,'NumUtils']]],
+  ['flagexists',['flagExists',['../class_cmd_line_parser.html#a9b0467e326732f24ff5c4740c2025d4a',1,'CmdLineParser::flagExists(const std::string &amp;flag)'],['../class_cmd_line_parser.html#a21134a5a4f6b216fa61c1470016b2fa4',1,'CmdLineParser::flagExists(char flag)']]],
   ['fsize',['fsize',['../namespace_f_s_utils.html#a11fb84f3df7114bebe23e1ae90acb84e',1,'FSUtils']]]
 ];

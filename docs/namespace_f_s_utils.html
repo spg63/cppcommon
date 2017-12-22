@@ -145,6 +145,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a2dc195f1c1d31cb9c352931f057195d3"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_f_s_utils.html#a2dc195f1c1d31cb9c352931f057195d3">getAccessTime</a> (const std::string &amp;path)</td></tr>
 <tr class="memdesc:a2dc195f1c1d31cb9c352931f057195d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the last access time of a file or directory.  <a href="#a2dc195f1c1d31cb9c352931f057195d3">More...</a><br /></td></tr>
 <tr class="separator:a2dc195f1c1d31cb9c352931f057195d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a30c6a7272937c342a92c1ee3f383b7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_f_s_utils.html#a8a30c6a7272937c342a92c1ee3f383b7">clearFile</a> (const std::string &amp;path)</td></tr>
+<tr class="memdesc:a8a30c6a7272937c342a92c1ee3f383b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the contents of a file.  <a href="#a8a30c6a7272937c342a92c1ee3f383b7">More...</a><br /></td></tr>
+<tr class="separator:a8a30c6a7272937c342a92c1ee3f383b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -199,6 +202,41 @@ const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>PREV_DIR
   <table class="params">
     <tr><td class="paramname">fileName</td><td>File name if file is in cwd, else path to file </td></tr>
     <tr><td class="paramname">msg</td><td>The text to append to the file </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a8a30c6a7272937c342a92c1ee3f383b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a30c6a7272937c342a92c1ee3f383b7">&#9670;&nbsp;</a></span>clearFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FSUtils::clearFile </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Clear the contents of a file. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if file has been opened and cleared successfully </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if path can't be found </td></tr>
   </table>
   </dd>
 </dl>

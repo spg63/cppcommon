@@ -77,8 +77,18 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:abc6473aff8455e7f185edb09d58297a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a988751fea5f33682d340667f8dc63002"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cmd_line_parser.html#a988751fea5f33682d340667f8dc63002">optExists</a> (const std::string &amp;opt_ID)</td></tr>
 <tr class="separator:a988751fea5f33682d340667f8dc63002"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b0467e326732f24ff5c4740c2025d4a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cmd_line_parser.html#a9b0467e326732f24ff5c4740c2025d4a">flagExists</a> (const std::string &amp;flag)</td></tr>
+<tr class="separator:a9b0467e326732f24ff5c4740c2025d4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21134a5a4f6b216fa61c1470016b2fa4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cmd_line_parser.html#a21134a5a4f6b216fa61c1470016b2fa4">flagExists</a> (char flag)</td></tr>
+<tr class="separator:a21134a5a4f6b216fa61c1470016b2fa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adbfbac00006cb9755e4e22b5df61876e"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cmd_line_parser.html#adbfbac00006cb9755e4e22b5df61876e">getOptValue</a> (const std::string &amp;opt_ID)</td></tr>
 <tr class="separator:adbfbac00006cb9755e4e22b5df61876e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2c19d7e851418586edeae29b5f95534"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cmd_line_parser.html#aa2c19d7e851418586edeae29b5f95534">getOptValue</a> (char flag)</td></tr>
+<tr class="separator:aa2c19d7e851418586edeae29b5f95534"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a291af85bdc3733fc4a846cf8eb933b9d"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cmd_line_parser.html#a291af85bdc3733fc4a846cf8eb933b9d">numOptions</a> ()</td></tr>
+<tr class="separator:a291af85bdc3733fc4a846cf8eb933b9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5d3622e7063a0f2a3a298a55e23b287"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cmd_line_parser.html#af5d3622e7063a0f2a3a298a55e23b287">anyOptions</a> ()</td></tr>
+<tr class="separator:af5d3622e7063a0f2a3a298a55e23b287"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Easy command line argument parsing for c++. </p>
@@ -130,8 +140,100 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="af5d3622e7063a0f2a3a298a55e23b287"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5d3622e7063a0f2a3a298a55e23b287">&#9670;&nbsp;</a></span>anyOptions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CmdLineParser::anyOptions </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Are there any options </p><dl class="section return"><dt>Returns</dt><dd>true if an option exists, false if there are no options </dd></dl>
+
+</div>
+</div>
+<a id="a9b0467e326732f24ff5c4740c2025d4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b0467e326732f24ff5c4740c2025d4a">&#9670;&nbsp;</a></span>flagExists() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CmdLineParser::flagExists </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>flag</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Determine if a flag exists. Functionally the same as optExists but uses a better name when searching for a flag that doesn't have an associated option </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">flag</td><td>The flag to search for, "-f" or "f", dash can be included or excluded </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the flag exists, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="a21134a5a4f6b216fa61c1470016b2fa4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21134a5a4f6b216fa61c1470016b2fa4">&#9670;&nbsp;</a></span>flagExists() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CmdLineParser::flagExists </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>flag</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Determine if a flag exists. Assumes no leading dash will be included, takes a single character </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">flag</td><td>The flag character </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the flag exists, false otherwise </dd></dl>
+
+</div>
+</div>
 <a id="adbfbac00006cb9755e4e22b5df61876e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adbfbac00006cb9755e4e22b5df61876e">&#9670;&nbsp;</a></span>getOptValue()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#adbfbac00006cb9755e4e22b5df61876e">&#9670;&nbsp;</a></span>getOptValue() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -160,6 +262,65 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Variable associated with flag if flag exists, otherwise "" </dd></dl>
+
+</div>
+</div>
+<a id="aa2c19d7e851418586edeae29b5f95534"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2c19d7e851418586edeae29b5f95534">&#9670;&nbsp;</a></span>getOptValue() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string CmdLineParser::getOptValue </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>flag</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Flag searched for by character, 'f', without a leading dash </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">flag</td><td>The flag character to be searched for </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Variable associated with flag character if flag exists, otherwise "" </dd></dl>
+
+</div>
+</div>
+<a id="a291af85bdc3733fc4a846cf8eb933b9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a291af85bdc3733fc4a846cf8eb933b9d">&#9670;&nbsp;</a></span>numOptions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t CmdLineParser::numOptions </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return the number of options in the argument list </p><dl class="section return"><dt>Returns</dt><dd>the number of options </dd></dl>
 
 </div>
 </div>
@@ -197,7 +358,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li><a class="el" href="_cmd_line_parser_8hpp_source.html">CmdLineParser.hpp</a></li>
+<li>src/<a class="el" href="_cmd_line_parser_8hpp_source.html">CmdLineParser.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

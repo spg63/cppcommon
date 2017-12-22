@@ -1,9 +1,12 @@
 var searchData=
 [
-  ['timestamp',['timeStamp',['../namespace_str_utils.html#afef7b4fe00a9a412098a334eb4289491',1,'StrUtils']]],
+  ['timestamp',['timeStamp',['../namespace_utils.html#aac5bfeae39fb1b6c2c112cebbb2c74c6',1,'Utils']]],
   ['tolower',['toLower',['../namespace_str_utils.html#ae95c9aa073050143492de7b873ecbb9f',1,'StrUtils']]],
+  ['totalpausednano',['totalPausedNano',['../class_timer.html#ac4570c1947f0e1098ec1258c239dfc17',1,'Timer']]],
   ['toupper',['toUpper',['../namespace_str_utils.html#aa25cc232074636e94e376c7f12fc7104',1,'StrUtils']]],
   ['trim',['trim',['../namespace_str_utils.html#a6e389382b4a4aae2d9dd13a022f91881',1,'StrUtils']]],
+  ['trimspecific',['trimSpecific',['../namespace_str_utils.html#a2b91b7450f12a598b5b4e7c3e1ef1403',1,'StrUtils']]],
+  ['trimspecificvec',['trimSpecificVec',['../namespace_str_utils.html#a370d15a00b6392e509e4beab65828d37',1,'StrUtils']]],
   ['trimstrvec',['trimStrVec',['../namespace_str_utils.html#af440b5bf122c9a8f5597a327d398c476',1,'StrUtils']]],
   ['try_5fand_5fpop',['try_and_pop',['../class_t_s_queue.html#aae4d415f09a04e54244cb8c89797ce7f',1,'TSQueue::try_and_pop(T &amp;item)'],['../class_t_s_queue.html#a637456b3ab6d6a4c259db85316fc2281',1,'TSQueue::try_and_pop(T &amp;item, std::chrono::milliseconds timeout)']]],
   ['tslogger',['TSLogger',['../class_t_s_logger.html#a6ac37a761dee4cfaab60b091c7aa5751',1,'TSLogger::TSLogger()'],['../class_t_s_logger.html#a78c15df066cd4082d1d61c90ebb1ffab',1,'TSLogger::TSLogger(std::string logFile)'],['../class_t_s_logger.html#acdeb726f1a2ad94c948afdf1159e6107',1,'TSLogger::TSLogger(std::string logFile, std::chrono::milliseconds queue_cond_var_timeout)']]],
