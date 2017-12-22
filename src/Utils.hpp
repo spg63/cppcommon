@@ -44,7 +44,7 @@ namespace Utils{
     @return Returns true if both variables are of the same type, false otherwise
 */
 template <class T, class U>
-bool Utils::isSameType(T first, U second){
+bool Utils::isSameType(T, U){
     return std::is_same<T, U>::value;
 }
 

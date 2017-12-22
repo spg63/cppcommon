@@ -257,11 +257,12 @@ bool FSUtils::isExc(const std::string& path){
 bool FSUtils::makeDir(const std::string &path){
     if(dexists(path))
         return true;
-    
+/*
     // NOTE: I have no idea why flushing the stream is required, however without this flush only the root
     // directory is created when creating multiple directories on macOS Sierra 10.12.3 (and possibly other
     // systems)
     std::cout << std::flush;
+*/
     mkdir(path.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
     return dexists(path) && isDir(path);
 }

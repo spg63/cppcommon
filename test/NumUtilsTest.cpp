@@ -188,25 +188,3 @@ test_case("getRadians"){
     require(NumUtils::getRadians(360) == Approx(6.2831).epsilon(0.1));
     require(NumUtils::getRadians(7200) == Approx(125.6637).epsilon(0.1));
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
