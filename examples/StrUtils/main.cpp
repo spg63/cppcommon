@@ -3,6 +3,7 @@
 #include <vector>
 
 int main(){
+    
     //----- removeCharFromStr    
     std::string has_too_many_fs = "Thifs sftfrfifnfg ifs bfrokefn";
     std::cout << "Str before removal of f's: " << has_too_many_fs << '\n';
@@ -42,7 +43,7 @@ int main(){
         std::cout << "Parsed str: " << str << '\n';
 
     //----- timeStamp
-    std::cout << "\nCurrent time: " << StrUtils::timeStamp() << '\n';
+    //std::cout << "\nCurrent time: " << StrUtils::timeStamp() << '\n';
 
     std::cout << std::endl;
 
